@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Navigate, Link } from "react-router-dom";
+import Constructor from "./pages/Constructor.jsx";
+import Home from "./pages/Home.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function NotFound() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="p-10">
+      <p>404</p>
+      <Link to="/constructor" className="text-blue-600 underline">Ir a la landing</Link>
+    </div>
+  );
 }
 
-export default App
+export default function App() {
+  return (
+    <>
+      <nav className="p-4 bg-white shadow flex gap-4">
+        <Link to="/constructor" className="text-blue-600 hover:underline">Landing</Link>
+        <Link to="/home" className="text-blue-600 hover:underline">Home</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Navigate to="/constructor" replace />} />
+        <Route path="/constructor" element={<Constructor />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
+  );
+}
+
+
+
