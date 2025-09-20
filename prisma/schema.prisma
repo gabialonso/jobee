@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model user {
   id        Int       @id @default(autoincrement())
   name      String
   email     String    @unique
@@ -33,7 +33,7 @@ model Contact {
   createdAt DateTime @default(now())
 }
 
-model Person {
+model person {
   id        Int     @id @default(autoincrement())
   firstName String
   lastName  String
@@ -42,21 +42,19 @@ model Person {
   description String
   cv        String?
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+  userEamil String
+  user   user @relation(fields: [userEamil], references: [email])
 }
 
 model Company {
-  id             Int    @id @default(autoincrement())
-  rut            Int
+  rut            Int  @unique
   name           String
   legalReason    String
-  commercialName String
   groupName      String
   subGroupName   String
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+  userEamil
+  user   user @relation(fields: [userEamil], references: [email])
 }
 
 model Course {
