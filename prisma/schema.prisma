@@ -58,9 +58,11 @@ model Company {
 }
 
 model Course {
-  id          Int       @id @default(autoincrement())
+  courseId         Int       @id @default(autoincrement())
   title       String
   description String
+  duartion    Int
+  theme       String
 
   purchases   Purchase[]
 }
