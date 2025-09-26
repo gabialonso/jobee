@@ -1,47 +1,61 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../config/db.js";
 
-const courseService = require("./course.service");
-const prisma = new PrismaClient();
-const db = require("../config/db");
+export const buyCourseHandler = async (userId, courseId, price, currency) => {
+    const course = await prisma.course.findUnique({
+        where: { courseId },
+        select: { courseId: true },
+    });
+    if (!course) throw new Error("Course not found");
 
-// Buy a course
-async function buyCourse(userId, courseId, price, currency) {
-    // Check if course exists
-    const [course] = await db.query("SELECT * FROM courses WHERE course_id = ?", [courseId]);
-    if (course.length === 0) {
-        throw new Error("Course not found");
-    }
+    const existing = await prisma.purchase.findFirst({
+        where: { userId, courseId },
+        select: { id: true },
+    });
+    if (existing) throw new Error("Course already purchased by this user");
 
-  // Check if already purchased
-    const [existing] = await db.query(
-        "SELECT * FROM purchases WHERE course_id = ? AND user_id = ?",
-        [courseId, userId]
-    );
-    if (existing.length > 0) {
-        throw new Error("Course already purchased by this user");
-    }
+    const purchase = await prisma.purchase.create({
+        data: { userId, courseId, price, currency },
+            select: {
+                id: true,
+                userId: true,
+                courseId: true,
+                price: true,
+                course: {
+                    select: { title: true, description: true, duration: true, theme: true },
+                },
+            },
+    });
+    return purchase;
+};
 
-  // Create purchase
-const [result] = await db.query(
-        "INSERT INTO purchases (price, currency, course_id, user_id) VALUES (?, ?, ?, ?)",
-        [price, currency, courseId, userId]
-    );
+export const getUserPurchasesHandler = async (userId) => {
+    const purchases = await prisma.purchase.findMany({
+        where: { userId },
+        orderBy: { id: "desc" },
+        select: {
+        id: true,
+        price: true,
+        currency: true,
+        course: {
+                select: { title: true, description: true, duration: true, theme: true },
+            },
+        },
+    });
+    return purchases;
+};
 
-    return { id: result.insertId, courseId, userId, price, currency };
-}
-
-// Get all purchases for a user
-async function getUserPurchases(userId) {
-const [rows] = await db.query(
-        "SELECT p.id, p.price, p.currency, c.title, c.description, c.duration, c.theme " +
-        "FROM purchases p INNER JOIN courses c ON p.course_id = c.course_id " +
-        "WHERE p.user_id = ?",
-        [userId]
-    );
-return rows;
-}
-
-module.exports = {
-    buyCourse,
-    getUserPurchases,
+export const getAllPurchasesHandler = async () => {
+    const purchases = await prisma.purchase.findMany({
+    orderBy: { id: "desc" },
+    select: {
+            id: true,
+            price: true,
+            currency: true,
+            user: { select: { id: true, name: true, email: true } },
+            course: {
+                select: { courseId: true, title: true, description: true, duration: true, theme: true },
+            },
+        },
+    });
+    return purchases;
 };

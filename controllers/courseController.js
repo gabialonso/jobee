@@ -1,73 +1,64 @@
-const courseService = require("../services/course.service");
+// src/controllers/course.controller.js
+import {
+    createCourse as createCourseService,
+    getAllCourses as getAllCoursesService,
+    getCourseById as getCourseByIdService,
+    updateCourse as updateCourseService,
+    deleteCourse as deleteCourseService,
+} from "../services/course.service.js";
 
-// Create course
-async function createCourse(req, res) {
+// POST /api/v1/courses
+export const createCourseHandler = async (req, res, next) => {
     try {
         const { title, description, duration, companyId } = req.body;
-        const newCourse = await courseService.createCourse({
-        title,
-        description,
-        duration,
-        companyId,
-    });
-        res.status(201).json(newCourse);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+        const created = await createCourseService({ title, description, duration, companyId });
+        res.status(201).json(created);
+    } catch (err) {
+    next(err);
     }
-}
+};
 
-// Get all courses
-async function getAllCourses(req, res) {
+// GET /api/v1/courses
+export const listCoursesHandler = async (_req, res, next) => {
     try {
-        const courses = await courseService.getAllCourses();
+        const courses = await getAllCoursesService();
         res.json(courses);
-    }catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+    next(err);
     }
-}
+};
 
-// Get course by ID
-async function getCourseById(req, res) {
+// GET /api/v1/courses/:id
+export const getCourseHandler = async (req, res, next) => {
     try {
-        const { courseId } = req.params;
-        const course = await courseService.getCourseById(courseId);
+        const id = Number(req.params.id);
+        const course = await getCourseByIdService(id);
+        if (!course) return res.status(404).json({ error: "Course not found" });
         res.json(course);
-}catch (error) {
-        res.status(404).json({ error: error.message });
+    } catch (err) {
+    next(err);
     }
-}
+};
 
-// Update course
-async function updateCourse(req, res) {
+// PUT/PATCH /api/v1/courses/:id
+export const updateCourseHandler = async (req, res, next) => {
     try {
-        const { courseId } = req.params;
+        const id = Number(req.params.id);
         const { title, description, duration } = req.body;
-        const updatedCourse = await courseService.updateCourse(courseId, {
-        title,
-        description,
-        duration,
-    });
-        res.json(updatedCourse);
-    }catch (error) {
-        res.status(400).json({ error: error.message });
+        const updated = await updateCourseService(id, { title, description, duration });
+        res.json(updated);
+    } catch (err) {
+    next(err);
     }
-}
+};
 
-// Delete course
-async function deleteCourse(req, res) {
+// DELETE /api/v1/courses/:id
+export const deleteCourseHandler = async (req, res, next) => {
     try {
-        const { courseId } = req.params;
-        const result = await courseService.deleteCourse(courseId);
-        res.json(result);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+        const id = Number(req.params.id);
+        const deleted = await deleteCourseService(id);
+        res.json(deleted);
+    } catch (err) {
+    next(err);
     }
-}
-
-module.exports = {
-    createCourse,
-    getAllCourses,
-    getCourseById,
-    updateCourse,
-    deleteCourse,
 };

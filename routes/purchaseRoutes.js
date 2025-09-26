@@ -1,14 +1,15 @@
-const express = require("express");
-const router = express.Router();
-const purchaseController = require("../controllers/purchase.controller");
+// src/routes/purchase.routes.js
+import { Router } from "express";
+import {
+    buyCourseHandler,
+    getUserPurchasesHandler,
+    getAllPurchasesHandler,
+} from "../controllers/purchase.controller.js";
 
-// Buy a course
-router.post("/", purchaseController.buyCourse);
+const router = Router();
 
-// User's purchases
-router.get("/user/:userId", purchaseController.getUserPurchases);
+router.post("/", buyCourseHandler);
+router.get("/user/:userId", getUserPurchasesHandler);
+router.get("/", getAllPurchasesHandler);
 
-// Admin - all purchases
-router.get("/", purchaseController.getAllPurchases);
-
-module.exports = router;
+export default router;

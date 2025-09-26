@@ -1,14 +1,19 @@
-import * as courseService from "../services/cursesService.js";
+// src/routes/course.routes.js
+import { Router } from "express";
+import {
+    createCourseHandler,
+    getCourseHandler,
+    listCoursesHandler,
+    updateCourseHandler,
+    deleteCourseHandler,
+} from "../controllers/course.controller.js";
 
-const express = require("express");
-const router = express.Router();
-const courseController = require("../controllers/course.controller");
+const router = Router();
 
-// Routes for courses
-router.post("/", courseController.createCourse);              // Create course
-router.get("/", courseController.getAllCourses);             // Get all courses
-router.get("/:courseId", courseController.getCourseById);   // Get course by ID
-router.put("/:courseId", courseController.updateCourse);    // Update course
-router.delete("/:courseId", courseController.deleteCourse); // Delete course
+router.post("/", createCourseHandler);
+router.get("/:id", getCourseHandler);
+router.get("/", listCoursesHandler);
+router.put("/:id", updateCourseHandler);
+router.delete("/:id", deleteCourseHandler);
 
-module.exports = router;
+export default router;
