@@ -4,6 +4,10 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
+import coursesRoutes from './routes/coursesRoutes.js';
+import purchaseRoutes from './routes/purchaseRoutes.js';
+import personRoutes from './routes/personRoutes.js';
+import companyRoutes from './routes/companyRoutes.js';
 import { connectDB } from './config/db.js';
 
 dotenv.config();
@@ -23,6 +27,10 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/courses', coursesRoutes);
+app.use('/api/purchase', purchaseRoutes); 
+app.use('api/person', personRoutes);
+app.use('api/company/', companyRoutes);
 
 // Conexión a la base de datos
 connectDB();
