@@ -1,9 +1,9 @@
 import {
-  createCompany,
-  getCompanyById,
-  listCompaniesByUser,
-  updateCompany,
-  deleteCompany,
+    createCompany,
+    getCompanyById,
+    listCompaniesByUser,
+    updateCompany,
+    deleteCompany,
 } from "../services/company.service.js";
 
 export const createCompanyHandler = async (req, res, next) => {

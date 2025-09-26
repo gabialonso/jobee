@@ -3,7 +3,7 @@ const db = require("../config/db");
 
 // Crear curso
 async function createCourse(courseData) {
-    const { title, description, duration,courseId} = courseData;
+    const { title, description, duration,theme,price,courseId} = courseData;
 
     if (!title) {
         throw new Error("Título es obligatorios");
@@ -11,7 +11,7 @@ async function createCourse(courseData) {
 
 const [result] = await db.query(
         "INSERT INTO cursos (title, description, duration, id VALUES (?, ?, ?, ?)",
-        [title, description, duration, courseId]
+        [title, description, duration,theme,price,courseId]
     );
 
 return { courseId: result.insertId, ...courseData };
@@ -31,7 +31,7 @@ async function getCourseById(id) {
 }
 
 // Actualizar curso
-async function updateCourse(id, updates) {
+async function updateCourse(courseId, updates) {
     const { title, description, duration} = updates;
     await db.query(
         "UPDATE cursos SET title=?, description=?, duration=? WHERE courseId=?",
@@ -42,7 +42,7 @@ async function updateCourse(id, updates) {
 
 // Eliminar curso
 async function deleteCourse(courseId) {
-    await db.query("DELETE FROM cursos WHERE courseId = ?", [cpurseId]);
+    await db.query("DELETE FROM cursos WHERE courseId = ?", [courseId]);
     return { message: "Curso eliminado" };
 }
 
