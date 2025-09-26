@@ -13,6 +13,11 @@ datasource db {
 // =========================
 // Core
 // =========================
+enum Role {
+  persons
+  companies
+  Admin
+}
 model User {
   id         Int        @id @default(autoincrement())
   name       String
@@ -27,6 +32,7 @@ model User {
   purchases  Purchase[]
   comments   Comment[]
   likes      Like[]
+  admin      Admin?
 }
 
 model Contact {
@@ -68,6 +74,25 @@ model Company {
   user   User   @relation(fields: [userId], references: [id])
 
   @@index([userId])
+}
+enum AdminRole {
+  ADMIN
+  SUPERADMIN
+  MODERATOR
+}
+
+model Admin {
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique
+  user      User       @relation(fields: [userId], references: [id])
+
+  role      AdminRole  @default(ADMIN)
+  isActive  Boolean    @default(true)
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([role])
 }
 
 // =========================
