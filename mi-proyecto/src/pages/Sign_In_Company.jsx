@@ -1,27 +1,28 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Sign_In_Company() {
+export default function CompanyForm() {
   const [company, setCompany] = useState({
-  email: "",
-  password: "",
-  confirmPassword: "",
-  name: "",
-  rut: "",          
-  legalReason: "",
-  socialGroup: "",
-  subGroup: "",     
-});
+    email: "",
+    password: "",
+    confirmPassword: "",
+    name: "",
+    rut: "",
+    legalReason: "",
+    socialGroup: "",
+    subGroup: "",
+  });
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setCompany((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -30,131 +31,125 @@ export default function Sign_In_Company() {
       setError("Las contraseñas no coinciden");
       return;
     }
-
-    try {
-      setLoading(true);
-      setTimeout(() => {
-        console.log("Empresa registrada:", company);
-
-        setSuccess("Empresa registrada correctamente ✅");
-        setCompany({
-          email: "",
-          password: "",
-          confirmPassword: "",
-          name: "",
-          rut: "",
-          legalReason: "",
-          socialGroup: "",
-          subGroup: "",
-        });
-        setLoading(false);
-      }, 500);
-    } catch (err) {
-      setError("Error inesperado");
-      setLoading(false);
+    if (company.password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres");
+      return;
     }
+
+    console.log("Datos de la empresa:", company);
+
+
+    setSuccess("Registro exitoso ✅");
+    navigate("/company/home");
+
+    setCompany({
+      email: "",
+      password: "",
+      confirmPassword: "",
+      name: "",
+      rut: "",
+      legalReason: "",
+      socialGroup: "",
+      subGroup: "",
+    });
   };
 
   return (
-    <div className="p-10">
-      <h1 className="text-1xl font-bold text-black-600">
-        Sign In Company se cargó 👌
+    <div>
+      <h1 className="text-4xl font-bold text-yellow-600">
+        Sign In User se cargó 👌
       </h1>
-
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <label htmlFor="email">Email:</label>
         <input
-          type="email"
           id="email"
+          type="email"
+          placeholder="Cual es su email?"
           value={company.email}
           onChange={handleChange}
-          placeholder="Cual es su email?"
-          required
+          className="border p-2 rounded w-full"
         />
         <br />
-
         <label htmlFor="password">Contraseña:</label>
         <input
-          type="password"
           id="password"
+          type="password"
+          placeholder="Cual es su contraseña?"
           value={company.password}
           onChange={handleChange}
-          placeholder="Cree una contraseña"
-          required
+          className="border p-2 rounded w-full"
         />
         <br />
-
-        <label htmlFor="confirmPassword">Confirmar contraseña:</label>
+        <label htmlFor="confirmPassword">Confirme su contraseña:</label>
         <input
-          type="password"
           id="confirmPassword"
+          type="password"
+          placeholder="Confirme su Contraseña"
           value={company.confirmPassword}
           onChange={handleChange}
-          placeholder="Confirme su contraseña"
-          required
+          className="border p-2 rounded w-full"
         />
         <br />
-
-        <label htmlFor="name">Nombre:</label>
+        <label htmlFor="name">Nombre de la empresa:</label>
         <input
-          type="text"
           id="name"
+          type="text"
+          placeholder="Como se llama su empresa?"
           value={company.name}
           onChange={handleChange}
-          placeholder="Como se llama su empresa?"
-          required
+          className="border p-2 rounded w-full"
         />
         <br />
-
         <label htmlFor="rut">RUT:</label>
         <input
-          type="number"
           id="rut"
+          type="number"
+          placeholder="Cual es su RUT?"
           value={company.rut}
           onChange={handleChange}
-          placeholder="Cual es su RUT?"
-          required
+          className="border p-2 rounded w-full"
         />
         <br />
-
-        <label htmlFor="legalReason">Razon Social:</label>
+        <label htmlFor="legalReason">Razón social:</label>
         <input
-          type="text"
           id="legalReason"
+          type="text"
+          placeholder="Cual es su razón social?"
           value={company.legalReason}
           onChange={handleChange}
-          placeholder="Cual es su razon social?"
-          required
+          className="border p-2 rounded w-full"
         />
         <br />
-
-        <label htmlFor="socialGroup">Grupo Social:</label>
+        <label htmlFor="socialGroup">Grupo social:</label>
         <input
-          type="text"
           id="socialGroup"
+          type="text"
+          placeholder="Cual es su grupo social?"
           value={company.socialGroup}
           onChange={handleChange}
-          placeholder="Cual es su grupo social?"
-          required
+          className="border p-2 rounded w-full"
         />
         <br />
-
-        <label htmlFor="subGroup">Sub Grupo:</label>
+        <label htmlFor="subGroup">Subgrupo:</label>
         <input
-          type="text"
           id="subGroup"
+          type="text"
+          placeholder="Cual es su subgrupo?"
           value={company.subGroup}
           onChange={handleChange}
-          placeholder="Cual es su sub grupo ?"
-          required
+          className="border p-2 rounded w-full"
         />
         <br />
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {success && <p style={{ color: "green" }}>{success}</p>}
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Registrando..." : "Registrar empresa"}
+        {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-500">{success}</p>}
+
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Registrar empresa
         </button>
       </form>
     </div>
