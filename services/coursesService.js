@@ -24,8 +24,8 @@ async function getAllCourses() {
 }
 
 // Obtener curso por ID
-async function getCourseById(id) {
-        const [rows] = await db.query("SELECT * FROM cursos WHERE id = ?", [id]);
+async function getCourseById(courseId) {
+        const [rows] = await db.query("SELECT * FROM cursos WHERE id = ?", [courseId]);
     if (rows.length === 0) throw new Error("Curso no encontrado");
     return rows[0];
 }
