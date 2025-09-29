@@ -22,36 +22,55 @@ export default function CompanyForm() {
     setCompany((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    if (company.password !== company.confirmPassword) {
-      setError("Las contraseñas no coinciden");
-      return;
+  
+
+    try {
+      const { email, password, name, rut, legalReason, socialGroup, subGroup } = company;
+      if (
+        email === "" ||
+        password === "" ||
+        name === "" ||
+        rut === "" ||
+        legalReason === "" ||
+        socialGroup === "" ||
+        subGroup === ""
+      ) {
+        setError("Por favor, complete todos los campos.");
+        return;
+      }
+
+      const res = await fetch("http://localhost:3000/api/companyServioce", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(company),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.message || "Error en el registro");
+        return;
+      }
+
+      setSuccess("Registro exitoso ✅");
+      setCompany({
+        email: "",
+        password: "",
+        confirmPassword: "",
+        name: "",
+        rut: "",
+        legalReason: "",
+        socialGroup: "",
+        subGroup: "",
+      });
+      navigate("/company/home");
+    } catch (err) {
+      setError("Error de red o del servidor");
     }
-    if (company.password.length < 8) {
-      setError("La contraseña debe tener al menos 8 caracteres");
-      return;
-    }
-
-    console.log("Datos de la empresa:", company);
-
-
-    setSuccess("Registro exitoso ✅");
-    navigate("/company/home");
-
-    setCompany({
-      email: "",
-      password: "",
-      confirmPassword: "",
-      name: "",
-      rut: "",
-      legalReason: "",
-      socialGroup: "",
-      subGroup: "",
-    });
   };
 
   return (
@@ -135,7 +154,7 @@ export default function CompanyForm() {
           id="subGroup"
           type="text"
           placeholder="Cual es su subgrupo?"
-          value={company.subGroup}
+                    value={company.subGroup}
           onChange={handleChange}
           className="border p-2 rounded w-full"
         />
@@ -144,6 +163,7 @@ export default function CompanyForm() {
 
         {error && <p className="text-red-500">{error}</p>}
         {success && <p className="text-green-500">{success}</p>}
+
 
         <button
           type="submit"

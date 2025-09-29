@@ -12,7 +12,7 @@ export default function Sign_In_User() {
   });
 
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // 👈 inicializar navigate
+  const navigate = useNavigate(); 
   const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
@@ -35,10 +35,8 @@ export default function Sign_In_User() {
 
     console.log("Datos de la persona:", person);
 
-    // ✅ redirigir cuando todo está OK
     navigate("/user/home");
 
-    // ✅ resetear formulario
     setPerson({
       email: "",
       password: "",
@@ -54,7 +52,7 @@ export default function Sign_In_User() {
       <h1 className="text-4xl font-bold text-yellow-600">
         Sign In User se cargó 👌
       </h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <label htmlFor="email">Email:</label>
         <input
           type="email"
