@@ -5,16 +5,16 @@ import {
     listPersonsByUserHandler,
     updatePersonHandler,
     deletePersonHandler,
-} from "../controllers/person.controller.js";
- import { authGuard } from "../middlewares/auth.js"; 
+} from "../controllers/personController.js";
+import { authGuard } from "../middlewares/auth.js"; 
 
 const router = Router();
 
 router.post("/",             createPersonHandler);
-router.get("/user/:userId",  listPersonsByUserHandler);
-router.get("/:id",           getPersonHandler);
-router.put("/:id",           updatePersonHandler);
-router.patch("/:id",         updatePersonHandler);
-router.delete("/:id",        deletePersonHandler);
+router.get("/person/:userId",  listPersonsByUserHandler);
+router.get("/:userId",           getPersonHandler);
+router.put("/:userId",           updatePersonHandler);
+router.patch("/:userId",         updatePersonHandler);
+router.delete("/:userId",        deletePersonHandler);
 
 export default router;
