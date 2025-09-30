@@ -6,7 +6,7 @@ import {
     updatePersonHandler,
     deletePersonHandler,
 } from "../controllers/person.controller.js";
-// import { authGuard } from "../middlewares/auth.js"; // si usás auth, descomentalo
+ import { authGuard } from "../middlewares/auth.js"; 
 
 const router = Router();
 
