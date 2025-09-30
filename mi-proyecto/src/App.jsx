@@ -11,6 +11,13 @@ import Profile_User from "./pages/user/Profile.jsx"
 import Company_User from "./pages/user/Company.jsx"
 import Contacts_User from "./pages/user/Contact.jsx"
 import Courses_User from "./pages/user/Courses.jsx"
+//-----------------------------------Company pages----------------------------------
+import Home_Company from "./pages/company/Home.jsx"
+import Profile_Company from "./pages/company/Profile.jsx"
+import Users_Company from "./pages/company/Users.jsx"
+import Contact_Company from "./pages/company/Contact.jsx"
+import Courses_Company from "./pages/company/Courses.jsx"
+//----------------------------------Catch all page----------------------------------
 
 function NotFound() {
   return (
@@ -38,6 +45,12 @@ export default function App() {
         <Route path="/user/company" element={<Company_User />} />
         <Route path="/user/contacts" element={<Contacts_User />} />
         <Route path="/user/courses" element={<Courses_User />} />
+//-----------------------------------Company routes----------------------------------
+        <Route path="/company/home" element={<Home_Company />} />
+        <Route path="/company/profile" element={<Profile_Company />} />
+        <Route path="/company/users" element={<Users_Company />} />
+        <Route path="/company/contacts" element={<Contact_Company />} />
+        <Route path="/company/courses" element={<Courses_Company />} />
 //----------------------------------Catch all route----------------------------------
         <Route path="*" element={<NotFound />} />
       </Routes>
