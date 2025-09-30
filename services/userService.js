@@ -1,7 +1,7 @@
 import prisma from '../config/db.js';
 import bcrypt from 'bcryptjs';
 
-export const register = async ({ name, email, password }) => {
+export const sigin = async ({ name, email, password,Ci,brithday}) => {
   const userExists = await prisma.user.findUnique({ where: { email } });
   if (userExists) throw new Error('El usuario ya existe');
   const hashedPassword = await bcrypt.hash(password, 10);

@@ -28,8 +28,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/courses', coursesRoutes);
+app.use('/api/person', personRoutes);
 app.use('/api/purchase', purchaseRoutes); 
-app.use('api/person', personRoutes);
 app.use('api/company/', companyRoutes);
 
 // Conexión a la base de datos

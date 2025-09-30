@@ -28,11 +28,12 @@ model User {
 
   persons    Person[]
   companies  Company[]
-  posts      Post[]
-  purchases  Purchase[]
   comments   Comment[]
   likes      Like[]
+  posts      Post[]
+  purchases  Purchase[]
   admin      Admin?
+
 }
 
 model Contact {
@@ -52,9 +53,11 @@ model Person {
   firstName   String
   lastName    String
   birthYear   Int
+  Ci          Int
   highSchool  String
   description String
   cv          String?
+  linkedin    String?
 
   userId  Int
   user    User    @relation(fields: [userId], references: [id])
