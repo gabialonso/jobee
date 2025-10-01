@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 export default function Company_User() {
   return (
     <div className="p-10">
-      <nav>
+      <nav className="nav_stylized mb-5">
         <Link to={"/user/home"}>Inicio</Link>
         <Link to={"/user/profile"}>Perfil</Link>
         <Link to={"/user/company"}>Empresas</Link>

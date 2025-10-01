@@ -1,7 +1,4 @@
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
 
 @layer base {
@@ -56,6 +53,9 @@
   .interactive-logo:hover {
     transform: scale(1.06);         
     filter: drop-shadow(0 0 1.5em #edaa39);
+  }
+  .nav_stylized{
+    @apply flex justify-between items-center;
   }
 
   .brand-title { @apply m-0 font-bold text-4xl md:text-5xl text-[#6F442C]; }
