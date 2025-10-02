@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
@@ -29,8 +30,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/courses', coursesRoutes);
 app.use('/api/person', personRoutes);
-app.use('/api/purchase', purchaseRoutes); 
-app.use('api/company/', companyRoutes);
+app.use('/api/purchase', purchaseRoutes);
+app.use('/api/company', companyRoutes);
 
 // Conexión a la base de datos
 connectDB();

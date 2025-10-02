@@ -1,17 +1,17 @@
 // src/controllers/course.controller.js
 import {
-    createCourse as createCourseService,
-    getAllCourses as getAllCoursesService,
-    getCourseById as getCourseByIdService,
-    updateCourse as updateCourseService,
-    deleteCourse as deleteCourseService,
-} from "../services/course.service.js";
+    createCourse,
+    getAllCourses ,
+    getCourseById ,
+    updateCourse ,
+    deleteCourse ,
+} from "../src/services/course.service.js";
 
 // POST /api/v1/courses
 export const createCourseHandler = async (req, res, next) => {
     try {
         const { title, description, duration, companyId } = req.body;
-        const created = await createCourseService({ title, description, duration, companyId });
+        const created = await createCourse({ title, description, duration, companyId });
         res.status(201).json(created);
     } catch (err) {
     next(err);
@@ -21,7 +21,7 @@ export const createCourseHandler = async (req, res, next) => {
 // GET /api/v1/courses
 export const listCoursesHandler = async (_req, res, next) => {
     try {
-        const courses = await getAllCoursesService();
+        const courses = await getAllCourses();
         res.json(courses);
     } catch (err) {
     next(err);
@@ -32,7 +32,7 @@ export const listCoursesHandler = async (_req, res, next) => {
 export const getCourseHandler = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
-        const course = await getCourseByIdService(id);
+        const course = await getCourseById(id);
         if (!course) return res.status(404).json({ error: "Course not found" });
         res.json(course);
     } catch (err) {
@@ -45,7 +45,7 @@ export const updateCourseHandler = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const { title, description, duration } = req.body;
-        const updated = await updateCourseService(id, { title, description, duration });
+        const updated = await updateCourse(id, { title, description, duration });
         res.json(updated);
     } catch (err) {
     next(err);
@@ -56,7 +56,7 @@ export const updateCourseHandler = async (req, res, next) => {
 export const deleteCourseHandler = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
-        const deleted = await deleteCourseService(id);
+        const deleted = await deleteCourse(id);
         res.json(deleted);
     } catch (err) {
     next(err);

@@ -1,9 +1,9 @@
 const purchaseService = require("../services/purchase.service");
 import {
-    buyCourse as buyCourseService,
-    getUserPurchases as getUserPurchasesService,
-    getAllPurchases as getAllPurchasesService,
-} from "../services/purchase.service.js";
+    buyCourse, 
+    getUserPurchases,
+    getAllPurchases,
+} from "../src/services/purchase.service.js";
 
 
 // POST /purchases
