@@ -1,1 +1,5 @@
-// Modelo gestionado por Prisma. No es necesario definir aquí.
+class persons{
+    constructor(){
+        
+    }
+}
