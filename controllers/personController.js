@@ -4,7 +4,7 @@ import {
     listPersonsByUser,
     updatePerson,
     deletePerson,
-} from "../services/person.service.js";
+} from "../src/services/person.service.js";
 
 export const createPersonHandler = async (req, res, next) => {
     try {

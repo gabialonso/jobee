@@ -1,4 +1,4 @@
-import * as ContactService from '../services/contactService.js';
+import * as ContactService from '../src/services/contactService.js';
 
 export const sendContact = async (req, res) => {
   try {

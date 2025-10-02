@@ -8,7 +8,7 @@ import {
     adminListPurchases,
     adminPurchasesTable,
     adminCoursesWithPurchaseCount,
-} from "../services/admin.service.js";
+} from "../src/services/admin.service.js";
 
 export const adminCreateCourseHandler = async (req, res, next) => {
     try {

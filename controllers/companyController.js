@@ -4,7 +4,7 @@ import {
     listCompaniesByUser,
     updateCompany,
     deleteCompany,
-} from "../services/company.service.js";
+} from "../src/services/company.service.js";
 
 export const createCompanyHandler = async (req, res, next) => {
     try {
