@@ -1,10 +1,10 @@
-import {
-    createPerson,
-    getPersonById,
-    listPersonsByUser,
-    updatePerson,
-    deletePerson,
-} from "../src/services/personService.js";
+import {createPerson, 
+        getPersonById,
+        listPersonsByUser,
+        updatePerson,
+        deletePerson } from "../service/personService"
+        
+import 'express-async-errors';
 
 export const createPersonHandler = async (req, res, next) => {
     try {
@@ -19,12 +19,13 @@ export const createPersonHandler = async (req, res, next) => {
     } catch (err) {
     next(err);
     }
+
 };
 
 export const getPersonByIdHandler = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
-        const person = await getPersonByIdHandelr(id);
+        const person = await getPersonById(id);
 
         if (!person) {
             return res.status(404).json({

@@ -1,12 +1,9 @@
-import {
-    createCourse,
-    getAllCourses,
-    getCourseById,
-    updateCourse,
-    deleteCourse,
-} from "../src/services/course.service.js";
+import {createCourse,
+        getCourseById,
+        updateCourse,
+        deleteCourse 
+    } from '../services/courseService.js';
 
-// POST /api/v1/courses - create a new course
 export const createCourseHandler = async (req, res, next) => {
     try {
         const { title, description, duration, companyId } = req.body;
@@ -23,20 +20,6 @@ export const createCourseHandler = async (req, res, next) => {
     }
 
 
-// GET /api/v1/courses - list all courses
-export const listCoursesHandler = async (_req, res, next) => {
-    try {
-        const courses = await getAllCourses();
-
-        return res.status(200).json({
-            success: true,
-            message: "Courses retrieved successfully",
-            data: courses,
-        });
-    } catch (err) {
-        next(err);
-    }
-};
 
 // GET /api/v1/courses/:id - get a course by ID
 export const getCourseHandler = async (req, res, next) => {

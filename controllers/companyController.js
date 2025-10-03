@@ -1,10 +1,6 @@
-import {
-    createCompany,
-    getCompanyById,
-    listCompaniesByUser,
-    updateCompany,
-    deleteCompany,
-} from "../src/services/company.service.js";
+import * as  companyService from "../src/services/companyService.js";
+
+const companyServices = new companyService();
 
 // POST /api/v1/companies - create a new company
 export const createCompanyHandler = async (req, res, next) => {

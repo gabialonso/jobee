@@ -1,10 +1,9 @@
-import * as purchaseService from {
-buyCourse,
-getUserPurchases,
-getAllPurchases,    
-}, "../services/purchaseService.js";
+// src/controllers/purchaseController.js
+import {buyCourse,
+        getUserPurchase,
+        getAllPurchase } from "../services/purchasService.js";
 
-export const buyCourse = async (req, res, next) => {
+export const buyCourseHandler = async (req, res, next) => {
     try {
         const { userId, courseId, price, currency } = req.body;
         const purchase = await purchaseService.buyCourse(userId, courseId, price, currency);
@@ -15,34 +14,34 @@ export const buyCourse = async (req, res, next) => {
             data: purchase,
         });
     } catch (error) {
-        next(error); // handled by centralized error middleware
+        next(error);
     }
 };
 
-export const getUserPurchases = async (req, res, next) => {
+export const getUserPurchaseHandler = async (req, res, next) => {
     try {
         const { userId } = req.params;
-        const purchases = await purchaseService.getUserPurchases(userId);
+        const purchase = await purchaseService.getUserPurchase(userId);
 
-        return res.status(200).json({
+    return res.status(200).json({
             success: true,
             message: "User purchases retrieved",
-            data: purchases,
+            data: purchase,
         });
     } catch (error) {
         next(error);
     }
 };
 
-export const getAllPurchases = async (req, res, next) => {
+export const getAllPurchaseHandler = async (req, res, next) => {
     try {
-        const purchases = await purchaseService.getAllPurchases();
+        const purchase = await purchaseService.getAllPurchase();
 
         return res.status(200).json({
             success: true,
             message: "All purchases retrieved",
-            data: purchases,
-    });
+            data: purchase,
+        });
     } catch (error) {
         next(error);
     }

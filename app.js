@@ -2,14 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import authRoutes from './src/routes/authRoutes.js';
-import userRoutes from './src/routes/userRoutes.js';
-import contactRoutes from './src/routes/contactRoutes.js';
-import coursesRoutes from './src/routes/coursesRoutes.js';
-import purchaseRoutes from './src/routes/purchaseRoutes.js';
-import personRoutes from './src/routes/personRoutes.js';
-import companyRoutes from '.src/routes/companyRoutes.js';
-import { connectDB } from './src/config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import courseRoutes from './routes/courseRoutes.js';
+import purchaseRoutes from './routes/purchaseRoutes.js';
+import personRoutes from './routes/personRoutes.js';
+import companyRoutes from './routes/companyRoutes.js';
+import { connectDB } from './config/db.js';
 
 dotenv.config();
 
@@ -27,8 +26,7 @@ app.use(express.json());
 // Rutas
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/contact', contactRoutes);
-app.use('/api/courses', coursesRoutes);
+app.use('/api/course', courseRoutes);
 app.use('/api/person', personRoutes);
 app.use('/api/purchase', purchaseRoutes);
 app.use('/api/company', companyRoutes);

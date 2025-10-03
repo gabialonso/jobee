@@ -1,8 +1,8 @@
-import * as AuthService from '../src/services/authService.js';
+import * as authService from '../services/authService.js';
 
 export const login = async (req, res) => {
   try {
-    const { token, user } = await AuthService.login(req.body);
+    const { token, user } = await authService.login(req.body);
     res.json({ token, user });
   } catch (error) {
     res.status(401).json({ error: error.message });
