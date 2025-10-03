@@ -4,26 +4,42 @@ import {
     listPersonsByUser,
     updatePerson,
     deletePerson,
-} from "../src/services/person.service.js";
+} from "../src/services/personService.js";
 
 export const createPersonHandler = async (req, res, next) => {
     try {
         const body = req.body;
         const created = await createPerson(body);
-        res.status(201).json(created);
+
+        return res.status(201).json({
+            success: true,
+            message: "Person created successfully",
+            data: created,
+        });
     } catch (err) {
-        next(err);
+    next(err);
     }
 };
 
-export const getPersonHandler = async (req, res, next) => {
+export const getPersonByIdHandler = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
-        const person = await getPersonById(id);
-        if (!person) return res.status(404).json({ error: "Person not found" });
-        res.json(person);
+        const person = await getPersonByIdHandelr(id);
+
+        if (!person) {
+            return res.status(404).json({
+                success: false,
+                message: "Person not found",
+            });
+    }
+
+        return res.status(200).json({
+            success: true,
+            message: "Person retrieved successfully",
+            data: person,
+        });
     } catch (err) {
-        next(err);
+    next(err);
     }
 };
 
@@ -31,9 +47,14 @@ export const listPersonsByUserHandler = async (req, res, next) => {
     try {
         const userId = Number(req.params.userId);
         const persons = await listPersonsByUser(userId);
-        res.json(persons);
+
+        return res.status(200).json({
+            success: true,
+            message: "Persons retrieved successfully",
+            data: persons,
+        });
     } catch (err) {
-        next(err);
+    next(err);
     }
 };
 
@@ -42,9 +63,14 @@ export const updatePersonHandler = async (req, res, next) => {
         const id = Number(req.params.id);
         const body = req.body;
         const updated = await updatePerson(id, body);
-        res.json(updated);
+
+        return res.status(200).json({
+            success: true,
+            message: "Person updated successfully",
+            data: updated,
+        });
     } catch (err) {
-        next(err);
+    next(err);
     }
 };
 
@@ -52,7 +78,12 @@ export const deletePersonHandler = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const deleted = await deletePerson(id);
-        res.json(deleted);
+
+        return res.status(200).json({
+            success: true,
+            message: "Person deleted successfully",
+            data: deleted,
+        });
     } catch (err) {
         next(err);
     }

@@ -1,64 +1,99 @@
-// src/controllers/course.controller.js
 import {
     createCourse,
-    getAllCourses ,
-    getCourseById ,
-    updateCourse ,
-    deleteCourse ,
+    getAllCourses,
+    getCourseById,
+    updateCourse,
+    deleteCourse,
 } from "../src/services/course.service.js";
 
-// POST /api/v1/courses
+// POST /api/v1/courses - create a new course
 export const createCourseHandler = async (req, res, next) => {
     try {
         const { title, description, duration, companyId } = req.body;
         const created = await createCourse({ title, description, duration, companyId });
-        res.status(201).json(created);
-    } catch (err) {
-    next(err);
-    }
-};
 
-// GET /api/v1/courses
+        return res.status(201).json({
+            success: true,
+            message: "Course created successfully",
+            data: created,
+        });
+    } catch (err) {
+        next(err);
+    }
+    }
+
+
+// GET /api/v1/courses - list all courses
 export const listCoursesHandler = async (_req, res, next) => {
     try {
         const courses = await getAllCourses();
-        res.json(courses);
+
+        return res.status(200).json({
+            success: true,
+            message: "Courses retrieved successfully",
+            data: courses,
+        });
     } catch (err) {
-    next(err);
+        next(err);
     }
 };
 
-// GET /api/v1/courses/:id
+// GET /api/v1/courses/:id - get a course by ID
 export const getCourseHandler = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const course = await getCourseById(id);
-        if (!course) return res.status(404).json({ error: "Course not found" });
-        res.json(course);
+
+    if (!course) {
+        return res.status(404).json({
+            success: false,
+            message: "Course not found",
+        });
+    }
+
+    return res.status(200).json({
+        success: true,
+        message: "Course retrieved successfully",
+        data: course,
+    });
     } catch (err) {
-    next(err);
+        next(err);
     }
 };
 
-// PUT/PATCH /api/v1/courses/:id
+// PUT/PATCH /api/v1/courses/:id - update a course
 export const updateCourseHandler = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const { title, description, duration } = req.body;
         const updated = await updateCourse(id, { title, description, duration });
-        res.json(updated);
+
+    return res.status(200).json({
+        success: true,
+        message: "Course updated successfully",
+        data: updated,
+    });
     } catch (err) {
-    next(err);
+        next(err);
     }
 };
 
-// DELETE /api/v1/courses/:id
+// DELETE /api/v1/courses/:id - delete a course
 export const deleteCourseHandler = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const deleted = await deleteCourse(id);
-        res.json(deleted);
+        if (!deleted) {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found",
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Course deleted successfully",
+        });
     } catch (err) {
-    next(err);
+        next(err);
     }
 };
