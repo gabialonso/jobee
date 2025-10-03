@@ -1,14 +1,27 @@
-import * as UserService from '../src/services/userService.js';
-
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
     const user = await UserService.register(req.body);
-    res.status(201).json({ message: 'Usuario registrado', user });
+
+    return res.status(201).json({
+      success: true,
+      message: "Usuario registrado exitosamente",
+      data: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+    });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    next(error); // delega al middleware de manejo de errores
   }
 };
-
 export const getProfile = async (req, res) => {
-  res.json({ user: req.user });
+  return res.status(200).json({
+    success: true,
+    data: {
+      id: req.user.id,
+      email: req.user.email,
+      name: req.user.name,
+    },
+  });
 };
