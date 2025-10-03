@@ -32,7 +32,7 @@
 }
 
 @layer components {
- .landing-wrap {
+  .landing-wrap {
     @apply min-h-screen w-full grid place-items-center bg-[#FFF4D6];
   }
 
@@ -54,11 +54,11 @@
     transform: scale(1.06);         
     filter: drop-shadow(0 0 1.5em #edaa39);
   }
-  .nav_stylized{
+
+  .nav_stylized {
     @apply flex justify-between items-center;
   }
 
   .brand-title { @apply m-0 font-bold text-4xl md:text-5xl text-[#6F442C]; }
   .brand-sub   { @apply text-lg text-[#6F442C]/80; }
 }
-
