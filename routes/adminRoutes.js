@@ -9,8 +9,8 @@ import {
     adminListPurchasesHandler,
     adminPurchasesTableHandler,
     adminCoursesWithPurchaseCountHandler,
-} from "../controllers/admin.controller.js";
-import { authGuard, adminGuard } from "../middlewares/auth.js";
+} from "../src/controllers/admin.controller.js";
+import { authGuard, adminGuard } from "../src/middlewares/auth.js";
 
 const router = Router();
 

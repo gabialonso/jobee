@@ -6,7 +6,7 @@ import {
     listCoursesHandler,
     updateCourseHandler,
     deleteCourseHandler,
-} from "../controllers/course.controller.js";
+} from "../src/controllers/course.controller.js";
 
 const router = Router();
 

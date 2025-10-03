@@ -4,7 +4,7 @@ import {
     buyCourseHandler,
     getUserPurchasesHandler,
     getAllPurchasesHandler,
-} from "../controllers/purchase.controller.js";
+} from "../src/controllers/purchase.controller.js";
 
 const router = Router();
 

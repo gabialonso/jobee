@@ -5,7 +5,7 @@ import {
     listPersonsByUserHandler,
     updatePersonHandler,
     deletePersonHandler,
-} from "../controllers/personController.js";
+} from "../src/controllers/personController.js";
 import { authGuard } from "../middlewares/auth.js"; 
 
 const router = Router();

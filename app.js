@@ -2,14 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import authRoutes from './routes/authRoutes.js';
-import userRoutes from './routes/userRoutes.js';
-import contactRoutes from './routes/contactRoutes.js';
-import coursesRoutes from './routes/coursesRoutes.js';
-import purchaseRoutes from './routes/purchaseRoutes.js';
-import personRoutes from './routes/personRoutes.js';
-import companyRoutes from './routes/companyRoutes.js';
-import { connectDB } from './config/db.js';
+import authRoutes from './src/routes/authRoutes.js';
+import userRoutes from './src/routes/userRoutes.js';
+import contactRoutes from './src/routes/contactRoutes.js';
+import coursesRoutes from './src/routes/coursesRoutes.js';
+import purchaseRoutes from './src/routes/purchaseRoutes.js';
+import personRoutes from './src/routes/personRoutes.js';
+import companyRoutes from '.src/routes/companyRoutes.js';
+import { connectDB } from './src/config/db.js';
 
 dotenv.config();
 
