@@ -50,6 +50,14 @@
     will-change: transform;
   }
 
+  .basic_plan{@apply bg-green-500/50 text-center text-black font-bold rounded-b-2xl}
+  .medium_plan{@apply bg-[#E69C00]/50 text-center text-black font-bold rounded-b-2xl}
+  .advanced_plan{@apply bg-[#9B1756] text-white text-center font-bold rounded-b-2xl}
+ 
+  .buttons_interactive{@apply border-2 border-black rounded-lg px-3 py-1 hover:bg-yellow-500/50 }
+
+  .curses_card{@apply flex flex-shrink-0 flex-col gap-4 border-2 border-black rounded-2xl px-4 pb-4 w-1/4 justify-between  text-start snap-center}
+
   .interactive-logo:hover {
     transform: scale(1.06);         
     filter: drop-shadow(0 0 1.5em #edaa39);
