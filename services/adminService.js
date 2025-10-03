@@ -1,4 +1,5 @@
 // src/services/admin.service.js
+import 'express-async-errors';
 import prisma from "../src/config/db.js";
 
 export const adminCreateCourse = async (courseData) => {

@@ -1,4 +1,5 @@
 import * as UserService from './userService.js';
+import 'express-async-errors';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import jwtConfig from '../config/jwt.js';

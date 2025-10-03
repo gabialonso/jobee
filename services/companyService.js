@@ -1,4 +1,6 @@
 import prisma from "../config/db.js";
+import 'express-async-errors';
+
 
 export const createCompany = async (company) => {
 return prisma.company.create({

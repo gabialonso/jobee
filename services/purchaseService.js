@@ -1,4 +1,6 @@
 import prisma from "../config/db.js";
+import 'express-async-errors';
+
 
 export const buyCourseHandler = async (userId, courseId, price, currency) => {
     const course = await prisma.course.findUnique({

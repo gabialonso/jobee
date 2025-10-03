@@ -1,5 +1,7 @@
 // src/modules/person/person.service.js
 import prisma from "../config/db.js";
+import 'express-async-errors';
+
 
 export const createPerson = async (person) => {
     return prisma.person.create({

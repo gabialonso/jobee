@@ -1,5 +1,7 @@
 // Importa la conexión a la base de datos
 const db = require("../config/db");
+import 'express-async-errors';
+
 
 // Crear curso
 async function createCourse(courseData) {
