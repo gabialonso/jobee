@@ -1,5 +1,7 @@
-import {createCourse,
+import {
+        createCourse,
         getCourseById,
+        getAllCourses,
         updateCourse,
         deleteCourse 
     } from '../services/courseService.js';
@@ -60,6 +62,21 @@ export const updateCourseHandler = async (req, res, next) => {
         next(err);
     }
 };
+
+export const getAllCoursesHandler = async (req, res, next) => {
+    try {
+        const courses = await getAllCourses();
+
+        return res.status(200).json({
+            success: true,
+            message: "Courses retrieved successfully",
+            data: courses,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 // DELETE /api/v1/courses/:id - delete a course
 export const deleteCourseHandler = async (req, res, next) => {

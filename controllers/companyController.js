@@ -1,4 +1,4 @@
-import * as  companyService from "../src/services/companyService.js";
+import {createCompany,getCompanyById,listCompaniesByUser,updateCompany,deleteCompany} from "../services/companyService.js";
 
 const companyServices = new companyService();
 
