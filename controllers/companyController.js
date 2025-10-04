@@ -1,6 +1,9 @@
-import {createCompany,getCompanyById,listCompaniesByUser,updateCompany,deleteCompany} from "../services/companyService.js";
-
-const companyServices = new companyService();
+import {createCompany,
+        getCompanyById,
+        listCompaniesByUser,
+        updateCompany,
+        deleteCompany}from "../services/companyService.js";
+import 'express-async-errors';
 
 // POST /api/v1/companies - create a new company
 export const createCompanyHandler = async (req, res, next) => {

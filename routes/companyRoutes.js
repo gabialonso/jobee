@@ -5,7 +5,7 @@ import {
     listCompaniesByUserHandler,
     updateCompanyHandler,
     deleteCompanyHandler,
-} from "../src/controllers/company.controller.js";
+} from "../controllers/companyController.js";
 
 const router = Router();
 
