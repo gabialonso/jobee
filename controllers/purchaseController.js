@@ -1,7 +1,9 @@
 // src/controllers/purchaseController.js
-import {buyCourse,
+import {
+        buyCourse,
         getUserPurchase,
-        getAllPurchase } from "../services/purchasService.js";
+        getAllPurchase, 
+        } from "../services/purchaseService.js";
 
 export const buyCourseHandler = async (req, res, next) => {
     try {

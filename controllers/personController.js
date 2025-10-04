@@ -1,8 +1,10 @@
-import {createPerson, 
+import {
+        createPerson, 
         getPersonById,
         listPersonsByUser,
         updatePerson,
-        deletePerson } from "../service/personService"
+        deletePerson
+        } from "../services/personService.js";   
         
 import 'express-async-errors';
 

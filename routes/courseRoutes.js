@@ -3,16 +3,16 @@ import { Router } from "express";
 import {
     createCourseHandler,
     getCourseHandler,
-    listCoursesHandler,
+    getAllCoursesHandler,
     updateCourseHandler,
     deleteCourseHandler,
-} from "../src/controllers/course.controller.js";
+} from "../controllers/courseController.js";
 
 const router = Router();
 
 router.post("/", createCourseHandler);
 router.get("/:id", getCourseHandler);
-router.get("/", listCoursesHandler);
+router.get("/", getAllCoursesHandler);
 router.put("/:id", updateCourseHandler);
 router.delete("/:id", deleteCourseHandler);
 

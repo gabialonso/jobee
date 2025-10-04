@@ -2,7 +2,7 @@ import prisma from "../config/db.js";
 import 'express-async-errors';
 
 
-export const buyCourseHandler = async (userId, courseId, price, currency) => {
+export const buyCourse = async (userId, courseId, price, currency) => {
     const course = await prisma.course.findUnique({
         where: { courseId },
         select: { courseId: true },
@@ -30,7 +30,7 @@ export const buyCourseHandler = async (userId, courseId, price, currency) => {
     return purchase;
 };
 
-export const getUserPurchasesHandler = async (userId) => {
+export const getUserPurchase = async (userId) => {
     const purchases = await prisma.purchase.findMany({
         where: { userId },
         orderBy: { id: "desc" },
@@ -46,7 +46,7 @@ export const getUserPurchasesHandler = async (userId) => {
     return purchases;
 };
 
-export const getAllPurchasesHandler = async () => {
+export const getAllPurchase = async () => {
     const purchases = await prisma.purchase.findMany({
     orderBy: { id: "desc" },
     select: {
