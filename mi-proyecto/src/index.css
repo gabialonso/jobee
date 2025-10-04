@@ -32,7 +32,7 @@
 }
 
 @layer components {
- .landing-wrap {
+  .landing-wrap {
     @apply min-h-screen w-full grid place-items-center bg-[#FFF4D6];
   }
 
@@ -50,15 +50,23 @@
     will-change: transform;
   }
 
+  .basic_plan{@apply bg-green-500/50 text-center text-black font-bold rounded-b-2xl}
+  .medium_plan{@apply bg-[#E69C00]/50 text-center text-black font-bold rounded-b-2xl}
+  .advanced_plan{@apply bg-[#9B1756] text-white text-center font-bold rounded-b-2xl}
+ 
+  .buttons_interactive{@apply border-2 border-black rounded-lg px-3 py-1 hover:bg-yellow-500/50 }
+
+  .curses_card{@apply flex flex-shrink-0 flex-col gap-4 border-2 border-black rounded-2xl px-4 pb-4 w-1/4 justify-between  text-start snap-center}
+
   .interactive-logo:hover {
     transform: scale(1.06);         
     filter: drop-shadow(0 0 1.5em #edaa39);
   }
-  .nav_stylized{
+
+  .nav_stylized {
     @apply flex justify-between items-center;
   }
 
   .brand-title { @apply m-0 font-bold text-4xl md:text-5xl text-[#6F442C]; }
   .brand-sub   { @apply text-lg text-[#6F442C]/80; }
 }
-
