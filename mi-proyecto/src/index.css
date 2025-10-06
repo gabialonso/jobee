@@ -55,6 +55,7 @@
   .advanced_plan{@apply bg-[#9B1756] text-white text-center font-bold rounded-b-2xl}
  
   .buttons_interactive{@apply border-2 border-black rounded-lg px-3 py-1 hover:bg-yellow-500/50 }
+  .button_selected {@apply bg-yellow-500/50 border-2 border-black rounded-lg px-3 py-1 font-bold }
 
   .curses_card{@apply flex flex-shrink-0 flex-col gap-4 border-2 border-black rounded-2xl px-4 pb-4 w-1/4 justify-between  text-start snap-center}
 
