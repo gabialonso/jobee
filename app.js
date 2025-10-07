@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import 'express-async-errors';
 
-
+import stripeRoutes from "./routes/stripeRoutes.js";
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
@@ -15,6 +15,7 @@ import { connectDB } from './config/db.js';
 dotenv.config();
 
 const app = express();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const PORT = process.env.PORT || 3000;
 
 // Configurar CORS para permitir el frontend
@@ -32,6 +33,7 @@ app.use('/api/course', courseRoutes);
 app.use('/api/person', personRoutes);
 app.use('/api/purchase', purchaseRoutes);
 app.use('/api/company', companyRoutes);
+app.use('/api/stripe', stripeRoutes);
 
 // Conexión a la base de datos
 connectDB();
