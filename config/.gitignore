@@ -23,3 +23,7 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Stripe
+stripe-events/    
+stripe.json      
