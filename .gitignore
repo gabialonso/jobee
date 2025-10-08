@@ -1,0 +1,14 @@
+# Ignorar dependencias y archivos sensibles
+
+# === Stripe y dependencias ===
+node_modules/
+stripe/
+.stripe/
+stripe.log
+stripe-config.json
+stripe-test-keys.json
+
+# === Archivos de entorno ===
+.env
+.env.*
+

@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db"); 
 
 const Purchase = sequelize.define("Purchase", {
+    
     id_pucharse: {
         type: DataTypes.INTEGER,
         primaryKey: true,
