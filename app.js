@@ -15,7 +15,7 @@ import { connectDB } from './config/db.js';
 dotenv.config();
 
 const app = express();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 const PORT = process.env.PORT || 3000;
 
 // Configurar CORS para permitir el frontend
@@ -23,6 +23,7 @@ app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true
 }));
+
 
 app.use(express.json());
 
