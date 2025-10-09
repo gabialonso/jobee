@@ -17,8 +17,8 @@ export default function Sign_In_User() {
   const [mostrar, setMostrar] = useState(false);
   const [mostrar2, setMostrar2] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate(); 
-  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
+  const [success] = useState("");
   
   const handleChange = (e) => {
     const { id, value } = e.target;

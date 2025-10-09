@@ -68,7 +68,7 @@ export default function CompanyForm() {
         subGroup: "",
       });
       navigate("/company/home");
-    } catch (err) {
+    } catch {
       setError("Error de red o del servidor");
     }
   };

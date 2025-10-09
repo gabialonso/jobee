@@ -1,4 +1,5 @@
 {/*-----------------------Icons-----------------------*/}
+import { useState } from "react";
 import { IoEyeOffOutline } from "react-icons/io5"; //Ojo cerrado
 import { IoEyeOutline } from "react-icons/io5"; //Ojo abierto
 import { GoMail } from "react-icons/go"; //Icono de mail
@@ -10,57 +11,20 @@ import { LiaBirthdayCakeSolid } from "react-icons/lia"; //Icono de cumpleaños
 import { CiBank } from "react-icons/ci"; //Icono de razon social
 import { RiLockPasswordLine } from "react-icons/ri"; //Icono de contraseña
 
-function Input_Form({ type, id, placeholder, value,}) {
-    let icon=""
+function Input_Form({ type, id, placeholder, value, onChange }) {
     const [mostrar, setMostrar] = useState(false);
     const [mostrar2, setMostrar2] = useState(false);
-    switch (id) {
-        case "email":
-            icon=<GoMail/>
-            break;
-        case "password":
-            icon=<RiLockPasswordLine/>
-            break;
-        case "confirmPassword":
-            icon=<RiLockPasswordLine/>
-            break;
-        case "name":
-            icon=<FaRegUser/>
-            break;
-        case "ci":
-            icon=<HiOutlineIdentification/>
-            break;
-        case "birthDate":
-            icon=<LiaBirthdayCakeSolid/>
-            break;
-        case "rut":
-            icon=<HiOutlineIdentification/>
-            break;
-        case "legalReason":
-            icon=<CiBank/>
-            break;
-        case "socialGroup":
-            icon=<GrGroup/>
-            break
-        case "subGroup":
-            icon=<RiGroupLine/>
-            break;    
-        default:
-            icon=""
-            break;
-    }
     
     if (type === "password") {
         if(id==="password"){
             return (
                 <div className="flex border-1 rounded-lg mx-2 w-4/6 flex justify-around bg-white">
-                    icon
                     <input
                         className="pl-1 py-0 w-full rounded-l-lg placeholder-black/50"
                         type={mostrar ? "text" : "password"}
                         id="password"
                         value={value}
-                        onChange={handleChange}
+                        onChange={onChange}
                         placeholder={placeholder}
                         required
                     />
@@ -72,17 +36,16 @@ function Input_Form({ type, id, placeholder, value,}) {
         }else{
             return (
                 <div className="flex border-1 rounded-lg mx-2 w-4/6 flex justify-around bg-white">
-                    icon
                     <input
                         className="pl-1 py-0 w-full rounded-l-lg placeholder-black/50"
                         type={mostrar2 ? "text" : "password"}
                         id="password"
                         value={value}
-                        onChange={handleChange}
+                        onChange={onChange}
                         placeholder={placeholder}
                         required
                     />
-                    <button type="button" onClick={() => setMostrar(!mostrar2)}>
+                    <button type="button" onClick={() => setMostrar2(!mostrar2)}>
                         {mostrar2 ? <IoEyeOffOutline/> : <IoEyeOutline/>}
                     </button> 
                 </div>
@@ -91,7 +54,6 @@ function Input_Form({ type, id, placeholder, value,}) {
     } else if (type === "date") {
         return (
             <div className="w-4/6">
-                icon
             <input
                 className="border-1 rounded-lg pl-1 w-full py-0 bg-white placeholder-black/50"
                 type="text"
@@ -102,7 +64,7 @@ function Input_Form({ type, id, placeholder, value,}) {
                 id={id}
                 placeholder={placeholder}
                 value={value}
-                onChange={handleChange}
+                onChange={onChange}
                 required
             />
           </div>
