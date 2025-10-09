@@ -7,7 +7,7 @@ import { MdPlace } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { GoMail } from "react-icons/go";
 {/*-------------------------------Components------------------------------- */}
-import Course_Card from "../components/Course_Card";
+import Course_Card from "../components/Course_Card.jsx";
 
 export default function Home() {
   return (
