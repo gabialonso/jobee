@@ -44,8 +44,7 @@ export default function Home() {
           </ul>
         </nav>
       </header>
-{/*-----------------------------Presentation--------------
-            <Course_Card----------------- */}
+{/*-----------------------------Presentation------------------------------ */}
       <div className="bg-yellow-200 rounded-2xl w-[95%] flex justify-center items-center ">
         <div className="py-10 pl-4 text-start w-3/4 flex flex-col gap-6">
           <h1 className="text-2xl font-bold w-1/2">Conectando jóvenes a su primera experiencia laboral</h1>
@@ -61,7 +60,7 @@ export default function Home() {
             <Course_Card plan="basico" title="Bases de la Programacion" description="Aprendé las bases de la programación y resolvé problemas con lógica simple, sin experiencia previa"/>
             <Course_Card plan="medio" title="Bases de la Programacion" description="Aprendé las bases de la programación y resolvé problemas con lógica simple, sin experiencia previa"/>
             <Course_Card plan="avanzado" title="React desde cero" description="Aprende los fundamentos de React paso a paso."/>
-            <Course_Card plan="baaico" title="React desde cero" description="Aprende los fundamentos de React paso a paso."/>
+            <Course_Card plan="baico" title="React desde cero" description="Aprende los fundamentos de React paso a paso."/>
           </div>
         </div>
       </div>
