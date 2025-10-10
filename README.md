@@ -158,26 +158,6 @@ jobee-frontend/
 
 ---
 
-## 🤝 Contribución
-
-Las contribuciones son **bienvenidas**.
-Para proponer nuevas funciones o mejoras:
-
-```bash
-# Crear una nueva rama
-git checkout -b feature/NuevaFuncionalidad
-
-# Guardar cambios
-git commit -m 'feat: agregar NuevaFuncionalidad'
-
-# Enviar los cambios
-git push origin feature/NuevaFuncionalidad
-```
-
-Luego abre un **Pull Request** para revisión.
-
----
-
 ## 🧾 Licencia
 
 Este proyecto se distribuye bajo la licencia **MIT**.
