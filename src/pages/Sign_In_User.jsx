@@ -128,7 +128,7 @@ export default function Sign_In_User() {
               id="ci"
               value={person.ci}
               onChange={handleChange}
-              placeholder="¿Cuál es su C.I?"
+              placeholder="¿Cuál es su C.I.?"
               required
             />
           </div>

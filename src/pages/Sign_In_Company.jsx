@@ -163,7 +163,7 @@ export default function CompanyForm() {
             <input
               className="border-1 rounded-lg pl-1 w-full pl-1 py-0 bg-white placeholder-black/50"
               type="text"
-              id="legalreason"
+              id="legalReason"
               value={company.legalReason}
               onChange={handleChange}
               placeholder="¿Cuál es su razon social?"
@@ -175,7 +175,7 @@ export default function CompanyForm() {
             <input
               className="border-1 rounded-lg pl-1 w-full pl-1 py-0 bg-white placeholder-black/50"
               type="text"
-              id="socialgroup"
+              id="socialGroup"
               value={company.socialGroup}
               onChange={handleChange}
               placeholder="¿Cuál es su grupo social?"
@@ -187,7 +187,7 @@ export default function CompanyForm() {
             <input
               className="border-1 rounded-lg pl-1 w-full pl-1 py-0 bg-white placeholder-black/50"
               type="text"
-              id="subgroup"
+              id="subGroup"
               value={company.subGroup}
               onChange={handleChange}
               placeholder="¿Cuál es su sub-grupo?"
