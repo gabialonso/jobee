@@ -1,4 +1,4 @@
-# 🐝 JoBee Frontend
+# 🐝 Jobee Frontend
 
 <div align="center">
 
@@ -172,6 +172,6 @@ Consulta el archivo [LICENSE](./LICENSE) para más información.
 
 <div align="center">
 
-💡 Desarrollado con precisión y pasión por el **Equipo de Ingeniería JoBee**
+💡 Desarrollado con precisión y pasión por el **Equipo de Jobee**
 
 </div>
