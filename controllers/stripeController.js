@@ -1,7 +1,7 @@
 // src/controllers/stripeController.js
 import {
     createPaymentIntent
-} from "../integration/stripeIntegration.js";
+} from "../integrations/stripeIntegration.js";
 
 export const createPaymentIntentHandler = async (req, res, next) => {
     try {
