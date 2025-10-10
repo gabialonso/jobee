@@ -150,10 +150,7 @@ jobee-frontend/
 ## 🧑‍💻 Guía de Desarrollo
 
 - Seguir las reglas de **ESLint** y **Prettier**.
-- Usar **componentes funcionales** y **React Hooks**.
-- Aplicar **principios de diseño atómico**.
-- Gestionar estado global con **Context API** o **Zustand** *(si aplica)*.
-- Emplear **async/await** con manejo adecuado de errores.
+- Usar **componentes funcionales**.
 - Mantener **mensajes de commit convencionales** (`feat:`, `fix:`, `refactor:`, etc.).
 
 ---
