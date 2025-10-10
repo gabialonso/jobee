@@ -6,9 +6,8 @@ import "./index.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/jobee-frontend">
       <App />
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );
-
