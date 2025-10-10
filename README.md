@@ -1,315 +1,200 @@
 # 🐝 JoBee Frontend
 
-[English](#english) | [Español](#español)
+<div align="center">
+
+[![React](https://img.shields.io/badge/React-19.0.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.0-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![React Router](https://img.shields.io/badge/React_Router-7.0-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)](https://reactrouter.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](./LICENSE)
+
+**Conectando jóvenes con su primera experiencia laboral**
+
+</div>
 
 ---
 
-<a name="español"></a>
-## 🇪🇸 Español
+## 📚 Descripción General
 
-### 📋 Descripción
+**JoBee** es una aplicación web moderna y responsiva, orientada a conectar **jóvenes entre 18 y 27 años** con **su primera oportunidad laboral**.
+La plataforma permite la interacción entre **usuarios y empresas** mediante **ofertas de empleo**, **cursos de formación** y **perfiles personalizados**.
 
-**JoBee** es una plataforma web diseñada para conectar jóvenes entre 18 y 27 años con su primera experiencia laboral. La aplicación permite a usuarios y empresas interactuar a través de ofertas de empleo, cursos de capacitación y perfiles personalizados.
+Desarrollada con **React 19**, **Vite 7** y **Tailwind CSS 4**, está optimizada para ofrecer **rendimiento**, **modularidad** y **escalabilidad**.
 
-### ✨ Características Principales
+---
 
-- 🔐 **Autenticación dual**: Sistema de registro e inicio de sesión separado para usuarios y empresas
-- 👤 **Perfiles personalizados**: Gestión de perfiles para candidatos y empresas
-- 📚 **Cursos destacados**: Plataforma de cursos para capacitar a jóvenes profesionales
-- 🏢 **Panel de empresa**: Gestión de ofertas laborales y candidatos
-- 👨‍💼 **Panel de usuario**: Búsqueda de empleos y aplicación a ofertas
-- 💬 **Sistema de contactos**: Comunicación entre empresas y candidatos
-- 📱 **Diseño responsivo**: Interfaz adaptable a diferentes dispositivos
+## ✨ Características Principales
 
-### 🛠️ Stack Tecnológico
+| Categoría | Descripción |
+|-----------|--------------|
+| 🔐 **Autenticación dual** | Registro e inicio de sesión separados para usuarios y empresas. |
+| 👤 **Gestión de perfiles** | Paneles personalizados para candidatos y organizaciones. |
+| 📚 **Plataforma de capacitación** | Sistema de cursos para formación y desarrollo profesional. |
+| 🏢 **Panel empresarial** | Publicación de ofertas y gestión de candidatos. |
+| 👨‍💼 **Panel de usuario** | Búsqueda y postulación a empleos. |
+| 💬 **Sistema de mensajería** | Comunicación directa entre empresas y postulantes. |
+| 📱 **Diseño responsivo** | Interfaz adaptable a múltiples dispositivos. |
 
-- **Framework**: [React 19](https://react.dev/)
-- **Build Tool**: [Vite 7](https://vitejs.dev/)
-- **Estilos**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Enrutamiento**: [React Router 7](https://reactrouter.com/)
-- **Iconos**: [React Icons](https://react-icons.github.io/react-icons/)
-- **Linter**: [ESLint 9](https://eslint.org/)
+---
 
-### 📦 Requisitos Previos
+## 🧱 Stack Tecnológico
 
-Antes de comenzar, asegúrate de tener instalado:
+| Capa | Tecnología |
+|------|-------------|
+| **Framework Frontend** | [React 19](https://react.dev/) |
+| **Herramienta de Build** | [Vite 7](https://vitejs.dev/) |
+| **Estilos** | [Tailwind CSS 4](https://tailwindcss.com/) |
+| **Ruteo** | [React Router 7](https://reactrouter.com/) |
+| **Iconografía** | [React Icons](https://react-icons.github.io/react-icons/) |
+| **Linter** | [ESLint 9](https://eslint.org/) |
 
-- **Node.js**: >= 18.0.0
-- **npm**: >= 9.0.0 (o yarn/pnpm)
+---
 
-### 🚀 Instalación
+## ⚙️ Requisitos del Sistema
 
-1. **Clonar el repositorio**
-   ```bash
-   git clone https://github.com/galonsoo/jobee-frontend.git
-   cd jobee-frontend
-   ```
+- **Node.js:** ≥ 18.0.0
+- **npm:** ≥ 9.0.0 *(también compatible con yarn/pnpm)*
+- **Navegadores soportados:** Últimas versiones de Chrome, Firefox, Edge y Safari
 
-2. **Instalar dependencias**
-   ```bash
-   npm install
-   ```
+---
 
-3. **Iniciar el servidor de desarrollo**
-   ```bash
-   npm run dev
-   ```
-
-4. **Abrir en el navegador**
-   ```
-   http://localhost:5173
-   ```
-
-### 📜 Scripts Disponibles
+## 🚀 Instalación
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/galonsoo/jobee-frontend.git
+cd jobee-frontend
+
+# Instalar dependencias
+npm install
+
 # Iniciar servidor de desarrollo
 npm run dev
-
-# Compilar para producción
-npm run build
-
-# Ejecutar linter
-npm run lint
-
-# Vista previa de la compilación
-npm run preview
 ```
 
-### 📁 Estructura del Proyecto
-
-```
-jobee-frontend/
-├── src/
-│   ├── assets/          # Imágenes y recursos estáticos
-│   ├── components/      # Componentes reutilizables
-│   │   ├── Course_Card.jsx
-│   │   └── Input_Form.jsx
-│   ├── pages/           # Páginas de la aplicación
-│   │   ├── company/     # Páginas para empresas
-│   │   │   ├── Home.jsx
-│   │   │   ├── Profile.jsx
-│   │   │   ├── Users.jsx
-│   │   │   ├── Courses.jsx
-│   │   │   └── Contact.jsx
-│   │   ├── user/        # Páginas para usuarios
-│   │   │   ├── Home.jsx
-│   │   │   ├── Profile.jsx
-│   │   │   ├── Company.jsx
-│   │   │   ├── Courses.jsx
-│   │   │   └── Contact.jsx
-│   │   ├── Log_In.jsx
-│   │   ├── Sign_In_Company.jsx
-│   │   ├── Sign_In_User.jsx
-│   │   ├── Home.jsx
-│   │   └── Constructor.jsx
-│   ├── App.jsx          # Componente principal y rutas
-│   ├── main.jsx         # Punto de entrada
-│   └── index.css        # Estilos globales
-├── public/              # Archivos públicos
-├── dist/                # Build de producción
-└── package.json         # Dependencias y scripts
-```
-
-### 🗺️ Rutas Principales
-
-#### Públicas
-- `/` - Redirige a landing page
-- `/constructor` - Landing page
-- `/home` - Página principal
-- `/log_in` - Inicio de sesión
-- `/sign_in_user` - Registro de usuario
-- `/sign_in_company` - Registro de empresa
-
-#### Usuario
-- `/user/home` - Panel de usuario
-- `/user/profile` - Perfil de usuario
-- `/user/company` - Empresas disponibles
-- `/user/courses` - Cursos disponibles
-- `/user/contacts` - Contactos
-
-#### Empresa
-- `/company/home` - Panel de empresa
-- `/company/profile` - Perfil de empresa
-- `/company/users` - Candidatos
-- `/company/courses` - Cursos publicados
-- `/company/contacts` - Contactos
-
-### 🤝 Contribución
-
-Las contribuciones son bienvenidas. Para cambios importantes:
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-### 📄 Licencia
-
-Este proyecto está bajo la licencia MIT.
-
-### 📧 Contacto
-
-- **Email**: animajobee@gmail.com
-- **Teléfono**: +598 92 502 958
-- **Dirección**: Canelones 1564
+Luego abre la aplicación en:
+👉 [http://localhost:5173](http://localhost:5173)
 
 ---
 
-<a name="english"></a>
-## 🇬🇧 English
+## 🧩 Scripts Disponibles
 
-### 📋 Description
+| Comando | Descripción |
+|----------|-------------|
+| `npm run dev` | Inicia el servidor de desarrollo con recarga en caliente. |
+| `npm run build` | Genera el paquete de producción optimizado. |
+| `npm run preview` | Sirve la compilación de producción localmente. |
+| `npm run lint` | Ejecuta ESLint para análisis y corrección de código. |
 
-**JoBee** is a web platform designed to connect young people between 18 and 27 years old with their first work experience. The application allows users and companies to interact through job offers, training courses, and personalized profiles.
+---
 
-### ✨ Main Features
-
-- 🔐 **Dual authentication**: Separate registration and login system for users and companies
-- 👤 **Personalized profiles**: Profile management for candidates and companies
-- 📚 **Featured courses**: Course platform to train young professionals
-- 🏢 **Company panel**: Job posting and candidate management
-- 👨‍💼 **User panel**: Job search and application system
-- 💬 **Contact system**: Communication between companies and candidates
-- 📱 **Responsive design**: Interface adaptable to different devices
-
-### 🛠️ Tech Stack
-
-- **Framework**: [React 19](https://react.dev/)
-- **Build Tool**: [Vite 7](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Routing**: [React Router 7](https://reactrouter.com/)
-- **Icons**: [React Icons](https://react-icons.github.io/react-icons/)
-- **Linter**: [ESLint 9](https://eslint.org/)
-
-### 📦 Prerequisites
-
-Before starting, make sure you have installed:
-
-- **Node.js**: >= 18.0.0
-- **npm**: >= 9.0.0 (or yarn/pnpm)
-
-### 🚀 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/galonsoo/jobee-frontend.git
-   cd jobee-frontend
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open in browser**
-   ```
-   http://localhost:5173
-   ```
-
-### 📜 Available Scripts
-
-```bash
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Run linter
-npm run lint
-
-# Preview production build
-npm run preview
-```
-
-### 📁 Project Structure
+## 📁 Estructura del Proyecto
 
 ```
 jobee-frontend/
 ├── src/
-│   ├── assets/          # Images and static resources
-│   ├── components/      # Reusable components
-│   │   ├── Course_Card.jsx
-│   │   └── Input_Form.jsx
-│   ├── pages/           # Application pages
-│   │   ├── company/     # Company pages
-│   │   │   ├── Home.jsx
-│   │   │   ├── Profile.jsx
-│   │   │   ├── Users.jsx
-│   │   │   ├── Courses.jsx
-│   │   │   └── Contact.jsx
-│   │   ├── user/        # User pages
-│   │   │   ├── Home.jsx
-│   │   │   ├── Profile.jsx
-│   │   │   ├── Company.jsx
-│   │   │   ├── Courses.jsx
-│   │   │   └── Contact.jsx
-│   │   ├── Log_In.jsx
-│   │   ├── Sign_In_Company.jsx
-│   │   ├── Sign_In_User.jsx
-│   │   ├── Home.jsx
-│   │   └── Constructor.jsx
-│   ├── App.jsx          # Main component and routes
-│   ├── main.jsx         # Entry point
-│   └── index.css        # Global styles
-├── public/              # Public files
-├── dist/                # Production build
-└── package.json         # Dependencies and scripts
+│   ├── assets/              # Recursos estáticos (imágenes, íconos)
+│   ├── components/          # Componentes reutilizables
+│   │   ├── common/          # Componentes comunes (InputForm, etc.)
+│   │   └── courses/         # Componentes de cursos (CourseCard)
+│   ├── pages/               # Páginas principales de la app
+│   │   ├── auth/            # Autenticación (Login, Signup)
+│   │   ├── public/          # Páginas públicas (Home, Splash)
+│   │   ├── company/         # Panel de empresa
+│   │   └── user/            # Panel de usuario
+│   ├── App.jsx              # Configuración de rutas y layout
+│   ├── main.jsx             # Punto de entrada
+│   └── index.css            # Estilos globales
+├── public/                  # Archivos estáticos públicos
+├── dist/                    # Compilación de producción
+└── package.json             # Dependencias y scripts
 ```
 
-### 🗺️ Main Routes
+---
 
-#### Public
-- `/` - Redirects to landing page
-- `/constructor` - Landing page
-- `/home` - Home page
-- `/log_in` - Login
-- `/sign_in_user` - User registration
-- `/sign_in_company` - Company registration
+## 🗺️ Rutas Principales
 
-#### User
-- `/user/home` - User dashboard
-- `/user/profile` - User profile
-- `/user/company` - Available companies
-- `/user/courses` - Available courses
-- `/user/contacts` - Contacts
+### **Públicas**
+| Ruta | Descripción |
+|------|--------------|
+| `/` | Página principal |
+| `/splash` | Página de bienvenida |
 
-#### Company
-- `/company/home` - Company dashboard
-- `/company/profile` - Company profile
-- `/company/users` - Candidates
-- `/company/courses` - Published courses
-- `/company/contacts` - Contacts
+### **Autenticación**
+| Ruta | Descripción |
+|------|--------------|
+| `/auth/login` | Inicio de sesión |
+| `/auth/signup/user` | Registro de usuario |
+| `/auth/signup/company` | Registro de empresa |
 
-### 🤝 Contributing
+### **Usuario**
+| Ruta | Descripción |
+|------|--------------|
+| `/user/dashboard` | Panel principal del usuario |
+| `/user/profile` | Perfil del usuario |
+| `/user/company` | Listado de empresas |
+| `/user/courses` | Cursos disponibles |
+| `/user/contacts` | Sistema de contactos |
 
-Contributions are welcome. For major changes:
+### **Empresa**
+| Ruta | Descripción |
+|------|--------------|
+| `/company/dashboard` | Panel principal de la empresa |
+| `/company/profile` | Perfil de empresa |
+| `/company/users` | Gestión de candidatos |
+| `/company/courses` | Gestión de cursos publicados |
+| `/company/contacts` | Contacto con postulantes |
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+---
 
-### 📄 License
+## 🧑‍💻 Guía de Desarrollo
 
-This project is under the MIT License.
+- Seguir las reglas de **ESLint** y **Prettier**.
+- Usar **componentes funcionales** y **React Hooks**.
+- Aplicar **principios de diseño atómico**.
+- Gestionar estado global con **Context API** o **Zustand** *(si aplica)*.
+- Emplear **async/await** con manejo adecuado de errores.
+- Mantener **mensajes de commit convencionales** (`feat:`, `fix:`, `refactor:`, etc.).
 
-### 📧 Contact
+---
 
-- **Email**: animajobee@gmail.com
-- **Phone**: +598 92 502 958
-- **Address**: Canelones 1564
+## 🤝 Contribución
+
+Las contribuciones son **bienvenidas**.
+Para proponer nuevas funciones o mejoras:
+
+```bash
+# Crear una nueva rama
+git checkout -b feature/NuevaFuncionalidad
+
+# Guardar cambios
+git commit -m 'feat: agregar NuevaFuncionalidad'
+
+# Enviar los cambios
+git push origin feature/NuevaFuncionalidad
+```
+
+Luego abre un **Pull Request** para revisión.
+
+---
+
+## 🧾 Licencia
+
+Este proyecto se distribuye bajo la licencia **MIT**.
+Consulta el archivo [LICENSE](./LICENSE) para más información.
+
+---
+
+## 📞 Contacto
+
+- **Email:** [animajobee@gmail.com](mailto:animajobee@gmail.com)
+- **Teléfono:** +598 92 502 958
+- **Dirección:** Canelones 1564, Uruguay
 
 ---
 
 <div align="center">
-  Made with ❤️ by the JoBee Team
+
+💡 Desarrollado con precisión y pasión por el **Equipo de Ingeniería JoBee**
+
 </div>
