@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { IoEyeOutline } from "react-icons/io5";
 
-export default function CompanyForm() {
+export default function SignUpCompanyPage() {
   const [company, setCompany] = useState({
     email: "",
     password: "",
@@ -72,7 +72,7 @@ export default function CompanyForm() {
         socialGroup: "",
         subGroup: "",
       });
-      navigate("/company/home");
+      navigate("/company/dashboard");
     } catch {
       setError("Error de red o del servidor");
     }
@@ -163,7 +163,7 @@ export default function CompanyForm() {
             <input
               className="border-1 rounded-lg pl-1 w-full pl-1 py-0 bg-white placeholder-black/50"
               type="text"
-              id="legalReason"
+              id="legalreason"
               value={company.legalReason}
               onChange={handleChange}
               placeholder="¿Cuál es su razon social?"
@@ -175,7 +175,7 @@ export default function CompanyForm() {
             <input
               className="border-1 rounded-lg pl-1 w-full pl-1 py-0 bg-white placeholder-black/50"
               type="text"
-              id="socialGroup"
+              id="socialgroup"
               value={company.socialGroup}
               onChange={handleChange}
               placeholder="¿Cuál es su grupo social?"
@@ -187,7 +187,7 @@ export default function CompanyForm() {
             <input
               className="border-1 rounded-lg pl-1 w-full pl-1 py-0 bg-white placeholder-black/50"
               type="text"
-              id="subGroup"
+              id="subgroup"
               value={company.subGroup}
               onChange={handleChange}
               placeholder="¿Cuál es su sub-grupo?"
@@ -202,8 +202,8 @@ export default function CompanyForm() {
 
           <div className="flex flex-col items-center gap-2 mt-4">
             <button className="buttons_forms" type="submit">Registrar empresa </button>
-            <p>¿Quieres ser empresa? <Link className="underline text-[#1769E0]" to="/sign_in_user">Registrarce como Usuario</Link></p>
-            <p>¿Ya tienes una cuenta? <Link className="underline text-[#1769E0]" to="/log_in">Iniciar sesión</Link></p>
+            <p>¿Quieres ser empresa? <Link className="underline text-[#1769E0]" to="/auth/signup/user">Registrarce como Usuario</Link></p>
+            <p>¿Ya tienes una cuenta? <Link className="underline text-[#1769E0]" to="/auth/login">Iniciar sesión</Link></p>
 
           </div>
         </form>

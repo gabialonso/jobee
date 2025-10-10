@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-export default function Home_User() {
+export default function UserDashboard() {
   return (
     <div className="p-10">
       <nav>
-        <Link to={"/user/home"}>Inicio</Link>
+        <Link to={"/user/dashboard"}>Inicio</Link>
         <Link to={"/user/profile"}>Perfil</Link>
         <Link to={"/user/company"}>Empresas</Link>
         <Link to={"/user/contacts"}>Contactos</Link>

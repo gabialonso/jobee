@@ -3,7 +3,7 @@ export default function Courses_User() {
   return (
     <div className="p-10">
       <nav>
-        <Link to={"/user/home"}>Inicio</Link>
+        <Link to={"/user/dashboard"}>Inicio</Link>
         <Link to={"/user/profile"}>Perfil</Link>
         <Link to={"/user/company"}>Empresas</Link>
         <Link to={"/user/contacts"}>Contactos</Link>

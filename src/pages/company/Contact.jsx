@@ -3,7 +3,7 @@ export default function Company_company() {
   return (
     <div className="p-10">
       <nav>
-        <Link to={"/company/home"}>Inicio</Link>
+        <Link to={"/company/dashboard"}>Inicio</Link>
         <Link to={"/company/profile"}>Perfil</Link>
         <Link to={"/company/users"}>Jovenes</Link>
         <Link to={"/company/contacts"}>Contactos</Link>

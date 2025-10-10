@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import Logo from "../assets/Jobee_Logo.png"; 
-import "../App.css"; 
+import Logo from "../../assets/Jobee_Logo.png"; 
+import "../../App.css"; 
 
-export default function Constructor() {
+export default function SplashPage() {
   return (
     <div className="w-full h-screen">
       <div className="min-h-screen grid place-items-center">
         <div className="text-center">
           <Link
-            to="/home"
+            to="/"
             className="inline-block mt-6 rounded-xl px-5 py-2.5text-white font-semibold hover:transition"
           >
               <div className="flex justify-center p-0">

@@ -1,4 +1,4 @@
- function Course_Card({ plan, title, description }) {
+ function CourseCard({ plan, title, description }) {
     let levelplan = "";
     let cssplan = "";
     switch (plan) {
@@ -29,4 +29,4 @@
         <button className="buttons_interactive">ir al curso</button>
     </div>;
 }
-export default Course_Card;
+export default CourseCard;

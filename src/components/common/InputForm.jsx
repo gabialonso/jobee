@@ -11,7 +11,7 @@ import { LiaBirthdayCakeSolid } from "react-icons/lia"; //Icono de cumpleaños
 import { CiBank } from "react-icons/ci"; //Icono de razon social
 import { RiLockPasswordLine } from "react-icons/ri"; //Icono de contraseña
 
-function Input_Form({ type, id, placeholder, value, onChange }) {
+function InputForm({ type, id, placeholder, value, onChange }) {
     const [mostrar, setMostrar] = useState(false);
     const [mostrar2, setMostrar2] = useState(false);
     
@@ -76,7 +76,7 @@ function Input_Form({ type, id, placeholder, value, onChange }) {
     }
 }
 
- export default Input_Form;
+ export default InputForm;
  {/*
     <div className="w-4/6">
             <input

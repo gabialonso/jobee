@@ -1,64 +1,64 @@
-import { Routes, Route, Navigate, Link } from "react-router-dom";
-import Constructor from "./pages/Constructor.jsx";
-import Home from "./pages/Home.jsx";
-//-------------------------------Sign in/Log in pages-------------------------------
-import Log_In from "./pages/Log_In.jsx";
-import Sign_in_Company from "./pages/Sign_In_Company.jsx";
-import Sign_in_User from "./pages/Sign_In_User.jsx";
-//------------------------------------User pages------------------------------------
-import Home_User from "./pages/user/Home.jsx"
-import Profile_User from "./pages/user/Profile.jsx"
-import Company_User from "./pages/user/Company.jsx"
-import Contacts_User from "./pages/user/Contact.jsx"
-import Courses_User from "./pages/user/Courses.jsx"
-//-----------------------------------Company pages----------------------------------
-import Home_Company from "./pages/company/Home.jsx"
-import Profile_Company from "./pages/company/Profile.jsx"
-import Users_Company from "./pages/company/Users.jsx"
-import Contact_Company from "./pages/company/Contact.jsx"
-import Courses_Company from "./pages/company/Courses.jsx"
-//----------------------------------Catch all page----------------------------------
+import { Routes, Route, Link } from "react-router-dom";
+// ============================= Public Pages =============================
+import SplashPage from "./pages/public/SplashPage.jsx";
+import HomePage from "./pages/public/HomePage.jsx";
+// ============================= Auth Pages =============================
+import LoginPage from "./pages/auth/LoginPage.jsx";
+import SignUpCompanyPage from "./pages/auth/SignUpCompanyPage.jsx";
+import SignUpUserPage from "./pages/auth/SignUpUserPage.jsx";
+// ============================= User Pages =============================
+import UserDashboard from "./pages/user/UserDashboard.jsx";
+import UserProfile from "./pages/user/Profile.jsx";
+import UserCompany from "./pages/user/Company.jsx";
+import UserContacts from "./pages/user/Contact.jsx";
+import UserCourses from "./pages/user/Courses.jsx";
+// ============================= Company Pages =============================
+import CompanyDashboard from "./pages/company/CompanyDashboard.jsx";
+import CompanyProfile from "./pages/company/Profile.jsx";
+import CompanyUsers from "./pages/company/Users.jsx";
+import CompanyContacts from "./pages/company/Contact.jsx";
+import CompanyCourses from "./pages/company/Courses.jsx";
 
+// ============================= 404 Page =============================
 function NotFound() {
   return (
     <div className="p-10">
-      <p>404</p>
-      <Link to="/constructor" className="text-blue-600 underline">Ir a la landing</Link>
+      <h1 className="text-4xl font-bold">404 - Página no encontrada</h1>
+      <Link to="/" className="text-blue-600 underline">
+        Volver al inicio
+      </Link>
     </div>
   );
 }
 
 export default function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Navigate to="/constructor" replace />} />
-        <Route path="/constructor" element={<Constructor />} />
-        <Route path="/home" element={<Home />} />
-//-------------------------------Sign in/Log in routes-------------------------------
-        <Route path="/log_in" element={<Log_In />} /> 
-        <Route path="/sign_in_company" element={<Sign_in_Company />} />
-        <Route path="/sign_in_user" element={<Sign_in_User />} />
-//------------------------------------User routes------------------------------------
-        <Route path="/user/home" element={<Home_User />} />
-        <Route path="/user/profile" element={<Profile_User />} />
-        <Route path="/user/company" element={<Company_User />} />
-        <Route path="/user/contacts" element={<Contacts_User />} />
-        <Route path="/user/courses" element={<Courses_User />} />
-//-----------------------------------Company routes----------------------------------
-        <Route path="/company/home" element={<Home_Company />} />
-        <Route path="/company/profile" element={<Profile_Company />} />
-        <Route path="/company/users" element={<Users_Company />} />
-        <Route path="/company/contacts" element={<Contact_Company />} />
-        <Route path="/company/courses" element={<Courses_Company />} />
-//----------------------------------Catch all route----------------------------------
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+    <Routes>
+      {/* Public routes */}
+      <Route path="/" element={<HomePage />} />
+      <Route path="/splash" element={<SplashPage />} />
+
+      {/* Auth routes */}
+      <Route path="/auth/login" element={<LoginPage />} />
+      <Route path="/auth/signup/company" element={<SignUpCompanyPage />} />
+      <Route path="/auth/signup/user" element={<SignUpUserPage />} />
+
+      {/* User routes */}
+      <Route path="/user/dashboard" element={<UserDashboard />} />
+      <Route path="/user/profile" element={<UserProfile />} />
+      <Route path="/user/company" element={<UserCompany />} />
+      <Route path="/user/contacts" element={<UserContacts />} />
+      <Route path="/user/courses" element={<UserCourses />} />
+
+      {/* Company routes */}
+      <Route path="/company/dashboard" element={<CompanyDashboard />} />
+      <Route path="/company/profile" element={<CompanyProfile />} />
+      <Route path="/company/users" element={<CompanyUsers />} />
+      <Route path="/company/contacts" element={<CompanyContacts />} />
+      <Route path="/company/courses" element={<CompanyCourses />} />
+
+      {/* 404 */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
-
-
-
-
-

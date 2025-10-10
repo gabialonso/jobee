@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { IoEyeOutline } from "react-icons/io5";
 
-export default function Sign_In_User() {
+export default function SignUpUserPage() {
   const [person, setPerson] = useState({
     email: "",
     password: "",
@@ -40,7 +40,7 @@ export default function Sign_In_User() {
 
     console.log("Datos de la persona:", person);
 
-    navigate("/user/home");
+    navigate("/user/dashboard");
 
     setPerson({
       email: "",
@@ -128,7 +128,7 @@ export default function Sign_In_User() {
               id="ci"
               value={person.ci}
               onChange={handleChange}
-              placeholder="¿Cuál es su C.I.?"
+              placeholder="¿Cuál es su C.I?"
               required
             />
           </div>
@@ -156,8 +156,8 @@ export default function Sign_In_User() {
 
           <div className="flex flex-col items-center gap-2 mt-4">
             <button className="buttons_forms" type="submit">Registrar usuario</button>
-            <p>¿Quieres ser empresa? <Link className="underline text-[#1769E0]" to="/sign_in_company">Registrarce como Empresa</Link></p>
-            <p>¿Ya tienes una cuenta? <Link className="underline text-[#1769E0]" to="/log_in">Iniciar sesión</Link></p>
+            <p>¿Quieres ser empresa? <Link className="underline text-[#1769E0]" to="/auth/signup/company">Registrarce como Empresa</Link></p>
+            <p>¿Ya tienes una cuenta? <Link className="underline text-[#1769E0]" to="/auth/login">Iniciar sesión</Link></p>
 
           </div>
         </form>

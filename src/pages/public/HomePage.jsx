@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 {/*---------------------------------Images--------------------------------- */}
-import Logo from "../assets/Jobee_Logo.png";
-import Imagen from "../assets/imagen-de-espera.jpg";
+import Logo from "../../assets/Jobee_Logo.png";
+import Imagen from "../../assets/imagen-de-espera.jpg";
 {/*---------------------------------Icons---------------------------------- */}
 import { MdPlace } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { GoMail } from "react-icons/go";
 {/*-------------------------------Components------------------------------- */}
-import Course_Card from "../components/Course_Card.jsx";
+import CourseCard from "../../components/courses/CourseCard.jsx";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div className="w-full h-screen items-center flex flex-col p-0">
 {/*-----------------------------Header and Nav----------------------------- */}
@@ -21,21 +21,21 @@ export default function Home() {
           </div>
           <ul className="flex gap-6 items-center">
             <li>
-              <Link to="/sign_in_user">
+              <Link to="/auth/signup/user">
                 <button className="buttons_interactive  ">
                   Registrarse como persona
                 </button>
               </Link>
             </li>
             <li>
-              <Link to="/sign_in_company">
+              <Link to="/auth/signup/company">
                 <button className="buttons_interactive  ">
                   Registrarse como empresa
                 </button>
               </Link>
             </li>
             <li>
-              <Link to="/log_in">
+              <Link to="/auth/login">
                 <button className="buttons_interactive  ">
                   Iniciar Sesión
                 </button>
@@ -57,10 +57,10 @@ export default function Home() {
         <h1 className="text-2xl"><b>Cursos Destacados</b></h1>
         <div className="w-full overflow-x-auto snap-x snap-mandatory ">
           <div className="flex gap-4 p-4">
-            <Course_Card plan="basico" title="Bases de la Programacion" description="Aprendé las bases de la programación y resolvé problemas con lógica simple, sin experiencia previa"/>
-            <Course_Card plan="medio" title="Bases de la Programacion" description="Aprendé las bases de la programación y resolvé problemas con lógica simple, sin experiencia previa"/>
-            <Course_Card plan="avanzado" title="React desde cero" description="Aprende los fundamentos de React paso a paso."/>
-            <Course_Card plan="baico" title="React desde cero" description="Aprende los fundamentos de React paso a paso."/>
+            <CourseCard plan="basico" title="Bases de la Programacion" description="Aprendé las bases de la programación y resolvé problemas con lógica simple, sin experiencia previa"/>
+            <CourseCard plan="medio" title="Bases de la Programacion" description="Aprendé las bases de la programación y resolvé problemas con lógica simple, sin experiencia previa"/>
+            <CourseCard plan="avanzado" title="React desde cero" description="Aprende los fundamentos de React paso a paso."/>
+            <CourseCard plan="baico" title="React desde cero" description="Aprende los fundamentos de React paso a paso."/>
           </div>
         </div>
       </div>
