@@ -1,4 +1,4 @@
-{/*-----------------------Icons-----------------------*/}
+{/*-----------------------Icons-----------------------*/ }
 import { useState } from "react";
 import { IoEyeOffOutline } from "react-icons/io5"; //Ojo cerrado
 import { IoEyeOutline } from "react-icons/io5"; //Ojo abierto
@@ -12,72 +12,72 @@ import { CiBank } from "react-icons/ci"; //Icono de razon social
 import { RiLockPasswordLine } from "react-icons/ri"; //Icono de contraseña
 
 function InputForm({ type, id, placeholder, value, onChange }) {
-    const [mostrar, setMostrar] = useState(false);
-    const [mostrar2, setMostrar2] = useState(false);
-    
-    if (type === "password") {
-        if(id==="password"){
-            return (
-                <div className="flex border-1 rounded-lg mx-2 w-4/6 flex justify-around bg-white">
-                    <input
-                        className="pl-1 py-0 w-full rounded-l-lg placeholder-black/50"
-                        type={mostrar ? "text" : "password"}
-                        id="password"
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        required
-                    />
-                    <button type="button" onClick={() => setMostrar(!mostrar)}>
-                        {mostrar ? <IoEyeOffOutline/> : <IoEyeOutline/>}
-                    </button> 
-                </div>
-            )
-        }else{
-            return (
-                <div className="flex border-1 rounded-lg mx-2 w-4/6 flex justify-around bg-white">
-                    <input
-                        className="pl-1 py-0 w-full rounded-l-lg placeholder-black/50"
-                        type={mostrar2 ? "text" : "password"}
-                        id="password"
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        required
-                    />
-                    <button type="button" onClick={() => setMostrar2(!mostrar2)}>
-                        {mostrar2 ? <IoEyeOffOutline/> : <IoEyeOutline/>}
-                    </button> 
-                </div>
-            )
-        }
-    } else if (type === "date") {
-        return (
-            <div className="w-4/6">
-            <input
-                className="border-1 rounded-lg pl-1 w-full py-0 bg-white placeholder-black/50"
-                type="text"
-                onFocus={(e) => (e.target.type = "date")}
-                onBlur={(e) => {
-                    if (!e.target.value) e.target.type = "text";
-                }}
-                id={id}
-                placeholder={placeholder}
-                value={value}
-                onChange={onChange}
-                required
-            />
-          </div>
-        )
-    }else{
-        return (
-            <p></p>
-        )
+  const [mostrar, setMostrar] = useState(false);
+  const [mostrar2, setMostrar2] = useState(false);
+
+  if (type === "password") {
+    if (id === "password") {
+      return (
+        <div className="flex border-1 rounded-lg mx-2 w-4/6 justify-around bg-white">
+          <input
+            className="pl-1 py-0 w-full rounded-l-lg placeholder-black/50"
+            type={mostrar ? "text" : "password"}
+            id="password"
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            required
+          />
+          <button type="button" onClick={() => setMostrar(!mostrar)}>
+            {mostrar ? <IoEyeOffOutline /> : <IoEyeOutline />}
+          </button>
+        </div>
+      )
+    } else {
+      return (
+        <div className="flex border-1 rounded-lg mx-2 w-4/6 justify-around bg-white">
+          <input
+            className="pl-1 py-0 w-full rounded-l-lg placeholder-black/50"
+            type={mostrar2 ? "text" : "password"}
+            id="password"
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            required
+          />
+          <button type="button" onClick={() => setMostrar2(!mostrar2)}>
+            {mostrar2 ? <IoEyeOffOutline /> : <IoEyeOutline />}
+          </button>
+        </div>
+      )
     }
+  } else if (type === "date") {
+    return (
+      <div className="w-4/6">
+        <input
+          className="border-1 rounded-lg pl-1 w-full py-0 bg-white placeholder-black/50"
+          type="text"
+          onFocus={(e) => (e.target.type = "date")}
+          onBlur={(e) => {
+            if (!e.target.value) e.target.type = "text";
+          }}
+          id={id}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          required
+        />
+      </div>
+    )
+  } else {
+    return (
+      <p></p>
+    )
+  }
 }
 
- export default InputForm;
- {/*
+export default InputForm;
+{/*
     <div className="w-4/6">
             <input
               className="border-1 flex rounded-lg pl-1 w-full py-0 bg-white placeholder-black/50 "

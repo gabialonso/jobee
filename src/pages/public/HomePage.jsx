@@ -1,57 +1,21 @@
 import { Link } from "react-router-dom";
-{
-  /*---------------------------------Images--------------------------------- */
-}
+// Images
 import Logo from "../../assets/Jobee_Logo.png";
 import Imagen from "../../assets/imagen-de-espera.jpg";
-{
-  /*---------------------------------Icons---------------------------------- */
-}
+// Icons
 import { MdPlace } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { GoMail } from "react-icons/go";
-{
-  /*-------------------------------Components------------------------------- */
-}
+// Components
 import CourseCard from "../../components/courses/CourseCard.jsx";
+import Header from "../../components/common/Header.jsx";
 
 export default function HomePage() {
   return (
     <div className="w-full h-screen items-center flex flex-col p-0">
-      {/*-----------------------------Header and Nav----------------------------- */}
-      <header className="flex justify-between items-centmt-10er bg-gray-200 w-[95%] my-4 rounded-4xl ">
-        <nav className="w-full flex items-center justify-around ">
-          <div class="flex basis-1/8 items-center ">
-            <img src={Logo} alt="Logo De Jobee" class="h-23" />
-            <p className="text-xl font-bold">Jobee</p>
-          </div>
-          <ul className="flex gap-6 items-center">
-            <li>
-              <Link to="/auth/signup/user">
-                <button className="buttons_interactive  ">
-                  Registrarse como persona
-                </button>
-              </Link>
-            </li>
-            <li>
-              <Link to="/auth/signup/company">
-                <button className="buttons_interactive  ">
-                  Registrarse como empresa
-                </button>
-              </Link>
-            </li>
-            <li>
-              <Link to="/auth/login">
-                <button className="buttons_interactive  ">
-                  Iniciar Sesión
-                </button>
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <Header />
       {/*-----------------------------Presentation------------------------------ */}
-      <div className="bg-yellow-200 rounded-2xl w-[95%] flex justify-center items-center ">
+      <div className="bg-yellow-200 rounded-2xl w-[95%] flex justify-center items-center">
         <div className="py-10 pl-4 text-start w-3/4 flex flex-col gap-6">
           <h1 className="text-2xl font-bold w-1/2">
             Conectando jóvenes a su primera experiencia laboral
@@ -73,8 +37,8 @@ export default function HomePage() {
         <h1 className="text-2xl">
           <b>Cursos Destacados</b>
         </h1>
-        <div className="w-full overflow-x-auto snap-x snap-mandatory ">
-          <div className="flex gap-4 p-4">
+        <div className="w-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+          <div className="flex mx-4 gap-4 p-4 w-max">
             <CourseCard
               plan="basico"
               title="Bases de la Programacion"
@@ -91,7 +55,7 @@ export default function HomePage() {
               description="Aprende los fundamentos de React paso a paso."
             />
             <CourseCard
-              plan="baico"
+              plan="basico"
               title="React desde cero"
               description="Aprende los fundamentos de React paso a paso."
             />
@@ -110,7 +74,7 @@ export default function HomePage() {
           <b>+1.500 ofertas publicadas</b>
         </p>
         <p>
-          <b>9/10 empresas recomiendan JoBee</b>
+          <b>9/10 empresas recomiendan Jobee</b>
         </p>
       </div>
       {/*---------------------------Footer And Contacts-------------------------- */}
@@ -118,19 +82,19 @@ export default function HomePage() {
         <div className="w-full flex justify-around items-center gap-2">
           <div className="flex items-center">
             <MdPlace />
-            <p>
+            <p className="px-3">
               <b>Canelones 1564</b>
             </p>
           </div>
           <div className="flex items-center">
             <FaPhoneAlt />
-            <p>
+            <p className="px-3">
               <b>+598 92 502 958</b>
             </p>
           </div>
           <div className="flex items-center">
             <GoMail />
-            <p>
+            <p className="px-3">
               <b>animajobee@gmail.com</b>
             </p>
           </div>

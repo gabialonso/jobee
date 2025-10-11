@@ -1,74 +1,103 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap");
 
 @layer base {
-  :root {
-    font-family: 'Atkinson Hyperlegible', sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
+    :root {
+        font-family: "Atkinson Hyperlegible", sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
 
-    color-scheme: light dark;
-    color: #6F442C;
-    background-color: #FFF4D6;
+        color-scheme: light dark;
+        color: #6f442c;
+        background-color: #fff4d6;
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-  body {
-    margin: 0;
-    display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
-  }
+    body {
+        margin: 0;
+        display: flex;
+        place-items: center;
+        min-width: 320px;
+        min-height: 100vh;
+    }
 
-  h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
-  }
+    h1 {
+        font-size: 3.2em;
+        line-height: 1.1;
+    }
 }
 
 @layer components {
-  .landing-wrap {
-    @apply min-h-screen w-full grid place-items-center bg-[#FFF4D6];
-  }
+    .landing-wrap {
+        @apply min-h-screen w-full grid place-items-center bg-[#FFF4D6];
+    }
 
-  .landing-stack {
-    @apply flex flex-col items-center text-center gap-3 px-6;
-  }
+    .landing-stack {
+        @apply flex flex-col items-center text-center gap-3 px-6;
+    }
 
-  .interactive-logo {
-    display: block;                
-    margin-inline: auto;
-    width: clamp(200px, 28vw, 380px);
-    height: auto;                  
-    transform-origin: center center;
-    transition: transform 600ms, filter 600ms;
-    will-change: transform;
-  }
+    .interactive-logo {
+        display: block;
+        margin-inline: auto;
+        width: clamp(200px, 28vw, 380px);
+        height: auto;
+        transform-origin: center center;
+        transition:
+            transform 600ms,
+            filter 600ms;
+        will-change: transform;
+    }
 
-  .basic_plan{@apply bg-green-500/50 text-center text-black font-bold rounded-b-2xl}
-  .medium_plan{@apply bg-[#E69C00]/50 text-center text-black font-bold rounded-b-2xl}
-  .advanced_plan{@apply bg-[#9B1756] text-white text-center font-bold rounded-b-2xl}
- 
-  .buttons_interactive{@apply border-2 border-black rounded-lg px-3 py-1 hover:bg-yellow-500/50 }
-  .button_selected {@apply bg-yellow-500/50 border-2 border-black rounded-lg px-3 py-1 font-bold }
-  .buttons_forms{@apply bg-white border-1 border-black rounded-lg px-1 py-0 hover:bg-yellow-100/50 }
+    .basic_plan {
+        @apply bg-green-500/50 text-center text-black font-bold rounded-b-2xl;
+    }
+    .medium_plan {
+        @apply bg-[#E69C00]/50 text-center text-black font-bold rounded-b-2xl;
+    }
+    .advanced_plan {
+        @apply bg-[#9B1756] text-white text-center font-bold rounded-b-2xl;
+    }
 
-  .curses_card{@apply flex flex-shrink-0 flex-col gap-4 border-2 border-black rounded-2xl px-4 pb-4 w-1/4 justify-between  text-start snap-center}
+    .buttons_interactive {
+        @apply border-2 border-black rounded-lg px-3 py-1 hover:bg-yellow-500/50;
+    }
+    .button_selected {
+        @apply bg-yellow-500/50 border-2 border-black rounded-lg px-3 py-1 font-bold;
+    }
+    .buttons_forms {
+        @apply bg-white border-1 border-black rounded-lg px-1 py-0 hover:bg-yellow-100/50;
+    }
 
-  .interactive-logo:hover {
-    transform: scale(1.06);         
-    filter: drop-shadow(0 0 1.5em #edaa39);
-  }
+    .curses_card {
+        @apply flex flex-shrink-0 flex-col gap-4 border-2 border-black rounded-2xl px-4 pb-4 w-1/4 justify-between  text-start snap-center;
+    }
 
-  .nav_stylized {
-    @apply flex justify-between items-center;
-  }
+    .interactive-logo:hover {
+        transform: scale(1.06);
+        filter: drop-shadow(0 0 1.5em #edaa39);
+    }
 
-  .brand-title { @apply m-0 font-bold text-4xl md:text-5xl text-[#6F442C]; }
-  .brand-sub   { @apply text-lg text-[#6F442C]/80; }
+    .nav_stylized {
+        @apply flex justify-between items-center;
+    }
+
+    .brand-title {
+        @apply m-0 font-bold text-4xl md:text-5xl text-[#6F442C];
+    }
+    .brand-sub {
+        @apply text-lg text-[#6F442C]/80;
+    }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
