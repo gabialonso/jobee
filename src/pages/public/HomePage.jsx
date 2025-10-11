@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 // Images
 import Logo from "../../assets/Jobee_Logo.png";
-import Imagen from "../../assets/imagen-de-espera.jpg";
+import Imagen from "../../assets/Placeholder.jpg";
 // Icons
 import { MdPlace } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
