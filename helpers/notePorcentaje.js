@@ -38,4 +38,82 @@ class notePorcentaje {
         this.note = [];
     }
 }
-export default notePorcentaje;
+class NotePercentageCourse extends notePorcentaje {
+    // English method to set the course grade (no weights)
+    setCourseGrade(value) {
+        if (typeof value !== 'number' || Number.isNaN(value)) {
+            throw new TypeError('Grade must be a number.');
+        }
+        if (value < 1 || value > 12) {
+            throw new RangeError('Grade must be in the 1-12 scale.');
+        }
+        this.courseGrade = { value };
+    }
+
+    // Spanish alias for compatibility
+    establecerNotaCurso(valor) {
+        return this.setCourseGrade(valor);
+    }
+
+    // Remove the course grade
+    removeCourseGrade() {
+        delete this.courseGrade;
+    }
+
+    // Spanish alias for compatibility
+    quitarNotaCurso() {
+        return this.removeCourseGrade();
+    }
+
+    // Return array of grades (ignoring weights) with percentages
+    calculatePercentages() {
+        const base = (this.note || []).map(n => ({
+            value: n.valor,
+            percentage: Number(((n.valor / 12) * 100).toFixed(2))
+        }));
+
+        if (this.courseGrade) {
+            base.push({
+                value: this.courseGrade.value,
+                percentage: Number(((this.courseGrade.value / 12) * 100).toFixed(2)),
+                course: true
+            });
+        }
+
+        return base;
+    }
+
+    // Spanish alias for compatibility
+    calcularPorcentajes() {
+        return this.calculatePercentages();
+    }
+
+    // Calculate final grade as a simple average (no weights)
+    calculateFinalGrade() {
+        const values = (this.note || []).map(n => n.valor);
+        if (this.courseGrade) values.push(this.courseGrade.value);
+
+        if (values.length === 0) return { value: 0, percentage: 0 };
+
+        const sum = values.reduce((s, v) => s + v, 0);
+        const average = sum / values.length;
+
+        return {
+            value: Number(average.toFixed(2)),
+            percentage: Number(((average / 12) * 100).toFixed(2))
+        };
+    }
+
+    // Spanish alias for compatibility
+    calcularNotaFinal() {
+        return this.calculateFinalGrade();
+    }
+
+    // Clear notes and course grade
+    clearNotes() {
+        super.clearNotes();
+        delete this.courseGrade;
+    }
+}
+
+export default NotePercentageCourse;
