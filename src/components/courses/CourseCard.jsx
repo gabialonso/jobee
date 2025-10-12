@@ -1,18 +1,18 @@
 const PLAN_STYLES = {
   basico: {
-    border: "border-2 border-[#F3B61F]",
+    border: "border-b-7 border-x-4 border-t-4 border-[#F3B61F]",
     badge: "bg-[#F3B61F]/30 text-[#1F2937]",
-    button: "border-2 border-[#F3B61F] bg-white text-[#1F2937]",
+    button: "border-b-4 border-[#F3B61F] bg-white text-[#1F2937]",
   },
   medio: {
-    border: "border-2 border-[#0B7285]",
+    border: "border-b-7 border-x-4 border-t-4 border-[#0B7285]",
     badge: "bg-[#0B7285]/20 text-[#0B7285]",
-    button: "border-2 border-[#0B7285] bg-white text-[#0B7285]",
+    button: "border-b-4 border-[#0B7285] bg-white text-[#0B7285]",
   },
   avanzado: {
-    border: "border-2 border-[#DC2626]",
+    border: "border-b-7 border-x-4 border-t-4 border-[#DC2626]",
     badge: "bg-[#DC2626]/20 text-[#DC2626]",
-    button: "border-2 border-[#DC2626] bg-white text-[#DC2626]",
+    button: "border-b-4 border-[#DC2626] bg-white text-[#DC2626]",
   },
 };
 

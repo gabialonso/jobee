@@ -28,13 +28,13 @@ export default function HomePage() {
             <div className="flex flex-wrap gap-4">
               <a
                 href="/auth/signup/user"
-                className="rounded-xl border-2 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+                className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
               >
                 Registrate como usuario
               </a>
               <a
                 href="/auth/signup/company"
-                className="rounded-xl border-2 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+                className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
               >
                 Soy empresa aliada
               </a>
@@ -57,7 +57,7 @@ export default function HomePage() {
           {FEATURE_ITEMS.map(({ title, description }) => (
             <div
               key={title}
-              className="flex flex-col justify-center gap-3 rounded-2xl border-2 border-[#E69C00] bg-[#FFF0C2] px-5 py-3"
+              className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-3"
             >
               <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">{title}</h3>
               <p className="text-sm text-[#4B5563]">{description}</p>
@@ -88,7 +88,7 @@ export default function HomePage() {
           {METRIC_ITEMS.map(({ label, detail }) => (
             <div
               key={detail}
-              className="flex flex-col gap-2 rounded-2xl border-2 border-[#E69C00] bg-[#FFF0C2] px-4 py-6"
+              className="flex flex-col gap-2 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-4 py-6"
             >
               <span className="text-3xl font-bold text-[#1F2937] md:text-4xl">{label}</span>
               <span className="text-sm font-medium uppercase tracking-wide text-[#4B5563]">
@@ -109,13 +109,13 @@ export default function HomePage() {
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <a
               href="/auth/signup/user"
-              className="rounded-xl border-2 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+              className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
             >
               Crear cuenta joven
             </a>
             <a
               href="/auth/signup/company"
-              className="rounded-xl border-2 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+              className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
             >
               Sumarse como empresa
             </a>
@@ -125,7 +125,7 @@ export default function HomePage() {
 
       <footer
         id="contactos"
-        className="mt-auto w-full bg-[#111827] px-6 py-6 text-[#FFF8E7] md:px-10"
+        className="mt-auto rounded-t-xl border-t-4 border-t-[#4B5563] w-full bg-[#111827] px-6 py-6 text-[#FFF8E7] md:px-10"
       >
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-6 md:flex-row md:justify-between">
           <p className="text-lg font-semibold">Conectemos</p>
