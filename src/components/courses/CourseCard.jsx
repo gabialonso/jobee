@@ -1,32 +1,60 @@
- function CourseCard({ plan, title, description }) {
-    let levelplan = "";
-    let cssplan = "";
-    switch (plan) {
-        case 'basico':
-            levelplan = "Plan Basico";
-            cssplan = "basic_plan";
-            break;
-        case 'medio':
-            levelplan = "Plan Medio";
-            cssplan = "medium_plan";
-            break;
-        case 'avanzado':
-            levelplan = "Plan Avanzado";
-            cssplan = "advanced_plan";
-            break;
-        default:
-            levelplan = "Error: Plan Desconocido";
-            cssplan = "bg-[#DC2626] text-white text-center font-bold rounded-b-2xl";
-            break;
-    }
-    
-    
-    
-    return <div className={`curses_card`}>
-        <p className={cssplan}>{levelplan}</p>
-        <h2 className="text-xl font-bold">{title}</h2>
-        <p>{description}</p>
-        <button className="buttons_interactive">ir al curso</button>
-    </div>;
+const PLAN_STYLES = {
+  basico: {
+    border: "border-2 border-[#F3B61F]",
+    badge: "bg-[#F3B61F]/30 text-[#1F2937]",
+    button: "border-2 border-[#F3B61F] bg-white text-[#1F2937]",
+  },
+  medio: {
+    border: "border-2 border-[#0B7285]",
+    badge: "bg-[#0B7285]/20 text-[#0B7285]",
+    button: "border-2 border-[#0B7285] bg-white text-[#0B7285]",
+  },
+  avanzado: {
+    border: "border-2 border-[#DC2626]",
+    badge: "bg-[#DC2626]/20 text-[#DC2626]",
+    button: "border-2 border-[#DC2626] bg-white text-[#DC2626]",
+  },
+};
+
+export default function CourseCard({ course }) {
+  const { plan, planLabel, title, description, duration, modality } = course;
+  const styles = PLAN_STYLES[plan] ?? PLAN_STYLES.basico;
+
+  return (
+    <article
+      className={`flex min-h-[18rem] flex-1 flex-col justify-between gap-4 rounded-3xl bg-[#FFF8E7] p-6 ${styles.border}`}
+    >
+      <div className="space-y-3">
+        <span
+          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${styles.badge}`}
+        >
+          {planLabel}
+        </span>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-[#1F2937] md:text-xl">{title}</h3>
+          <p className="text-sm leading-relaxed text-[#4B5563] md:text-base">{description}</p>
+        </div>
+      </div>
+
+      <div className="space-y-2 text-xs text-[#4B5563] md:text-sm">
+        {duration ? (
+          <p>
+            <span className="font-semibold">Duración:</span> {duration}
+          </p>
+        ) : null}
+        {modality ? (
+          <p>
+            <span className="font-semibold">Modalidad:</span> {modality}
+          </p>
+        ) : null}
+      </div>
+
+      <a
+        href="/auth/login"
+        className={`inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition ${styles.button}`}
+      >
+        Conocer más
+      </a>
+    </article>
+  );
 }
-export default CourseCard;
