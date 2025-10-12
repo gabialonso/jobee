@@ -95,7 +95,7 @@ jobee-frontend/
 ├── src/
 │   ├── assets/              # Recursos estáticos (imágenes, íconos)
 │   ├── components/          # Componentes reutilizables
-│   │   ├── common/          # Componentes comunes (InputForm, etc.)
+│   │   ├── common/          # Componentes comunes (header, inputs, etc.)
 │   │   └── courses/         # Componentes de cursos (CourseCard)
 │   ├── pages/               # Páginas principales de la app
 │   │   ├── auth/            # Autenticación (Login, Signup)
