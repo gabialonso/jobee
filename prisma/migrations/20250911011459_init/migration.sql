@@ -1,64 +1,137 @@
+-- CreateEnum
+CREATE TYPE `Role` AS ENUM ('persons', 'companies', 'Admin');
+CREATE TYPE `AdminRole` AS ENUM ('ADMIN', 'SUPERADMIN', 'MODERATOR');
+
 -- CreateTable
 CREATE TABLE `User` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191) NOT NULL,
-    `email` VARCHAR(191) NOT NULL,
-    `password` VARCHAR(191) NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(191) NOT NULL,
+  `email` VARCHAR(191) NOT NULL UNIQUE,
+  `password` VARCHAR(191) NOT NULL,
+  `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `updatedAt` DATETIME(3) NOT NULL ON UPDATE CURRENT_TIMESTAMP(3)
+);
 
-    UNIQUE INDEX `User_email_key`(`email`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `Contact` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191) NOT NULL,
-    `email` VARCHAR(191) NOT NULL,
-    `message` VARCHAR(191) NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(191) NOT NULL,
+  `email` VARCHAR(191) NOT NULL,
+  `message` TEXT NOT NULL,
+  `type` VARCHAR(191) NOT NULL,
+  `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+);
 
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE TABLE `Person` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `firstName` VARCHAR(191) NOT NULL,
+  `lastName` VARCHAR(191) NOT NULL,
+  `birthYear` INT NOT NULL,
+  `Ci` INT NOT NULL,
+  `highSchool` VARCHAR(191) NOT NULL,
+  `description` TEXT NOT NULL,
+  `cv` VARCHAR(191),
+  `linkedin` VARCHAR(191),
+  `userId` INT NOT NULL,
+  INDEX `Person_userId_idx`(`userId`),
+  FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
-CreateTable `Post` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `title` VARCHAR(191) NOT NULL,
-    `content` TEXT NOT NULL,
-    `published` BOOLEAN NOT NULL DEFAULT false,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
+CREATE TABLE `Company` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `rut` VARCHAR(191) NOT NULL UNIQUE,
+  `name` VARCHAR(191) NOT NULL,
+  `legalReason` VARCHAR(191) NOT NULL,
+  `groupName` VARCHAR(191) NOT NULL,
+  `subGroupName` VARCHAR(191) NOT NULL,
+  `userId` INT NOT NULL,
+  INDEX `Company_userId_idx`(`userId`),
+  FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE TABLE `Admin` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `userId` INT NOT NULL UNIQUE,
+  `role` ENUM('ADMIN', 'SUPERADMIN', 'MODERATOR') NOT NULL DEFAULT 'ADMIN',
+  `isActive` BOOLEAN NOT NULL DEFAULT TRUE,
+  `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `updatedAt` DATETIME(3) NOT NULL ON UPDATE CURRENT_TIMESTAMP(3),
+  INDEX `Admin_role_idx`(`role`),
+  FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
-CreateTable `Person` (
-        `firstName` VARCHAR(191) NOT NULL,
-        `lastName`  VARCHAR(191),
-        'birthday'  INTEGER NOT NULL,
-        'Ci'        INTEGER NOT NULL,
-        'highSchool'VARCHAR(191) NOT NULL,
-        'description' TEXT NOT NULL,
-        'cv'       VARCHAR(191) NOT NULL,
-        'linkedin' VARCHAR(191) NOT NULL,
-        `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-        `updatedAt` DATETIME(3) NOT NULL,
+CREATE TABLE `Course` (
+  `courseId` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(191) NOT NULL,
+  `description` TEXT NOT NULL,
+  `duration` INT NOT NULL,
+  `theme` VARCHAR(191) NOT NULL,
+  `price` INT NOT NULL
+);
 
-        UNIQUE INDEX `Profile_userId_key`(`userId`),
-        PRIMARY KEY (`id`),
-        foreign key (`userId`) references `User`(`id`
-    )
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-creareTable 'company' (
-        'id' INTEGER NOT NULL AUTO_INCREMENT,
-        'rut' INTEGER NOT NULL,
-        'name' VARCHAR(191) NOT NULL,
-        'legalReason' VARCHAR(191) NOT NULL,
-        'groupName' VARCHAR(191) NOT NULL,
-        'subGroupName' VARCHAR(191) NOT NULL,
+CREATE TABLE `Purchase` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `price` INT NOT NULL,
+  `currency` VARCHAR(191) NOT NULL,
+  `courseId` INT NOT NULL,
+  `userId` INT NOT NULL,
+  INDEX `Purchase_courseId_idx`(`courseId`),
+  INDEX `Purchase_userId_idx`(`userId`),
+  FOREIGN KEY (`courseId`) REFERENCES `Course`(`courseId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
-        UNIQUE INDEX `Company_userId_key`(`userId`),
-        PRIMARY KEY (`id`),
-        foreign key (`userId`) references `User`(`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE TABLE `Post` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `content` TEXT NOT NULL,
+  `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `authorId` INT NOT NULL,
+  INDEX `Post_authorId_idx`(`authorId`),
+  FOREIGN KEY (`authorId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `Image` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `sizeKb` INT NOT NULL,
+  `description` VARCHAR(191) NOT NULL,
+  `postId` INT NOT NULL,
+  INDEX `Image_postId_idx`(`postId`),
+  FOREIGN KEY (`postId`) REFERENCES `Post`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `Comment` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `content` TEXT NOT NULL,
+  `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `authorId` INT NOT NULL,
+  `postId` INT NOT NULL,
+  INDEX `Comment_authorId_idx`(`authorId`),
+  INDEX `Comment_postId_idx`(`postId`),
+  FOREIGN KEY (`authorId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`postId`) REFERENCES `Post`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `Like` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `userId` INT NOT NULL,
+  `postId` INT NOT NULL,
+  UNIQUE INDEX `Like_userId_postId_unique`(`userId`, `postId`),
+  INDEX `Like_postId_idx`(`postId`),
+  FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`postId`) REFERENCES `Post`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `Chat` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `isDirect` BOOLEAN,
+  `lastMsgId` INT
+);
+
+CREATE TABLE `Message` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `type` VARCHAR(191) NOT NULL,
+  `content` TEXT NOT NULL,
+  `reactions` VARCHAR(191),
+  `chatId` INT NOT NULL,
+  INDEX `Message_chatId_idx`(`chatId`),
+  FOREIGN KEY (`chatId`) REFERENCES `Chat`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
