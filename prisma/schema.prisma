@@ -52,7 +52,7 @@ model Person {
   id          Int     @id @default(autoincrement())
   firstName   String
   lastName    String
-  birthYear   Int
+  birthday    Int
   Ci          Int
   highSchool  String
   description String
