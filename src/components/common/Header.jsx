@@ -10,7 +10,7 @@ const NAV_LINKS = [
 
 export default function Header() {
   return (
-    <header className="w-full border-b-4 border-[#E69C00] bg-[#FFD65B]">
+    <header className="w-full rounded-b-xl border-b-4 border-[#E69C00] bg-[#FFD65B]">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 py-5 md:flex-row md:items-center md:justify-between md:px-6 lg:px-8">
         <a href="/" className="flex items-center gap-3">
           <img src={Logo} alt="Logo de Jobee" className="h-9 w-auto md:h-10" />
@@ -26,7 +26,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 rounded-xl border-2 border-[#E69C00] bg-white px-3 py-2">
+          <div className="flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-white px-3 py-2">
             <FiSearch className="text-lg text-[#1F2937]" />
             <input
               type="text"
@@ -37,13 +37,13 @@ export default function Header() {
 
           <a
             href="/auth/login"
-            className="rounded-xl border-2 border-[#E69C00] bg-white px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
           >
             Acceder
           </a>
           <a
             href="/auth/signup/user"
-            className="rounded-xl border-2 border-[#E69C00] bg-[#FFD65B] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-white md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00]  bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-white md:text-base"
           >
             Crear cuenta
           </a>

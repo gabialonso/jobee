@@ -50,7 +50,7 @@ export default function CourseCarousel({ courses = [] }) {
           <button
             type="button"
             onClick={() => move(slide - 1)}
-            className="rounded-full border-2 border-[#E69C00] px-4 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] disabled:opacity-40"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-4 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] disabled:opacity-40"
             disabled={slide === 0}
           >
             Atrás
@@ -61,9 +61,8 @@ export default function CourseCarousel({ courses = [] }) {
               <button
                 key={index}
                 type="button"
-                className={`h-3 w-3 rounded-full ${
-                  index === slide ? "bg-[#E69C00]" : "bg-[#E5E7EB]"
-                }`}
+                className={`h-3 w-3 rounded-full ${index === slide ? "bg-[#E69C00]" : "bg-[#E5E7EB]"
+                  }`}
                 onClick={() => move(index)}
                 aria-label={`Ir al slide ${index + 1}`}
               />
@@ -73,7 +72,7 @@ export default function CourseCarousel({ courses = [] }) {
           <button
             type="button"
             onClick={() => move(slide + 1)}
-            className="rounded-full border-2 border-[#E69C00] px-4 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] disabled:opacity-40"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-4 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] disabled:opacity-40"
             disabled={slide === total - 1}
           >
             Siguiente

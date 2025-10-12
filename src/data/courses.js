@@ -30,7 +30,7 @@ export const COURSES = [
     modality: "Online + prácticas",
   },
   {
-    id: "diseno-ux",
+    id: "diseño-ux",
     plan: "medio",
     planLabel: "Plan Medio",
     title: "Diseño UX para Product Teams",
