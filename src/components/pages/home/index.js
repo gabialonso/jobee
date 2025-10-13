@@ -16,4 +16,4 @@ export {
   callToActionContent,
   contactItems,
   courseSectionContent,
-} from "./content.js";
+} from "../../../data/homepage.js";
