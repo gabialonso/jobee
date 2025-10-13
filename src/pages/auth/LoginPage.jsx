@@ -24,28 +24,35 @@ const providers = [
     id: "google",
     label: "Continuar con Google",
     icon: FcGoogle,
-    iconClassName: "text-2xl h-6 w-6 -mr-1",
+    iconClassName: "h-6 w-6",
+    href: "/",
   },
   {
     id: "microsoft",
     label: "Continuar con Microsoft",
     icon: MicrosoftLogo,
-    iconClassName: "text-2xl h-5 w-5 -mr-0.5",
+    iconClassName: "h-6 w-6",
+    href: "/",
   },
   {
-    id: "outlook",
+    id: "apple",
     label: "Continuar con Apple",
     icon: FaApple,
-    iconClassName: "text-2xl h-6 w-6 -mr-1",
+    iconClassName: "h-6 w-6",
+    href: "/",
   },
 ];
 
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <header className="flex items-center gap-3 px-5 py-4 md:px-5">
-        <img src={JobeeLogo} alt="Jobee" className="h-10 w-auto md:h-12" />
-        <span className="text-xl font-bold tracking-tight text-gray-900 md:text-2xl">Jobee</span>
+      <header className="flex items-center gap-3 px-5 py-4 md:px-6">
+        <a href="/" className="flex items-center gap-3">
+          <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto md:h-10" />
+          <span className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl">
+            Jobee
+          </span>
+        </a>
       </header>
 
       <main className="flex flex-1 items-center justify-center px-6 pb-12 md:px-12">
@@ -60,21 +67,21 @@ export default function LoginPage() {
                   Inicio de sesión
                 </h1>
                 <p className="text-sm leading-relaxed text-gray-500 md:text-base">
-                  Conectate a nuestra comunidad.
+                  Conectate a Jobee y accedé a oportunidades reales para crecer profesionalmente.
                 </p>
               </div>
             </div>
 
             <div className="space-y-3">
-              {providers.map(({ id, label, icon: Icon, iconClassName }) => (
-                <button
+              {providers.map(({ id, label, icon: Icon, iconClassName, href }) => (
+                <a
                   key={id}
-                  type="button"
-                  className="flex w-full items-center justify-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 border-b-4 border-gray-900"
+                  href={href}
+                  className="flex w-full items-center justify-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-100 border-b-4 border-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFD65B]"
                 >
                   {Icon ? <Icon aria-hidden className={iconClassName} /> : null}
                   <span>{label}</span>
-                </button>
+                </a>
               ))}
             </div>
 
