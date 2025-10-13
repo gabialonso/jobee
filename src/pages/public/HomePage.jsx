@@ -12,7 +12,7 @@ import {
   callToActionContent,
   contactItems,
   courseSectionContent,
-} from "../../features/landing";
+} from "../../components/pages/home";
 import { COURSES } from "../../data/courses.js";
 import BannerImage from "../../assets/LandingBannerImg.svg";
 

@@ -1,4 +1,4 @@
-import FeatureCard from "../components/FeatureCard.jsx";
+import FeatureCard from "./FeatureCard.jsx";
 
 export default function FeatureHighlightsSection({ items = [] }) {
   if (!items.length) return null;

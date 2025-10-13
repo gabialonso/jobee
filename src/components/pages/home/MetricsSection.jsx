@@ -1,4 +1,4 @@
-import MetricCard from "../components/MetricCard.jsx";
+import MetricCard from "./MetricCard.jsx";
 
 export default function MetricsSection({ items = [], id }) {
   if (!items.length) return null;

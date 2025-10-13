@@ -1,4 +1,4 @@
-import CtaLink from "../../../components/ui/CtaLink.jsx";
+import CtaLink from "../../common/CtaLink.jsx";
 
 export default function HeroSection({
   eyebrow,

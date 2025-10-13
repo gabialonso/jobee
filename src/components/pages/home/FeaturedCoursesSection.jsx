@@ -1,4 +1,4 @@
-import CourseCarousel from "../../../components/courses/CourseCarousel.jsx";
+import CourseCarousel from "../../courses/CourseCarousel.jsx";
 
 export default function FeaturedCoursesSection({
   id = "cursos",
