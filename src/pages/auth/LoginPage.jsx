@@ -43,7 +43,7 @@ const providers = [
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <header className="flex items-center gap-3 px-6 py-6 md:px-12">
+      <header className="flex items-center px-5 py-4 md:px-5">
         <img src={JobeeLogo} alt="Jobee" className="h-10 w-auto md:h-12" />
         <span className="text-xl font-bold tracking-tight text-gray-900 md:text-2xl">Jobee</span>
       </header>
