@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import JobeeLogo from "../../assets/Jobee_Logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
@@ -25,21 +26,21 @@ const providers = [
     label: "Continuar con Google",
     icon: FcGoogle,
     iconClassName: "h-6 w-6",
-    href: "/",
+    to: "/",
   },
   {
     id: "microsoft",
     label: "Continuar con Microsoft",
     icon: MicrosoftLogo,
     iconClassName: "h-6 w-6",
-    href: "/",
+    to: "/",
   },
   {
     id: "apple",
     label: "Continuar con Apple",
     icon: FaApple,
     iconClassName: "h-6 w-6",
-    href: "/",
+    to: "/",
   },
 ];
 
@@ -47,12 +48,12 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <header className="flex items-center gap-3 px-5 py-4 md:px-6">
-        <a href="/" className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto md:h-10" />
           <span className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl">
             Jobee
           </span>
-        </a>
+        </Link>
       </header>
 
       <main className="flex flex-1 items-center justify-center px-6 pb-12 md:px-12">
@@ -73,15 +74,15 @@ export default function LoginPage() {
             </div>
 
             <div className="space-y-3">
-              {providers.map(({ id, label, icon: Icon, iconClassName, href }) => (
-                <a
+              {providers.map(({ id, label, icon: Icon, iconClassName, to }) => (
+                <Link
                   key={id}
-                  href={href}
+                  to={to}
                   className="flex w-full items-center justify-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-100 border-b-4 border-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFD65B]"
                 >
                   {Icon ? <Icon aria-hidden className={iconClassName} /> : null}
                   <span>{label}</span>
-                </a>
+                </Link>
               ))}
             </div>
 

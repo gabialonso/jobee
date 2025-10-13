@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Header from "../../components/common/Header.jsx";
 import CourseCarousel from "../../components/courses/CourseCarousel.jsx";
 import { COURSES } from "../../data/courses.js";
@@ -21,18 +22,18 @@ function Hero() {
           habilidades y llegá a tu primera entrevista con respaldo y oportunidades reales.
         </p>
         <div className="flex flex-wrap gap-4">
-          <a
-            href="/auth/signup/user"
+          <Link
+            to="/auth/signup/user"
             className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
           >
             Registrate como usuario
-          </a>
-          <a
-            href="/auth/signup/company"
+          </Link>
+          <Link
+            to="/auth/signup/company"
             className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
           >
             Soy empresa aliada
-          </a>
+          </Link>
         </div>
       </div>
       <div className="relative flex justify-center">
@@ -143,18 +144,18 @@ function CallToAction() {
         Creamos un espacio sencillo para aprender, practicar y conectar. Elegí tu plan y empecemos hoy.
       </p>
       <div className="mt-6 flex flex-wrap justify-center gap-4">
-        <a
-          href="/auth/signup/user"
+        <Link
+          to="/auth/signup/user"
           className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
         >
           Crear cuenta joven
-        </a>
-        <a
-          href="/auth/signup/company"
+        </Link>
+        <Link
+          to="/auth/signup/company"
           className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
         >
           Sumarse como empresa
-        </a>
+        </Link>
       </div>
     </section>
   );
