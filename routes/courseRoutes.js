@@ -1,4 +1,3 @@
-// src/routes/course.routes.js
 import { Router } from "express";
 import {
     createCourseHandler,

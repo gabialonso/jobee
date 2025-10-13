@@ -8,7 +8,7 @@ import {
 export const buyCourseHandler = async (req, res, next) => {
     try {
         const { userId, courseId, price, currency } = req.body;
-        const purchase = await purchaseService.buyCourse(userId, courseId, price, currency);
+        const purchase = await buyCourse(userId, courseId, price, currency);
 
         return res.status(201).json({
             success: true,
@@ -23,7 +23,7 @@ export const buyCourseHandler = async (req, res, next) => {
 export const getUserPurchaseHandler = async (req, res, next) => {
     try {
         const { userId } = req.params;
-        const purchase = await purchaseService.getUserPurchase(userId);
+        const purchase = await getUserPurchase(userId);
 
     return res.status(200).json({
             success: true,
@@ -37,7 +37,7 @@ export const getUserPurchaseHandler = async (req, res, next) => {
 
 export const getAllPurchaseHandler = async (req, res, next) => {
     try {
-        const purchase = await purchaseService.getAllPurchase();
+        const purchase = await getAllPurchase();
 
         return res.status(200).json({
             success: true,
