@@ -5,6 +5,7 @@ import {
         updateCourse,
         deleteCourse 
     } from '../services/courseService.js';
+import 'express-async-errors';
 
 export const createCourseHandler = async (req, res, next) => {
     try {

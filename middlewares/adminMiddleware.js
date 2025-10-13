@@ -2,6 +2,7 @@
 import jwt from "jsonwebtoken";
 import jwtConfig from "../config/jwt.js";
 import prisma from "../config/db.js";
+import 'express-async-errors';
 
 export const adminMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;

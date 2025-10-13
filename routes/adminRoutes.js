@@ -11,6 +11,8 @@ import {
     adminCoursesWithPurchaseCountHandler,
 } from "../src/controllers/admin.controller.js";
 import { authGuard, adminGuard } from "../src/middlewares/auth.js";
+import expressasyncerrors from "express-async-errors";
+
 
 const router = Router();
 

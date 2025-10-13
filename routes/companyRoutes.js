@@ -7,6 +7,7 @@ import {
     deleteCompanyHandler,
 } from "../controllers/companyController.js";
 
+
 const router = Router();
 
 router.post("/", createCompanyHandler);

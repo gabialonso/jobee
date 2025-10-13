@@ -1,4 +1,4 @@
-// src/routes/purchase.routes.js
+
 import { Router } from "express";
 import {
     buyCourseHandler,
