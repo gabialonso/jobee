@@ -52,19 +52,10 @@ const inputClass =
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const asideFooter = (
-    <div className="text-sm text-[#6F442C]/70">
-      ¿Todavía no tenés cuenta?{" "}
-      <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
-        Registrate
-      </Link>
-    </div>
-  );
-
-const footerContent = (
-  <div className="space-y-2 text-xs text-gray-500 text-center">
-    <p className="text-[11px] leading-relaxed text-gray-400">
-      Al continuar aceptás nuestras condiciones de uso y política de privacidad.
+  const footerContent = (
+    <div className="space-y-2 text-xs text-gray-500 text-center">
+      <p className="text-[11px] leading-relaxed text-gray-400">
+        Al continuar aceptás nuestras condiciones de uso y política de privacidad.
     </p>
       <p>
         ¿Necesitás ayuda?{" "}
@@ -82,7 +73,14 @@ const footerContent = (
       description="Conectate a Jobee y accedé a oportunidades reales para crecer profesionalmente."
       formTitle="Ingresá a tu cuenta"
       footer={footerContent}
-      asideFooter={asideFooter}
+      asideFooter={
+        <div className="text-sm text-[#6F442C]/70">
+          ¿Todavía no tenés cuenta?{" "}
+          <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
+            Registrate
+          </Link>
+        </div>
+      }
     >
       <form className="space-y-4" noValidate>
         <div className="space-y-3">

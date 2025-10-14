@@ -12,16 +12,6 @@ export default function AuthLayout({
   onToggle,
   asideFooter,
 }) {
-  const getAsideFooter = () =>
-    asideFooter ?? (
-      <div className="text-sm text-[#6F442C]/70">
-        ¿Ya tenés una cuenta?{" "}
-        <Link className="font-semibold text-[#1769E0]" to="/auth/login">
-          Iniciá sesión
-        </Link>
-      </div>
-    );
-
   return (
     <div className="flex min-h-screen flex-col bg-white text-gray-900 lg:flex-row">
       <aside className="relative hidden w-full max-w-xl flex-col justify-between bg-[#FFF4D6] px-10 py-10 lg:flex lg:sticky lg:top-0 lg:h-screen">
@@ -48,7 +38,7 @@ export default function AuthLayout({
           )}
         </div>
 
-        {getAsideFooter()}
+        {asideFooter}
       </aside>
 
       <section className="flex flex-1 items-center justify-center px-6 py-10 sm:px-8 lg:w-[480px] lg:px-10 lg:py-14">
@@ -60,7 +50,7 @@ export default function AuthLayout({
             </Link>
           </div>
 
-          <div className="lg:hidden">{getAsideFooter()}</div>
+          <div className="lg:hidden">{asideFooter}</div>
 
           {toggleOptions.length ? (
             <div className="mx-auto w-full max-w-xs md:max-w-sm">
