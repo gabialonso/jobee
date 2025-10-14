@@ -1,4 +1,4 @@
-import { openai } from "../config/openai.js";
+import { openai } from "../integrations/openAi.js";
 
 export const chatHandler = async (req, res) => {
     const { message } = req.body;
