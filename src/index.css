@@ -25,6 +25,12 @@
         min-height: 100vh;
     }
 
+    @media (min-width: 1536px) {
+        body {
+            zoom: 1.25;
+        }
+    }
+
     h1 {
         font-size: 3.2em;
         line-height: 1.1;
