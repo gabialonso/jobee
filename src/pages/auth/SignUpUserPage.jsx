@@ -1,14 +1,61 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import AuthLayout from "../../components/auth/AuthLayout.jsx";
+
+const inputClass =
+  "w-full rounded-xl border border-gray-200 border-b-4 border-x-2 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD65B]";
+
+const USER_FIELDS = [
+  {
+    id: "email",
+    name: "email",
+    type: "email",
+    placeholder: "Email",
+    autoComplete: "email",
+    colSpan: 2,
+  },
+  {
+    id: "password",
+    name: "password",
+    type: "password",
+    placeholder: "Contraseña",
+  },
+  {
+    id: "confirmPassword",
+    name: "confirmPassword",
+    type: "password",
+    placeholder: "Confirmar contraseña",
+  },
+  {
+    id: "name",
+    name: "name",
+    type: "text",
+    placeholder: "Nombre completo",
+    colSpan: 2,
+  },
+  {
+    id: "ci",
+    name: "ci",
+    type: "text",
+    placeholder: "Documento de identidad",
+    colSpan: 2,
+  },
+  {
+    id: "birthDate",
+    name: "birthDate",
+    type: "date",
+    placeholder: "Fecha de nacimiento",
+    colSpan: 2,
+  },
+];
 
 const SIGNUP_TYPES = [
   {
     id: "user",
     label: "Usuario",
     path: "/auth/signup/user",
-    highlight: "Accedé a cursos, mentorías y oportunidades reales.",
+    highlight: "  Accedé a cursos, mentorías y oportunidades reales.",
   },
   {
     id: "company",
@@ -16,9 +63,6 @@ const SIGNUP_TYPES = [
     path: "/auth/signup/company",
   },
 ];
-
-const inputClass =
-  "w-full rounded-xl border border-gray-200 border-b-4 border-x-2 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD65B]";
 
 export default function SignUpUserPage() {
   const navigate = useNavigate();
@@ -39,16 +83,15 @@ export default function SignUpUserPage() {
   const footerContent = (
     <div className="space-y-2 text-xs text-gray-500">
       <p className="text-[11px] leading-relaxed text-gray-400">
-        Al crear una cuenta aceptás nuestras condiciones de uso, política de privacidad y recibir
-        comunicaciones relevantes. Podés darte de baja cuando quieras.
+        Al crear una cuenta aceptás nuestras condiciones de uso y política de privacidad.
       </p>
     </div>
   );
 
   return (
     <AuthLayout
-      badgeLabel="Registro Jobee"
-      title="Creá tu cuenta"
+      badgeLabel="Registro Usuario"
+      title="Creá tu cuenta 👋"
       description={
         currentConfig?.highlight ??
         "Formá parte de la comunidad Jobee y accedé a experiencias significativas."
@@ -59,51 +102,9 @@ export default function SignUpUserPage() {
       formTitle="Registro usuarios"
       footer={footerContent}
     >
-      <form className="space-y-4" noValidate>
-        <div className="grid gap-x-3 gap-y-4 sm:grid-cols-2">
-          {[
-            {
-              id: "email",
-              name: "email",
-              type: "email",
-              placeholder: "Email",
-              autoComplete: "email",
-              colSpan: 2,
-            },
-            {
-              id: "password",
-              name: "password",
-              type: "password",
-              placeholder: "Contraseña",
-            },
-            {
-              id: "confirmPassword",
-              name: "confirmPassword",
-              type: "password",
-              placeholder: "Confirmar contraseña",
-            },
-            {
-              id: "name",
-              name: "name",
-              type: "text",
-              placeholder: "Nombre completo",
-              colSpan: 2,
-            },
-            {
-              id: "ci",
-              name: "ci",
-              type: "text",
-              placeholder: "Documento de identidad",
-              colSpan: 2,
-            },
-            {
-              id: "birthDate",
-              name: "birthDate",
-              type: "date",
-              placeholder: "Fecha de nacimiento",
-              colSpan: 2,
-            },
-          ].map(({ id, name, type, placeholder, autoComplete, colSpan = 1 }) => {
+      <form className="space-y-2.5" noValidate>
+        <div className="grid gap-x-3 gap-y-3 sm:grid-cols-2">
+          {USER_FIELDS.map(({ id, name, type, placeholder, autoComplete, colSpan = 1 }) => {
             const isPassword = type === "password";
             const inputType = isPassword && passwordVisibility[name] ? "text" : type;
 
@@ -147,13 +148,28 @@ export default function SignUpUserPage() {
           })}
         </div>
 
-        <div className="flex justify-center pt-2">
+        <div className="flex justify-center pt-1">
           <button
             type="submit"
             className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50 md:w-auto md:text-base"
           >
             Crear cuenta
           </button>
+        </div>
+
+        <div className="space-y-1.5 text-xs text-gray-500 text-center">
+          <p>
+            ¿Querés registrar una empresa?{" "}
+            <Link className="font-semibold text-[#1769E0]" to="/auth/signup/company">
+              Ir a registro empresa
+            </Link>
+          </p>
+          <p>
+            ¿Ya tenés una cuenta?{" "}
+            <Link className="font-semibold text-[#1769E0]" to="/auth/login">
+              Iniciar sesión
+            </Link>
+          </p>
         </div>
       </form>
     </AuthLayout>
