@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import AuthLayout from "../../components/auth/AuthLayout.jsx";
 
@@ -218,6 +218,21 @@ export default function SignUpCompanyPage() {
           >
             Crear cuenta
           </button>
+        </div>
+
+        <div className="space-y-2 text-xs text-gray-500 text-center">
+          <p>
+            ¿Querés registrarte como usuario?{" "}
+            <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
+              Ir a registro usuario
+            </Link>
+          </p>
+          <p>
+            ¿Ya tenés una cuenta?{" "}
+            <Link className="font-semibold text-[#1769E0]" to="/auth/login">
+              Iniciar sesión
+            </Link>
+          </p>
         </div>
       </form>
     </AuthLayout>
