@@ -115,7 +115,7 @@ export default function SignUpCompanyPage() {
       formTitle="Registro empresas"
       footer={footerContent}
     >
-      <form className="space-y-3" noValidate>
+      <form className="space-y-2.5" noValidate>
         <div className="grid gap-x-3 gap-y-3 sm:grid-cols-2">
           {[
             {
@@ -213,7 +213,7 @@ export default function SignUpCompanyPage() {
           })}
         </div>
 
-        <div className="flex justify-center pt-2">
+        <div className="flex justify-center pt-1">
           <button
             type="submit"
             className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50 md:w-auto md:text-base"
@@ -222,7 +222,7 @@ export default function SignUpCompanyPage() {
           </button>
         </div>
 
-        <div className="space-y-2 text-xs text-gray-500 text-center">
+        <div className="space-y-1.5 text-xs text-gray-500 text-center">
           <p>
             ¿Querés registrarte como usuario?{" "}
             <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
