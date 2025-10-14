@@ -32,12 +32,14 @@ const COMPANY_FIELDS = [
     name: "name",
     type: "text",
     placeholder: "Nombre comercial",
+    colSpan: 2,
   },
   {
     id: "rut",
     name: "rut",
     type: "text",
     placeholder: "RUT",
+    colSpan: 2,
   },
   {
     id: "legalReason",
@@ -50,6 +52,7 @@ const COMPANY_FIELDS = [
     name: "socialGroup",
     type: "text",
     placeholder: "Grupo",
+    colSpan: 2,
   },
   {
     id: "subGroup",
@@ -101,7 +104,7 @@ export default function SignUpCompanyPage() {
   return (
     <AuthLayout
       badgeLabel="Registro empresa"
-      title="Sumá a tu organización"
+      title="Sumá a tu compañía 🐝"
       description={
         currentConfig?.highlight ??
         "Publicá búsquedas, recibí postulaciones y gestioná tu proceso de selección desde un solo lugar."

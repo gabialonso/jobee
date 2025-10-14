@@ -32,18 +32,21 @@ const USER_FIELDS = [
     name: "name",
     type: "text",
     placeholder: "Nombre completo",
+    colSpan: 2,
   },
   {
     id: "ci",
     name: "ci",
     type: "text",
     placeholder: "Documento de identidad",
+    colSpan: 2,
   },
   {
     id: "birthDate",
     name: "birthDate",
     type: "date",
     placeholder: "Fecha de nacimiento",
+    colSpan: 2,
   },
 ];
 
@@ -88,7 +91,7 @@ export default function SignUpUserPage() {
   return (
     <AuthLayout
       badgeLabel="Registro Usuario"
-      title="Creá tu cuenta"
+      title="Creá tu cuenta 👋"
       description={
         currentConfig?.highlight ??
         "Formá parte de la comunidad Jobee y accedé a experiencias significativas."
