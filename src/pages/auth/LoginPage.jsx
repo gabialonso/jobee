@@ -75,15 +75,6 @@ const footerContent = (
     </div>
   );
 
-  const mobileAccountPrompt = (
-    <p className="text-xs text-gray-500 text-center lg:hidden">
-      ¿Todavía no tenés cuenta?{" "}
-      <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
-        Registrate
-      </Link>
-    </p>
-  );
-
   return (
     <AuthLayout
       badgeLabel="Acceso Jobee"
@@ -154,7 +145,6 @@ const footerContent = (
                 <span>{label}</span>
               </Link>
             ))}
-            {mobileAccountPrompt}
           </div>
         </div>
       </form>

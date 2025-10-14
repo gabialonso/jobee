@@ -55,7 +55,7 @@ const SIGNUP_TYPES = [
     id: "user",
     label: "Usuario",
     path: "/auth/signup/user",
-    highlight: "Accedé a cursos, mentorías y oportunidades reales.",
+    highlight: "  Accedé a cursos, mentorías y oportunidades reales.",
   },
   {
     id: "company",
@@ -91,7 +91,7 @@ export default function SignUpUserPage() {
 
   return (
     <AuthLayout
-      badgeLabel="Registro Jobee"
+      badgeLabel="Registro Usuario"
       title="Creá tu cuenta"
       description={
         currentConfig?.highlight ??
