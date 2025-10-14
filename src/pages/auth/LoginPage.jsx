@@ -72,6 +72,14 @@ export default function LoginPage() {
       title="Inicio de sesión"
       description="Conectate a Jobee y accedé a oportunidades reales para crecer profesionalmente."
       formTitle="Ingresá a tu cuenta"
+      headingAddon={
+        <p className="hidden text-sm text-[#6F442C]/70 lg:block">
+          ¿Todavía no tenés cuenta?{" "}
+          <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
+            Registrate
+          </Link>
+        </p>
+      }
       footer={footerContent}
       asideFooter={
         <div className="text-sm text-[#6F442C]/70">
@@ -121,6 +129,11 @@ export default function LoginPage() {
                 {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
               </button>
             </div>
+            <p className="mt-2 text-xs text-right">
+              <Link className="font-semibold text-[#1769E0]" to="/auth/forgot-password">
+                Recuperar contraseña
+              </Link>
+            </p>
           </fieldset>
         </div>
 

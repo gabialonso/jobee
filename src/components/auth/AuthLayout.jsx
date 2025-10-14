@@ -5,6 +5,7 @@ export default function AuthLayout({
   title,
   description,
   formTitle,
+  headingAddon,
   children,
   footer,
   toggleOptions = [],
@@ -14,7 +15,7 @@ export default function AuthLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-white text-gray-900 lg:flex-row">
-      <aside className="relative hidden w-full max-w-xl flex-col justify-between bg-[#FFF4D6] px-10 py-10 lg:flex lg:sticky lg:top-0 lg:h-screen">
+      <aside className="relative hidden w-full max-w-xl flex-col justify-between px-10 py-10 lg:flex lg:sticky lg:top-0 lg:h-screen rounded-b-xl border-r-4 border-[#E69C00] bg-[#FFD65B]">
         <Link to="/" className="flex items-center gap-3">
           <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto md:h-10" />
           <span className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl">
@@ -89,7 +90,10 @@ export default function AuthLayout({
           ) : null}
 
           {formTitle ? (
-            <h2 className="text-xl font-semibold text-[#2F1C10] sm:text-2xl">{formTitle}</h2>
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-[#2F1C10] sm:text-2xl">{formTitle}</h2>
+              {headingAddon ?? null}
+            </div>
           ) : null}
 
           <div className="flex-1">{children}</div>
@@ -97,6 +101,6 @@ export default function AuthLayout({
           {footer}
         </div>
       </section>
-    </div>
+    </div >
   );
 }
