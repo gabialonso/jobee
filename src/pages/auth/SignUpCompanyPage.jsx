@@ -160,7 +160,7 @@ export default function SignUpCompanyPage() {
         <div className="flex justify-center pt-2">
           <button
             type="submit"
-            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-white md:w-auto md:text-base"
+            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50 md:w-auto md:text-base"
           >
             Crear cuenta
           </button>

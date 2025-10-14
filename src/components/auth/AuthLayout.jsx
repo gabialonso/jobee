@@ -59,7 +59,7 @@ export default function AuthLayout({
 
           {toggleOptions.length ? (
             <div className="mx-auto w-full max-w-xs md:max-w-sm">
-              <div className="relative flex w-full overflow-hidden rounded-xl border border-[#E69C00]/60 border-b-4 bg-white">
+              <div className="relative flex w-full overflow-hidden rounded-xl border border-x-2 border-[#E69C00]/60 border-b-4 bg-white">
                 {(() => {
                   const activeIndex = Math.max(
                     toggleOptions.findIndex(({ id }) => id === currentType),

@@ -129,7 +129,7 @@ export default function LoginPage() {
         <div className="flex flex-col gap-4 pt-2">
           <button
             type="submit"
-            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-white md:text-base"
+            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50 md:text-base"
           >
             Iniciar sesión
           </button>
