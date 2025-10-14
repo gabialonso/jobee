@@ -48,8 +48,8 @@ export default function AuthLayout({
         )}
       </aside>
 
-      <section className="flex flex-1 justify-center px-6 py-8 sm:px-8 lg:w-[520px] lg:px-10 lg:py-10">
-        <div className="flex w-full max-w-md flex-1 flex-col justify-center gap-6 py-8 lg:py-0">
+      <section className="flex flex-1 items-center justify-center px-6 py-10 sm:px-8 lg:w-[480px] lg:px-10 lg:py-14">
+        <div className="w-full max-w-md space-y-6">
           <div className="flex items-center gap-3 lg:hidden">
             <Link to="/" className="flex items-center gap-3">
               <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto" />
@@ -58,8 +58,8 @@ export default function AuthLayout({
           </div>
 
           {toggleOptions.length ? (
-            <div className="mx-auto w-full max-w-xs">
-              <div className="relative flex w-full overflow-hidden rounded-xl border border-[#E69C00]/60 border-x-2 border-b-4 bg-white">
+            <div className="mx-auto w-full max-w-xs md:max-w-sm">
+              <div className="relative flex w-full overflow-hidden rounded-xl border border-[#E69C00]/60 border-b-4 bg-white">
                 {(() => {
                   const activeIndex = Math.max(
                     toggleOptions.findIndex(({ id }) => id === currentType),

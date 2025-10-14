@@ -59,8 +59,8 @@ export default function SignUpCompanyPage() {
       formTitle="Registro empresas"
       footer={footerContent}
     >
-      <form className="flex h-full flex-col gap-3" noValidate>
-        <div className="grid flex-1 content-start gap-x-3 gap-y-5 sm:grid-cols-2">
+      <form className="space-y-4" noValidate>
+        <div className="grid gap-x-3 gap-y-4 sm:grid-cols-2">
           {[
             {
               id: "email",
@@ -157,7 +157,7 @@ export default function SignUpCompanyPage() {
           })}
         </div>
 
-        <div className="mt-auto flex justify-center pt-2">
+        <div className="flex justify-center pt-2">
           <button
             type="submit"
             className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-white md:w-auto md:text-base"

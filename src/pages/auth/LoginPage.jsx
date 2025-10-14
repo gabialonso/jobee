@@ -84,7 +84,7 @@ export default function LoginPage() {
       footer={footerContent}
       asideFooter={asideFooter}
     >
-      <form className="flex h-full flex-col gap-4" noValidate>
+      <form className="space-y-4" noValidate>
         <div className="space-y-3">
           <fieldset>
             <label htmlFor="email" className="sr-only">
@@ -126,7 +126,7 @@ export default function LoginPage() {
           </fieldset>
         </div>
 
-        <div className="mt-auto flex flex-col gap-4 pt-2">
+        <div className="flex flex-col gap-4 pt-2">
           <button
             type="submit"
             className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-white md:text-base"
