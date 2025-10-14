@@ -39,7 +39,7 @@ export default function AuthLayout({
           )}
         </div>
 
-        {asideFooter ? <div className="hidden lg:block">{asideFooter}</div> : null}
+        {asideFooter ?? null}
       </aside>
 
       <section className="flex flex-1 justify-center px-5 py-8 sm:px-8 lg:w-[460px] lg:px-9 lg:py-12">

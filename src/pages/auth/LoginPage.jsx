@@ -67,7 +67,7 @@ export default function LoginPage() {
       description="Conectate a Jobee y accedé a oportunidades reales para crecer profesionalmente."
       formTitle="Ingresá a tu cuenta"
       headingAddon={
-        <p className="hidden text-sm text-[#6F442C]/70 lg:block">
+        <p className="text-sm text-[#6F442C]/70">
           ¿Todavía no tenés cuenta?{" "}
           <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
             Registrate
@@ -75,14 +75,6 @@ export default function LoginPage() {
         </p>
       }
       footer={footerContent}
-      asideFooter={
-        <div className="text-sm text-[#6F442C]/70">
-          ¿Todavía no tenés cuenta?{" "}
-          <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
-            Registrate
-          </Link>
-        </div>
-      }
     >
       <form className="space-y-4" noValidate>
         <div className="space-y-3">
