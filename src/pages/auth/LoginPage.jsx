@@ -143,7 +143,7 @@ export default function LoginPage() {
                 <span>{label}</span>
               </Link>
             ))}
-            <p className="text-xs text-gray-500 text-center">
+            <p className="text-xs text-gray-500 text-center lg:hidden">
               ¿Todavía no tenés cuenta?{" "}
               <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
                 Registrate

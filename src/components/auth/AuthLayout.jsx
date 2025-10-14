@@ -38,7 +38,7 @@ export default function AuthLayout({
           )}
         </div>
 
-        {asideFooter}
+        {asideFooter ? <div className="hidden lg:block">{asideFooter}</div> : null}
       </aside>
 
       <section className="flex flex-1 items-center justify-center px-6 py-10 sm:px-8 lg:w-[480px] lg:px-10 lg:py-14">
@@ -50,7 +50,7 @@ export default function AuthLayout({
             </Link>
           </div>
 
-          <div className="lg:hidden">{asideFooter}</div>
+          {asideFooter ? <div className="lg:hidden">{asideFooter}</div> : null}
 
           {toggleOptions.length ? (
             <div className="mx-auto w-full max-w-xs md:max-w-sm">
