@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import JobeeLogo from "../../assets/Jobee_Logo.png";
-export default function RegisterLayout({
+export default function AuthLayout({
   badgeLabel,
   title,
   description,
@@ -10,6 +10,7 @@ export default function RegisterLayout({
   toggleOptions = [],
   currentType,
   onToggle,
+  asideFooter,
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-white text-gray-900 lg:flex-row">
@@ -37,12 +38,14 @@ export default function RegisterLayout({
           )}
         </div>
 
-        <div className="text-sm text-[#6F442C]/70">
-          ¿Ya tenés una cuenta?{" "}
-          <Link className="font-semibold text-[#1769E0]" to="/auth/login">
-            Iniciá sesión
-          </Link>
-        </div>
+        {asideFooter ?? (
+          <div className="text-sm text-[#6F442C]/70">
+            ¿Ya tenés una cuenta?{" "}
+            <Link className="font-semibold text-[#1769E0]" to="/auth/login">
+              Iniciá sesión
+            </Link>
+          </div>
+        )}
       </aside>
 
       <section className="flex flex-1 justify-center px-6 py-8 sm:px-8 lg:w-[520px] lg:px-10 lg:py-10">
@@ -56,7 +59,7 @@ export default function RegisterLayout({
 
           {toggleOptions.length ? (
             <div className="mx-auto w-full max-w-xs">
-              <div className="relative flex w-full overflow-hidden rounded-xl border-x-2 border border-[#E69C00]/60 border-b-4 bg-white">
+              <div className="relative flex w-full overflow-hidden rounded-xl border border-[#E69C00]/60 border-x-2 border-b-4 bg-white">
                 {(() => {
                   const activeIndex = Math.max(
                     toggleOptions.findIndex(({ id }) => id === currentType),

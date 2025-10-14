@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import RegisterLayout from "../../components/auth/RegisterLayout.jsx";
+import AuthLayout from "../../components/auth/AuthLayout.jsx";
 
 const SIGNUP_TYPES = [
   {
@@ -46,7 +46,7 @@ export default function SignUpUserPage() {
   );
 
   return (
-    <RegisterLayout
+    <AuthLayout
       badgeLabel="Registro Jobee"
       title="Creá tu cuenta"
       description={
@@ -156,6 +156,6 @@ export default function SignUpUserPage() {
           </button>
         </div>
       </form>
-    </RegisterLayout>
+    </AuthLayout>
   );
 }
