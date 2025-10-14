@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import RegisterLayout from "../../components/auth/RegisterLayout.jsx";
+import AuthLayout from "../../components/auth/AuthLayout.jsx";
 
 const SIGNUP_TYPES = [
   {
@@ -46,7 +46,7 @@ export default function SignUpUserPage() {
   );
 
   return (
-    <RegisterLayout
+    <AuthLayout
       badgeLabel="Registro Jobee"
       title="Creá tu cuenta"
       description={
@@ -59,8 +59,8 @@ export default function SignUpUserPage() {
       formTitle="Registro usuarios"
       footer={footerContent}
     >
-      <form className="flex h-full flex-col gap-2.5" noValidate>
-        <div className="grid flex-1 content-start gap-x-3 gap-y-5 sm:grid-cols-2">
+      <form className="space-y-4" noValidate>
+        <div className="grid gap-x-3 gap-y-4 sm:grid-cols-2">
           {[
             {
               id: "email",
@@ -82,20 +82,20 @@ export default function SignUpUserPage() {
               type: "password",
               placeholder: "Confirmar contraseña",
             },
-          {
-            id: "name",
-            name: "name",
-            type: "text",
-            placeholder: "Nombre completo",
-            colSpan: 2,
-          },
-          {
-            id: "ci",
-            name: "ci",
-            type: "text",
-            placeholder: "Documento de identidad",
-            colSpan: 2,
-          },
+            {
+              id: "name",
+              name: "name",
+              type: "text",
+              placeholder: "Nombre completo",
+              colSpan: 2,
+            },
+            {
+              id: "ci",
+              name: "ci",
+              type: "text",
+              placeholder: "Documento de identidad",
+              colSpan: 2,
+            },
             {
               id: "birthDate",
               name: "birthDate",
@@ -147,15 +147,15 @@ export default function SignUpUserPage() {
           })}
         </div>
 
-        <div className="mt-auto flex justify-center pt-2">
+        <div className="flex justify-center pt-2">
           <button
             type="submit"
-            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-white md:w-auto md:text-base"
+            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50 md:w-auto md:text-base"
           >
             Crear cuenta
           </button>
         </div>
       </form>
-    </RegisterLayout>
+    </AuthLayout>
   );
 }

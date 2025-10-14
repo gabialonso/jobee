@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import JobeeLogo from "../../assets/Jobee_Logo.png";
-export default function RegisterLayout({
+export default function AuthLayout({
   badgeLabel,
   title,
   description,
@@ -10,6 +10,7 @@ export default function RegisterLayout({
   toggleOptions = [],
   currentType,
   onToggle,
+  asideFooter,
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-white text-gray-900 lg:flex-row">
@@ -37,16 +38,18 @@ export default function RegisterLayout({
           )}
         </div>
 
-        <div className="text-sm text-[#6F442C]/70">
-          ¿Ya tenés una cuenta?{" "}
-          <Link className="font-semibold text-[#1769E0]" to="/auth/login">
-            Iniciá sesión
-          </Link>
-        </div>
+        {asideFooter ?? (
+          <div className="text-sm text-[#6F442C]/70">
+            ¿Ya tenés una cuenta?{" "}
+            <Link className="font-semibold text-[#1769E0]" to="/auth/login">
+              Iniciá sesión
+            </Link>
+          </div>
+        )}
       </aside>
 
-      <section className="flex flex-1 justify-center px-6 py-8 sm:px-8 lg:w-[520px] lg:px-10 lg:py-10">
-        <div className="flex w-full max-w-md flex-1 flex-col justify-center gap-6 py-8 lg:py-0">
+      <section className="flex flex-1 items-center justify-center px-6 py-10 sm:px-8 lg:w-[480px] lg:px-10 lg:py-14">
+        <div className="w-full max-w-md space-y-6">
           <div className="flex items-center gap-3 lg:hidden">
             <Link to="/" className="flex items-center gap-3">
               <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto" />
@@ -55,8 +58,8 @@ export default function RegisterLayout({
           </div>
 
           {toggleOptions.length ? (
-            <div className="mx-auto w-full max-w-xs">
-              <div className="relative flex w-full overflow-hidden rounded-xl border-x-2 border border-[#E69C00]/60 border-b-4 bg-white">
+            <div className="mx-auto w-full max-w-xs md:max-w-sm">
+              <div className="relative flex w-full overflow-hidden rounded-xl border border-x-2 border-[#E69C00]/60 border-b-4 bg-white">
                 {(() => {
                   const activeIndex = Math.max(
                     toggleOptions.findIndex(({ id }) => id === currentType),

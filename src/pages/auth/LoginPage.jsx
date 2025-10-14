@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import JobeeLogo from "../../assets/Jobee_Logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import AuthLayout from "../../components/auth/AuthLayout.jsx";
 
 function MicrosoftLogo({ className = "", ...props }) {
   return (
@@ -44,54 +46,108 @@ const providers = [
   },
 ];
 
+const inputClass =
+  "w-full rounded-xl border border-gray-200 border-b-4 border-x-2 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD65B]";
+
 export default function LoginPage() {
-  return (
-    <div className="flex min-h-screen flex-col bg-white">
-      <header className="flex items-center gap-3 px-5 py-4 md:px-6">
-        <Link to="/" className="flex items-center gap-3">
-          <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto md:h-10" />
-          <span className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl">
-            Jobee
-          </span>
-        </Link>
-      </header>
+  const [showPassword, setShowPassword] = useState(false);
 
-      <main className="flex flex-1 items-center justify-center px-6 pb-12 md:px-12">
-        <section className="w-full max-w-md">
-          <article className="flex min-h-[20rem] flex-col justify-between gap-8 rounded-3xl border-b-7 border-x-4 border-t-4 border-gray-300 bg-white p-8 text-center">
-            <div className="space-y-4">
-              <span className="inline-flex items-center justify-center rounded-full bg-gray-100 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-gray-700">
-                Login
-              </span>
-              <div className="space-y-2">
-                <h1 className="text-2xl font-semibold text-gray-900 md:text-3xl">
-                  Inicio de sesión
-                </h1>
-                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
-                  Conectate a Jobee y accedé a oportunidades reales para crecer profesionalmente.
-                </p>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              {providers.map(({ id, label, icon: Icon, iconClassName, to }) => (
-                <Link
-                  key={id}
-                  to={to}
-                  className="flex w-full items-center justify-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-100 border-b-4 border-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFD65B]"
-                >
-                  {Icon ? <Icon aria-hidden className={iconClassName} /> : null}
-                  <span>{label}</span>
-                </Link>
-              ))}
-            </div>
-
-            <p className="text-xs text-gray-400">
-              Al continuar aceptás nuestras condiciones y política de privacidad.
-            </p>
-          </article>
-        </section>
-      </main>
+  const asideFooter = (
+    <div className="text-sm text-[#6F442C]/70">
+      ¿Todavía no tenés cuenta?{" "}
+      <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
+        Registrate
+      </Link>
     </div>
+  );
+
+  const footerContent = (
+    <div className="space-y-2 text-xs text-gray-500 text-center">
+      <p className="text-[11px] leading-relaxed text-gray-400">
+        Al continuar aceptás nuestras condiciones de uso y política de privacidad.
+      </p>
+      <p>
+        ¿Necesitás ayuda?{" "}
+        <Link className="font-semibold text-[#1769E0]" to="/auth/forgot-password">
+          Recuperar contraseña
+        </Link>
+      </p>
+    </div>
+  );
+
+  return (
+    <AuthLayout
+      badgeLabel="Acceso Jobee"
+      title="Inicio de sesión"
+      description="Conectate a Jobee y accedé a oportunidades reales para crecer profesionalmente."
+      formTitle="Ingresá a tu cuenta"
+      footer={footerContent}
+      asideFooter={asideFooter}
+    >
+      <form className="space-y-4" noValidate>
+        <div className="space-y-3">
+          <fieldset>
+            <label htmlFor="email" className="sr-only">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              className={inputClass}
+              placeholder="Email"
+              required
+            />
+          </fieldset>
+
+          <fieldset>
+            <label htmlFor="password" className="sr-only">
+              Contraseña
+            </label>
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                className={inputClass}
+                placeholder="Contraseña"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              >
+                {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+              </button>
+            </div>
+          </fieldset>
+        </div>
+
+        <div className="flex flex-col gap-4 pt-2">
+          <button
+            type="submit"
+            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50 md:text-base"
+          >
+            Iniciar sesión
+          </button>
+
+          <div className="flex flex-col gap-3">
+            {providers.map(({ id, label, icon: Icon, iconClassName, to }) => (
+              <Link
+                key={id}
+                to={to}
+                className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#E69C00]/60 border-b-4 border-x-2 bg-white px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF7E0]"
+              >
+                {Icon ? <Icon aria-hidden className={iconClassName} /> : null}
+                <span>{label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </form>
+    </AuthLayout>
   );
 }
