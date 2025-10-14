@@ -3,6 +3,63 @@ import { useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import AuthLayout from "../../components/auth/AuthLayout.jsx";
 
+const inputClass =
+  "w-full rounded-xl border border-gray-200 border-b-4 border-x-2 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD65B]";
+
+const COMPANY_FIELDS = [
+  {
+    id: "email",
+    name: "email",
+    type: "email",
+    placeholder: "Email corporativo",
+    autoComplete: "email",
+    colSpan: 2,
+  },
+  {
+    id: "password",
+    name: "password",
+    type: "password",
+    placeholder: "Contraseña",
+  },
+  {
+    id: "confirmPassword",
+    name: "confirmPassword",
+    type: "password",
+    placeholder: "Confirmar contraseña",
+  },
+  {
+    id: "name",
+    name: "name",
+    type: "text",
+    placeholder: "Nombre comercial",
+  },
+  {
+    id: "rut",
+    name: "rut",
+    type: "text",
+    placeholder: "RUT",
+  },
+  {
+    id: "legalReason",
+    name: "legalReason",
+    type: "text",
+    placeholder: "Razón social",
+  },
+  {
+    id: "socialGroup",
+    name: "socialGroup",
+    type: "text",
+    placeholder: "Grupo",
+  },
+  {
+    id: "subGroup",
+    name: "subGroup",
+    type: "text",
+    placeholder: "Subgrupo",
+    colSpan: 2,
+  },
+];
+
 const SIGNUP_TYPES = [
   {
     id: "user",
@@ -16,9 +73,6 @@ const SIGNUP_TYPES = [
     highlight: "Centralizá tus procesos y conocé talento preparado para crecer.",
   },
 ];
-
-const inputClass =
-  "w-full rounded-xl border border-gray-200 border-b-4 border-x-2 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD65B]";
 
 export default function SignUpCompanyPage() {
   const navigate = useNavigate();

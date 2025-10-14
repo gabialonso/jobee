@@ -3,6 +3,53 @@ import { useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import AuthLayout from "../../components/auth/AuthLayout.jsx";
 
+const inputClass =
+  "w-full rounded-xl border border-gray-200 border-b-4 border-x-2 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD65B]";
+
+const USER_FIELDS = [
+  {
+    id: "email",
+    name: "email",
+    type: "email",
+    placeholder: "Email",
+    autoComplete: "email",
+    colSpan: 2,
+  },
+  {
+    id: "password",
+    name: "password",
+    type: "password",
+    placeholder: "Contraseña",
+  },
+  {
+    id: "confirmPassword",
+    name: "confirmPassword",
+    type: "password",
+    placeholder: "Confirmar contraseña",
+  },
+  {
+    id: "name",
+    name: "name",
+    type: "text",
+    placeholder: "Nombre completo",
+    colSpan: 2,
+  },
+  {
+    id: "ci",
+    name: "ci",
+    type: "text",
+    placeholder: "Documento de identidad",
+    colSpan: 2,
+  },
+  {
+    id: "birthDate",
+    name: "birthDate",
+    type: "date",
+    placeholder: "Fecha de nacimiento",
+    colSpan: 2,
+  },
+];
+
 const SIGNUP_TYPES = [
   {
     id: "user",
@@ -16,9 +63,6 @@ const SIGNUP_TYPES = [
     path: "/auth/signup/company",
   },
 ];
-
-const inputClass =
-  "w-full rounded-xl border border-gray-200 border-b-4 border-x-2 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD65B]";
 
 export default function SignUpUserPage() {
   const navigate = useNavigate();
@@ -61,49 +105,7 @@ export default function SignUpUserPage() {
     >
       <form className="space-y-4" noValidate>
         <div className="grid gap-x-3 gap-y-4 sm:grid-cols-2">
-          {[
-            {
-              id: "email",
-              name: "email",
-              type: "email",
-              placeholder: "Email",
-              autoComplete: "email",
-              colSpan: 2,
-            },
-            {
-              id: "password",
-              name: "password",
-              type: "password",
-              placeholder: "Contraseña",
-            },
-            {
-              id: "confirmPassword",
-              name: "confirmPassword",
-              type: "password",
-              placeholder: "Confirmar contraseña",
-            },
-            {
-              id: "name",
-              name: "name",
-              type: "text",
-              placeholder: "Nombre completo",
-              colSpan: 2,
-            },
-            {
-              id: "ci",
-              name: "ci",
-              type: "text",
-              placeholder: "Documento de identidad",
-              colSpan: 2,
-            },
-            {
-              id: "birthDate",
-              name: "birthDate",
-              type: "date",
-              placeholder: "Fecha de nacimiento",
-              colSpan: 2,
-            },
-          ].map(({ id, name, type, placeholder, autoComplete, colSpan = 1 }) => {
+          {USER_FIELDS.map(({ id, name, type, placeholder, autoComplete, colSpan = 1 }) => {
             const isPassword = type === "password";
             const inputType = isPassword && passwordVisibility[name] ? "text" : type;
 
