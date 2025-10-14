@@ -56,12 +56,6 @@ export default function LoginPage() {
     <div className="space-y-2 text-xs text-gray-500 text-center">
       <p className="text-[11px] leading-relaxed text-gray-400">
         Al continuar aceptás nuestras condiciones de uso y política de privacidad.
-    </p>
-      <p>
-        ¿Necesitás ayuda?{" "}
-        <Link className="font-semibold text-[#1769E0]" to="/auth/forgot-password">
-          Recuperar contraseña
-        </Link>
       </p>
     </div>
   );
@@ -129,11 +123,6 @@ export default function LoginPage() {
                 {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
               </button>
             </div>
-            <p className="mt-2 text-xs text-right">
-              <Link className="font-semibold text-[#1769E0]" to="/auth/forgot-password">
-                Recuperar contraseña
-              </Link>
-            </p>
           </fieldset>
         </div>
 
@@ -160,6 +149,11 @@ export default function LoginPage() {
               ¿Todavía no tenés cuenta?{" "}
               <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
                 Registrate
+              </Link>
+            </p>
+            <p className="text-xs text-center">
+              <Link className="font-semibold text-[#1769E0]" to="/auth/forgot-password">
+                Recuperar contraseña
               </Link>
             </p>
           </div>
