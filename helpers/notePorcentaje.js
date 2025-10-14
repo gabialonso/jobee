@@ -39,7 +39,6 @@ class notePorcentaje {
     }
 }
 class NotePercentageCourse extends notePorcentaje {
-    // English method to set the course grade (no weights)
     setCourseGrade(value) {
         if (typeof value !== 'number' || Number.isNaN(value)) {
             throw new TypeError('Grade must be a number.');
@@ -50,7 +49,7 @@ class NotePercentageCourse extends notePorcentaje {
         this.courseGrade = { value };
     }
 
-    // Spanish alias for compatibility
+    
     establecerNotaCurso(valor) {
         return this.setCourseGrade(valor);
     }
@@ -60,7 +59,6 @@ class NotePercentageCourse extends notePorcentaje {
         delete this.courseGrade;
     }
 
-    // Spanish alias for compatibility
     quitarNotaCurso() {
         return this.removeCourseGrade();
     }

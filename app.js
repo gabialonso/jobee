@@ -10,6 +10,7 @@ import courseRoutes from './routes/courseRoutes.js';
 import purchaseRoutes from './routes/purchaseRoutes.js';
 import personRoutes from './routes/personRoutes.js';
 import companyRoutes from './routes/companyRoutes.js';
+import openAiRoutes from './routes/openAiRoutes.js';
 import { connectDB } from './config/db.js';
 
 dotenv.config();
@@ -35,6 +36,7 @@ app.use('/api/person', personRoutes);
 app.use('/api/purchase', purchaseRoutes);
 app.use('/api/company', companyRoutes);
 app.use('/api/stripe', stripeRoutes);
+app.use('/api/openAi', openAiRoutes);
 
 // Conexión a la base de datos
 connectDB();
