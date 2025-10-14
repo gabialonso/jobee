@@ -77,7 +77,7 @@ export default function LoginPage() {
       footer={footerContent}
     >
       <form className="space-y-4" noValidate>
-        <div className="space-y-3">
+        <div className="space-y-4">
           <fieldset>
             <label htmlFor="email" className="sr-only">
               Email
@@ -93,7 +93,7 @@ export default function LoginPage() {
             />
           </fieldset>
 
-          <fieldset>
+          <fieldset className="space-y-1.5">
             <label htmlFor="password" className="sr-only">
               Contraseña
             </label>
@@ -115,18 +115,23 @@ export default function LoginPage() {
                 {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
               </button>
             </div>
+            <p className="text-xs text-right">
+              <Link className="font-semibold text-[#1769E0]" to="/auth/forgot-password">
+                Recuperar contraseña
+              </Link>
+            </p>
           </fieldset>
         </div>
 
         <div className="flex flex-col gap-4 pt-2">
           <button
             type="submit"
-            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50 md:text-base"
+            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50"
           >
             Iniciar sesión
           </button>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex w-full flex-col gap-3">
             {providers.map(({ id, label, icon: Icon, iconClassName, to }) => (
               <Link
                 key={id}
@@ -137,15 +142,10 @@ export default function LoginPage() {
                 <span>{label}</span>
               </Link>
             ))}
-            <p className="text-xs text-gray-500 text-center lg:hidden">
+            <p className="text-xs text-center">
               ¿Todavía no tenés cuenta?{" "}
               <Link className="font-semibold text-[#1769E0]" to="/auth/signup/user">
                 Registrate
-              </Link>
-            </p>
-            <p className="text-xs text-center">
-              <Link className="font-semibold text-[#1769E0]" to="/auth/forgot-password">
-                Recuperar contraseña
               </Link>
             </p>
           </div>

@@ -42,7 +42,7 @@ export default function AuthLayout({
         {asideFooter ?? null}
       </aside>
 
-      <section className="flex flex-1 justify-center px-5 py-8 sm:px-8 lg:w-[460px] lg:px-9 lg:py-12">
+      <section className="flex flex-1 items-center justify-center px-5 py-8 sm:px-8 lg:w-[460px] lg:px-9 lg:py-12">
         <div className="flex w-full max-w-md flex-col gap-5">
           <div className="flex items-center gap-3 lg:hidden">
             <Link to="/" className="flex items-center gap-3">
