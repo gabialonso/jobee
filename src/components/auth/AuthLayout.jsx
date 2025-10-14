@@ -15,7 +15,7 @@ export default function AuthLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-white text-gray-900 lg:flex-row">
-      <aside className="relative hidden w-full max-w-xl flex-col justify-between px-10 py-10 lg:flex lg:sticky lg:top-0 lg:h-screen rounded-b-xl border-r-4 border-[#E69C00] bg-[#FFD65B]">
+      <aside className="relative hidden w-full max-w-xl flex-col justify-between rounded-r-xl border-r-4 border-[#E69C00] bg-[#FFD65B] px-10 py-10 lg:flex lg:sticky lg:top-0 lg:h-screen">
         <Link to="/" className="flex items-center gap-3">
           <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto md:h-10" />
           <span className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl">
@@ -42,8 +42,8 @@ export default function AuthLayout({
         {asideFooter ? <div className="hidden lg:block">{asideFooter}</div> : null}
       </aside>
 
-      <section className="flex flex-1 items-center justify-center px-6 py-10 sm:px-8 lg:w-[480px] lg:px-10 lg:py-14">
-        <div className="w-full max-w-md space-y-6">
+      <section className="flex flex-1 justify-center px-6 py-10 sm:px-8 lg:w-[480px] lg:px-10 lg:py-14">
+        <div className="flex w-full max-w-md flex-col gap-6">
           <div className="flex items-center gap-3 lg:hidden">
             <Link to="/" className="flex items-center gap-3">
               <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto" />
@@ -94,13 +94,15 @@ export default function AuthLayout({
               <h2 className="text-xl font-semibold text-[#2F1C10] sm:text-2xl">{formTitle}</h2>
               {headingAddon ?? null}
             </div>
+          ) : headingAddon ? (
+            headingAddon
           ) : null}
 
-          <div className="flex-1">{children}</div>
+          {children}
 
           {footer}
         </div>
       </section>
-    </div >
+    </div>
   );
 }
