@@ -15,7 +15,7 @@ export default function AuthLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-white text-gray-900 lg:flex-row">
-      <aside className="relative hidden w-full max-w-xl flex-col justify-between rounded-r-xl border-r-4 border-[#E69C00] bg-[#FFD65B] px-10 py-10 lg:flex lg:sticky lg:top-0 lg:h-screen">
+      <aside className="relative hidden w-full max-w-xl flex-col justify-between rounded-r-xl border-r-4 border-[#E69C00] bg-[#FFD65B] px-8 py-8 lg:flex lg:sticky lg:top-0 lg:h-screen">
         <Link to="/" className="flex items-center gap-3">
           <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto md:h-10" />
           <span className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl">
@@ -23,9 +23,9 @@ export default function AuthLayout({
           </span>
         </Link>
 
-        <div className="mt-16 space-y-6 text-left">
+        <div className="mt-12 space-y-5 text-left">
           {badgeLabel ? (
-            <span className="inline-flex items-center rounded-full border border-[#FFD65B] bg-[#FFF7E0] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6F442C]">
+            <span className="inline-flex items-center rounded-full border border-[#E69C00] bg-[#FFF7E0] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6F442C]">
               {badgeLabel}
             </span>
           ) : null}
@@ -42,8 +42,8 @@ export default function AuthLayout({
         {asideFooter ? <div className="hidden lg:block">{asideFooter}</div> : null}
       </aside>
 
-      <section className="flex flex-1 justify-center px-6 py-10 sm:px-8 lg:w-[480px] lg:px-10 lg:py-14">
-        <div className="flex w-full max-w-md flex-col gap-6">
+      <section className="flex flex-1 justify-center px-5 py-8 sm:px-8 lg:w-[460px] lg:px-9 lg:py-12">
+        <div className="flex w-full max-w-md flex-col gap-5">
           <div className="flex items-center gap-3 lg:hidden">
             <Link to="/" className="flex items-center gap-3">
               <img src={JobeeLogo} alt="Jobee" className="h-9 w-auto" />

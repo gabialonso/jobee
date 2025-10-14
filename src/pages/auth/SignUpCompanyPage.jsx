@@ -93,8 +93,7 @@ export default function SignUpCompanyPage() {
   const footerContent = (
     <div className="space-y-2 text-xs text-gray-500">
       <p className="text-[11px] leading-relaxed text-gray-400">
-        Al crear una cuenta aceptás nuestras condiciones de uso, política de privacidad y recibir
-        comunicaciones relevantes. Podés darte de baja cuando quieras.
+        Al crear una cuenta aceptás nuestras condiciones de uso y política de privacidad.
       </p>
     </div>
   );
@@ -113,8 +112,8 @@ export default function SignUpCompanyPage() {
       formTitle="Registro empresas"
       footer={footerContent}
     >
-      <form className="space-y-4" noValidate>
-        <div className="grid gap-x-3 gap-y-4 sm:grid-cols-2">
+      <form className="space-y-3" noValidate>
+        <div className="grid gap-x-3 gap-y-3 sm:grid-cols-2">
           {[
             {
               id: "email",

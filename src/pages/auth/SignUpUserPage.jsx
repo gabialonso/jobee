@@ -32,21 +32,18 @@ const USER_FIELDS = [
     name: "name",
     type: "text",
     placeholder: "Nombre completo",
-    colSpan: 2,
   },
   {
     id: "ci",
     name: "ci",
     type: "text",
     placeholder: "Documento de identidad",
-    colSpan: 2,
   },
   {
     id: "birthDate",
     name: "birthDate",
     type: "date",
     placeholder: "Fecha de nacimiento",
-    colSpan: 2,
   },
 ];
 
@@ -83,8 +80,7 @@ export default function SignUpUserPage() {
   const footerContent = (
     <div className="space-y-2 text-xs text-gray-500">
       <p className="text-[11px] leading-relaxed text-gray-400">
-        Al crear una cuenta aceptás nuestras condiciones de uso, política de privacidad y recibir
-        comunicaciones relevantes. Podés darte de baja cuando quieras.
+        Al crear una cuenta aceptás nuestras condiciones de uso y política de privacidad.
       </p>
     </div>
   );
@@ -103,8 +99,8 @@ export default function SignUpUserPage() {
       formTitle="Registro usuarios"
       footer={footerContent}
     >
-      <form className="space-y-4" noValidate>
-        <div className="grid gap-x-3 gap-y-4 sm:grid-cols-2">
+      <form className="space-y-3" noValidate>
+        <div className="grid gap-x-3 gap-y-3 sm:grid-cols-2">
           {USER_FIELDS.map(({ id, name, type, placeholder, autoComplete, colSpan = 1 }) => {
             const isPassword = type === "password";
             const inputType = isPassword && passwordVisibility[name] ? "text" : type;
