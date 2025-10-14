@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import jwtConfig from '../config/jwt.js';
 
-export const sigin = async ({ email, password, name, Ci, brithday }) => {
+export const signup = async ({ email, password, name, Ci, brithday }) => {
   const user = await UserService.findByEmail(email);
   if (!user) throw new Error('Usuario no encontrado');
   const valid = await bcrypt.compare(password, user.password);
