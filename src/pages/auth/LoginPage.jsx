@@ -4,6 +4,8 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import AuthLayout from "../../components/auth/AuthLayout.jsx";
+import { apiFetch } from "../../utils/api.js";
+import { saveSession } from "../../utils/auth.js";
 
 function MicrosoftLogo({ className = "", ...props }) {
   return (
@@ -61,19 +63,16 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      // Call login endpoint
+      const data = await apiFetch('/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: { email, password }
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Login failed');
-      }
+      // Save token and user data
+      saveSession(data.token, data.user);
 
-      const data = await response.json();
-      localStorage.setItem('token', data.token);
+      // Redirect to dashboard
       navigate('/user/dashboard');
     } catch (err) {
       setError(err.message);

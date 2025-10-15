@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { apiFetch } from "../../utils/api.js";
+import { logout } from "../../utils/auth.js";
 
 export default function UserDashboard() {
   const [profile, setProfile] = useState(null);
@@ -9,16 +11,8 @@ export default function UserDashboard() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('no token found');
-
-        const response = await fetch('http://localhost:3000/api/users/profile', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        if (!response.ok) throw new Error('failed to fetch profile');
-
-        const data = await response.json();
+        // Fetch user profile from backend
+        const data = await apiFetch('/users/profile');
         setProfile(data.data);
       } catch (err) {
         setError(err.message);
@@ -38,7 +32,7 @@ export default function UserDashboard() {
         <Link to="/user/company" style={{ marginRight: '15px' }}>companies</Link>
         <Link to="/user/courses" style={{ marginRight: '15px' }}>courses</Link>
         <Link to="/user/contacts" style={{ marginRight: '15px' }}>contacts</Link>
-        <button onClick={() => { localStorage.clear(); window.location.href = '/'; }} style={{ marginLeft: '20px' }}>
+        <button onClick={() => { logout(); window.location.href = '/'; }} style={{ marginLeft: '20px' }}>
           logout
         </button>
       </nav>

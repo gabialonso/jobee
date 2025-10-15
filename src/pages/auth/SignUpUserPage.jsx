@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import AuthLayout from "../../components/auth/AuthLayout.jsx";
+import { apiFetch } from "../../utils/api.js";
+import { saveSession } from "../../utils/auth.js";
 
 const inputClass =
   "w-full rounded-xl border border-gray-200 border-b-4 border-x-2 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD65B]";
@@ -99,23 +101,20 @@ export default function SignUpUserPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/register/user', {
+      // Call register endpoint
+      const data = await apiFetch('/auth/register/user', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        body: {
           name: formData.name,
           email: formData.email,
           password: formData.password
-        })
+        }
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Registration failed');
-      }
+      // Save token and user data
+      saveSession(data.token, data.user);
 
-      const data = await response.json();
-      localStorage.setItem('token', data.token);
+      // Redirect to dashboard
       navigate('/user/dashboard');
     } catch (err) {
       setError(err.message);
