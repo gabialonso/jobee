@@ -70,6 +70,15 @@ export default function SignUpUserPage() {
     password: false,
     confirmPassword: false,
   });
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    name: '',
+    ci: '',
+    birthDate: ''
+  });
+  const [error, setError] = useState('');
 
   const currentType = "user";
   const currentConfig = SIGNUP_TYPES.find(({ id }) => id === currentType);
@@ -78,6 +87,39 @@ export default function SignUpUserPage() {
     if (type === currentType) return;
     const target = SIGNUP_TYPES.find(({ id }) => id === type);
     if (target) navigate(target.path);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Las contraseñas no coinciden');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/register/user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Registration failed');
+      }
+
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      navigate('/user/dashboard');
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const footerContent = (
@@ -102,7 +144,8 @@ export default function SignUpUserPage() {
       formTitle="Registro usuarios"
       footer={footerContent}
     >
-      <form className="space-y-2.5" noValidate>
+      <form className="space-y-2.5" noValidate onSubmit={handleSubmit}>
+        {error && <p className="text-sm text-red-600">{error}</p>}
         <div className="grid gap-x-3 gap-y-3 sm:grid-cols-2">
           {USER_FIELDS.map(({ id, name, type, placeholder, autoComplete, colSpan = 1 }) => {
             const isPassword = type === "password";
@@ -121,6 +164,8 @@ export default function SignUpUserPage() {
                     className={inputClass}
                     placeholder={placeholder}
                     autoComplete={autoComplete}
+                    value={formData[name]}
+                    onChange={(e) => setFormData({...formData, [name]: e.target.value})}
                     required
                   />
                   {isPassword ? (

@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
-export default function Contacts_User() {
+
+export default function UserContacts() {
   return (
-    <div className="p-10">
-      <nav>
-        <Link to={"/user/dashboard"}>Inicio</Link>
-        <Link to={"/user/profile"}>Perfil</Link>
-        <Link to={"/user/company"}>Empresas</Link>
-        <Link to={"/user/contacts"}>Contactos</Link>
-        <Link to={"/user/courses"}>Cursos</Link>
+    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+      <nav style={{ marginBottom: '20px', borderBottom: '2px solid #333', paddingBottom: '10px' }}>
+        <Link to="/user/dashboard" style={{ marginRight: '15px' }}>dashboard</Link>
+        <Link to="/user/profile" style={{ marginRight: '15px' }}>profile</Link>
+        <Link to="/user/company" style={{ marginRight: '15px' }}>companies</Link>
+        <Link to="/user/courses" style={{ marginRight: '15px' }}>courses</Link>
+        <Link to="/user/contacts" style={{ marginRight: '15px', fontWeight: 'bold' }}>contacts</Link>
       </nav>
-      <h1 className="text-4xl font-bold text-yellow-600">Contactos de user cargó 👌</h1>
-      <p className="mt-3 text-gray-700">Router + Tailwind OK.</p>
+
+      <h1>contacts / messages</h1>
+
+      <p>messaging system placeholder - backend endpoint not implemented yet</p>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
@@ -51,6 +51,34 @@ const inputClass =
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Login failed');
+      }
+
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      navigate('/user/dashboard');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   const footerContent = (
     <div className="space-y-2 text-xs text-gray-500 text-center">
@@ -76,7 +104,8 @@ export default function LoginPage() {
       }
       footer={footerContent}
     >
-      <form className="space-y-4" noValidate>
+      <form className="space-y-4" noValidate onSubmit={handleSubmit}>
+        {error && <p className="text-sm text-red-600">{error}</p>}
         <div className="space-y-4">
           <fieldset>
             <label htmlFor="email" className="sr-only">
@@ -89,6 +118,8 @@ export default function LoginPage() {
               autoComplete="email"
               className={inputClass}
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </fieldset>
@@ -104,6 +135,8 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 className={inputClass}
                 placeholder="Contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
               <button
