@@ -2,18 +2,61 @@ import { Link } from "react-router-dom";
 
 export default function CompanyContacts() {
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <nav style={{ marginBottom: '20px', borderBottom: '2px solid #333', paddingBottom: '10px' }}>
-        <Link to="/company/dashboard" style={{ marginRight: '15px' }}>dashboard</Link>
-        <Link to="/company/profile" style={{ marginRight: '15px' }}>profile</Link>
-        <Link to="/company/users" style={{ marginRight: '15px' }}>candidates</Link>
-        <Link to="/company/courses" style={{ marginRight: '15px' }}>courses</Link>
-        <Link to="/company/contacts" style={{ marginRight: '15px', fontWeight: 'bold' }}>contacts</Link>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation */}
+      <nav className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex gap-6">
+          <Link to="/company/dashboard" className="text-gray-600 hover:text-gray-900 transition">
+            Dashboard
+          </Link>
+          <Link to="/company/profile" className="text-gray-600 hover:text-gray-900 transition">
+            Profile
+          </Link>
+          <Link to="/company/users" className="text-gray-600 hover:text-gray-900 transition">
+            Candidates
+          </Link>
+          <Link to="/company/courses" className="text-gray-600 hover:text-gray-900 transition">
+            Courses
+          </Link>
+          <Link to="/company/contacts" className="text-gray-900 font-semibold border-b-2 border-gray-900">
+            Contacts
+          </Link>
+        </div>
       </nav>
 
-      <h1>contacts / messages</h1>
+      {/* Main content */}
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">Messages & Contacts</h1>
 
-      <p>messaging system placeholder - backend endpoint not implemented yet</p>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                Feature Coming Soon
+              </h3>
+              <p className="text-blue-800">
+                The messaging system is currently under development.
+                Soon you'll be able to communicate directly with candidates and other companies.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+          <div className="text-center text-gray-500">
+            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+            <p className="mt-4 text-lg font-medium">No messages yet</p>
+            <p className="mt-2 text-sm">Your conversations will appear here</p>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
