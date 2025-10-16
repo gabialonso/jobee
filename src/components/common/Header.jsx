@@ -92,7 +92,7 @@ export default function Header({ mode = "public", currentPath = "" }) {
 
   return (
     <header className="w-full rounded-b-xl border-b-4 border-[#E69C00] bg-[#FFD65B]">
-      <div className="mx-auto w-full max-w-[90%] 2xl:max-w-[1600px] px-5 py-5 md:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-container px-5 py-5 md:px-6 lg:px-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
           <div className="flex items-center justify-between gap-4 md:gap-6">
             <Link to="/" className="flex items-center gap-3">

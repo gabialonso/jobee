@@ -119,7 +119,7 @@ export default function CompanyProfile() {
         currentPath={location.pathname}
       />
 
-      <main className="mx-auto w-full max-w-[90%] 2xl:max-w-[1600px] px-5 py-8 md:px-8 lg:px-12">
+      <main className="mx-auto w-full max-w-container px-5 py-8 md:px-8 lg:px-12">
         {message && (
           <div className={`mb-6 px-6 py-4 rounded-xl border-b-4 ${
             message.includes('Error') || message.includes('error')

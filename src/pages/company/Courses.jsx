@@ -31,7 +31,7 @@ export default function CompanyCourses() {
       <Header mode="company" currentPath={location.pathname} />
 
       {/* Main content */}
-      <main className="mx-auto w-full max-w-[90%] 2xl:max-w-[1600px] px-5 py-12 md:px-8 lg:px-12">
+      <main className="mx-auto w-full max-w-container px-5 py-12 md:px-8 lg:px-12">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div>
             <span className="inline-flex items-center rounded-full bg-[#9B1756]/10 border border-[#9B1756] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#9B1756] mb-4">

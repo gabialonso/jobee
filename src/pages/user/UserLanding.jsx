@@ -189,7 +189,7 @@ export default function UserLanding() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#FFF8E7]">
       <Header />
-      <main className="mx-auto flex w-full max-w-[90%] 2xl:max-w-[1600px] flex-1 flex-col gap-16 px-5 pb-16 pt-6 md:px-8 lg:px-12">
+      <main className="mx-auto flex w-full max-w-container flex-1 flex-col gap-16 px-5 pb-16 pt-6 md:px-8 lg:px-12">
         <UserHero />
         <UserBenefits />
         <UserCoursesSection />
