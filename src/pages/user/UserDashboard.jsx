@@ -92,36 +92,28 @@ export default function UserDashboard() {
                   icon={HiUser}
                   title="Editar Perfil"
                   description="Actualizá tu información profesional"
-                  borderColor="border-[#F3B61F]"
-                  iconBorderColor="border-[#E69C00]"
-                  iconColor="text-[#E69C00]"
+                  color="#F5C34D"
                 />
                 <ActionCard
                   to="/user/courses"
                   icon={HiBookOpen}
                   title="Ver Cursos"
                   description="Explorá cursos para tu desarrollo"
-                  borderColor="border-[#0B7285]"
-                  iconBorderColor="border-[#0B7285]"
-                  iconColor="text-[#0B7285]"
+                  color="#2A8A9E"
                 />
                 <ActionCard
                   to="/user/company"
                   icon={HiBuildingOffice2}
                   title="Empresas"
                   description="Descubrí oportunidades laborales"
-                  borderColor="border-[#DC2626]"
-                  iconBorderColor="border-[#DC2626]"
-                  iconColor="text-[#DC2626]"
+                  color="#E84D4D"
                 />
                 <ActionCard
                   to="/user/contacts"
                   icon={HiChatBubbleLeftRight}
                   title="Mensajes"
                   description="Gestioná tus contactos"
-                  borderColor="border-[#F3B61F]"
-                  iconBorderColor="border-[#E69C00]"
-                  iconColor="text-[#E69C00]"
+                  color="#2A8A9E"
                 />
               </div>
             </section>

@@ -1,13 +1,13 @@
 const STATUS_STYLES = {
   completed: {
-    border: "border-[#10B981]",
-    badge: "bg-[#10B981]/20 text-[#10B981]",
-    progressBg: "bg-[#10B981]",
+    border: "border-[#2A8A9E]",
+    badge: "bg-[#2A8A9E]/20 text-[#2A8A9E]",
+    progressBg: "bg-[#2A8A9E]",
   },
   in_progress: {
-    border: "border-[#F3B61F]",
-    badge: "bg-[#F3B61F]/30 text-[#1F2937]",
-    progressBg: "bg-[#F3B61F]",
+    border: "border-[#F5C34D]",
+    badge: "bg-[#F5C34D]/30 text-[#1F2937]",
+    progressBg: "bg-[#F5C34D]",
   },
 };
 

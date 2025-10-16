@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { apiFetch } from "../../utils/api.js";
 import Header from "../../components/common/Header.jsx";
 import CourseCarousel from "../../components/courses/CourseCarousel.jsx";
-import { COURSES } from "../../data/courses.js";
 import BannerImage from "../../assets/LandingBannerImg.svg";
 import { MdPlace } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -82,7 +83,7 @@ function FeatureHighlights() {
   );
 }
 
-function CoursesSection() {
+function CoursesSection({ courses }) {
   return (
     <section id="cursos" className="flex flex-col gap-6">
       <header className="flex flex-col gap-3 text-left">
@@ -95,7 +96,13 @@ function CoursesSection() {
           de nuestra red. Elegí por dónde empezar y avanzá a tu ritmo.
         </p>
       </header>
-      <CourseCarousel courses={COURSES} />
+      {courses.length > 0 ? (
+        <CourseCarousel courses={courses} />
+      ) : (
+        <div className="text-center py-12 rounded-xl bg-[#FFF0C2]">
+          <p className="text-[#4B5563]">Próximamente habrá cursos disponibles</p>
+        </div>
+      )}
     </section>
   );
 }
@@ -189,13 +196,37 @@ function ContactFooter() {
 }
 
 export default function HomePage() {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const data = await apiFetch('/course/');
+        const mappedCourses = (data.data || []).map(course => ({
+          title: course.title,
+          description: course.description,
+          duration: course.duration ? `${course.duration}h` : null,
+          plan: 'basico',
+          planLabel: 'Curso',
+          modality: 'Online',
+          courseId: course.courseId
+        }));
+        setCourses(mappedCourses);
+      } catch (err) {
+        console.error('Error fetching courses:', err);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#FFF8E7]">
       <Header />
       <main className="mx-auto flex w-full max-w-container flex-1 flex-col gap-16 px-5 pb-16 pt-6 md:px-8 lg:px-12">
         <Hero />
         <FeatureHighlights />
-        <CoursesSection />
+        <CoursesSection courses={courses} />
         <Metrics />
         <CallToAction />
       </main>

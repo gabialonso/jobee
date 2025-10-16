@@ -2,19 +2,19 @@ import { Link } from "react-router-dom";
 
 const PLAN_STYLES = {
   basico: {
-    border: "border-b-7 border-x-4 border-t-4 border-[#F3B61F]",
-    badge: "bg-[#F3B61F]/30 text-[#1F2937]",
-    button: "border-b-4 border-[#F3B61F] bg-white text-[#1F2937]",
+    border: "border-b-7 border-x-4 border-t-4 border-[#F5C34D]",
+    badge: "bg-[#F5C34D]/30 text-[#1F2937]",
+    button: "border-b-4 border-[#F5C34D] bg-white text-[#1F2937]",
   },
   medio: {
-    border: "border-b-7 border-x-4 border-t-4 border-[#0B7285]",
-    badge: "bg-[#0B7285]/20 text-[#0B7285]",
-    button: "border-b-4 border-[#0B7285] bg-white text-[#0B7285]",
+    border: "border-b-7 border-x-4 border-t-4 border-[#2A8A9E]",
+    badge: "bg-[#2A8A9E]/20 text-[#2A8A9E]",
+    button: "border-b-4 border-[#2A8A9E] bg-white text-[#2A8A9E]",
   },
   avanzado: {
-    border: "border-b-7 border-x-4 border-t-4 border-[#DC2626]",
-    badge: "bg-[#DC2626]/20 text-[#DC2626]",
-    button: "border-b-4 border-[#DC2626] bg-white text-[#DC2626]",
+    border: "border-b-7 border-x-4 border-t-4 border-[#E84D4D]",
+    badge: "bg-[#E84D4D]/20 text-[#E84D4D]",
+    button: "border-b-4 border-[#E84D4D] bg-white text-[#E84D4D]",
   },
 };
 

@@ -38,25 +38,19 @@ export default function CompanyDashboard() {
               label="Total de Candidatos"
               value="-"
               icon={HiUsers}
-              borderColor="border-[#0B7285]"
-              iconBgColor="bg-[#0B7285]/10"
-              iconColor="text-[#0B7285]"
+              color="#2A8A9E"
             />
             <StatCard
               label="Ofertas Activas"
               value="-"
               icon={HiBriefcase}
-              borderColor="border-[#10B981]"
-              iconBgColor="bg-[#10B981]/10"
-              iconColor="text-[#10B981]"
+              color="#F5C34D"
             />
             <StatCard
               label="Cursos Publicados"
               value="-"
               icon={HiBookOpen}
-              borderColor="border-[#DC2626]"
-              iconBgColor="bg-[#DC2626]/10"
-              iconColor="text-[#DC2626]"
+              color="#E84D4D"
             />
           </div>
         </section>
@@ -73,36 +67,28 @@ export default function CompanyDashboard() {
               icon={HiUser}
               title="Editar Perfil"
               description="Actualizá la información de tu empresa"
-              borderColor="border-[#F3B61F]"
-              iconBorderColor="border-[#E69C00]"
-              iconColor="text-[#E69C00]"
+              color="#F5C34D"
             />
             <ActionCard
               to="/company/courses"
               icon={HiPlus}
               title="Gestionar Cursos"
               description="Creá y administrá cursos de capacitación"
-              borderColor="border-[#DC2626]"
-              iconBorderColor="border-[#DC2626]"
-              iconColor="text-[#DC2626]"
+              color="#E84D4D"
             />
             <ActionCard
               to="/company/users"
               icon={HiMagnifyingGlass}
               title="Buscar Candidatos"
               description="Encontrá el talento ideal para tu empresa"
-              borderColor="border-[#0B7285]"
-              iconBorderColor="border-[#0B7285]"
-              iconColor="text-[#0B7285]"
+              color="#2A8A9E"
             />
             <ActionCard
               to="/company/contacts"
               icon={HiChatBubbleLeftRight}
               title="Mensajes"
               description="Gestioná tu comunicación con candidatos"
-              borderColor="border-[#10B981]"
-              iconBorderColor="border-[#10B981]"
-              iconColor="text-[#10B981]"
+              color="#2A8A9E"
             />
           </div>
         </section>

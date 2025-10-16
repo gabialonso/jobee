@@ -7,13 +7,6 @@ import StatCard from "../../components/common/StatCard";
 import { HiUsers, HiBriefcase, HiBookOpen } from "react-icons/hi2";
 import { FiEdit2, FiGlobe, FiMapPin, FiCamera } from "react-icons/fi";
 
-// Datos de ejemplo para estadísticas (luego del backend)
-const MOCK_STATS = {
-  totalCandidates: 45,
-  activeJobs: 8,
-  publishedCourses: 3,
-};
-
 export default function CompanyProfile() {
   const location = useLocation();
   const [formData, setFormData] = useState({
@@ -34,6 +27,11 @@ export default function CompanyProfile() {
   const [message, setMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [stats, setStats] = useState({
+    totalCandidates: '-',
+    activeJobs: '-',
+    publishedCourses: '-'
+  });
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -121,11 +119,10 @@ export default function CompanyProfile() {
 
       <main className="mx-auto w-full max-w-container px-5 py-8 md:px-8 lg:px-12">
         {message && (
-          <div className={`mb-6 px-6 py-4 rounded-xl border-b-4 ${
-            message.includes('Error') || message.includes('error')
+          <div className={`mb-6 px-6 py-4 rounded-xl border-b-4 ${message.includes('Error') || message.includes('error')
               ? 'bg-[#DC2626]/10 border-[#DC2626] text-[#DC2626]'
               : 'bg-[#10B981]/10 border-[#10B981] text-[#10B981]'
-          }`}>
+            }`}>
             {message}
           </div>
         )}
@@ -156,7 +153,7 @@ export default function CompanyProfile() {
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               {/* Company Logo */}
               <div className="relative -mt-16 md:-mt-20">
-                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl border-4 border-white bg-white overflow-hidden shadow-lg">
+                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl border-4 border-white bg-white overflow-hidden">
                   {formData.logoPhoto ? (
                     <img
                       src={formData.logoPhoto}
@@ -233,7 +230,7 @@ export default function CompanyProfile() {
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                     required
                   />
@@ -246,7 +243,7 @@ export default function CompanyProfile() {
                   <input
                     type="text"
                     value={formData.rut}
-                    onChange={(e) => setFormData({...formData, rut: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, rut: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                     required
                     placeholder="12-34567890-1"
@@ -260,7 +257,7 @@ export default function CompanyProfile() {
                   <input
                     type="text"
                     value={formData.legalReason}
-                    onChange={(e) => setFormData({...formData, legalReason: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, legalReason: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                   />
                 </div>
@@ -272,7 +269,7 @@ export default function CompanyProfile() {
                   <input
                     type="text"
                     value={formData.industry}
-                    onChange={(e) => setFormData({...formData, industry: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                     placeholder="Tecnología, Retail, etc."
                   />
@@ -285,7 +282,7 @@ export default function CompanyProfile() {
                   <input
                     type="text"
                     value={formData.location}
-                    onChange={(e) => setFormData({...formData, location: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                     placeholder="Montevideo, Uruguay"
                   />
@@ -298,7 +295,7 @@ export default function CompanyProfile() {
                   <input
                     type="url"
                     value={formData.website}
-                    onChange={(e) => setFormData({...formData, website: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                     placeholder="https://..."
                   />
@@ -311,7 +308,7 @@ export default function CompanyProfile() {
                   <input
                     type="text"
                     value={formData.groupName}
-                    onChange={(e) => setFormData({...formData, groupName: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, groupName: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                   />
                 </div>
@@ -323,7 +320,7 @@ export default function CompanyProfile() {
                   <input
                     type="text"
                     value={formData.subGroupName}
-                    onChange={(e) => setFormData({...formData, subGroupName: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, subGroupName: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                   />
                 </div>
@@ -334,7 +331,7 @@ export default function CompanyProfile() {
                   </label>
                   <textarea
                     value={formData.description}
-                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition resize-none"
                     rows="4"
                     placeholder="Describí tu empresa, su misión y valores..."
@@ -393,27 +390,21 @@ export default function CompanyProfile() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StatCard
                   label="Candidatos Contactados"
-                  value={MOCK_STATS.totalCandidates}
+                  value={stats.totalCandidates}
                   icon={HiUsers}
-                  borderColor="border-[#0B7285]"
-                  iconBgColor="bg-[#0B7285]/10"
-                  iconColor="text-[#0B7285]"
+                  color="#2A8A9E"
                 />
                 <StatCard
                   label="Ofertas Activas"
-                  value={MOCK_STATS.activeJobs}
+                  value={stats.activeJobs}
                   icon={HiBriefcase}
-                  borderColor="border-[#10B981]"
-                  iconBgColor="bg-[#10B981]/10"
-                  iconColor="text-[#10B981]"
+                  color="#F5C34D"
                 />
                 <StatCard
                   label="Cursos Publicados"
-                  value={MOCK_STATS.publishedCourses}
+                  value={stats.publishedCourses}
                   icon={HiBookOpen}
-                  borderColor="border-[#DC2626]"
-                  iconBgColor="bg-[#DC2626]/10"
-                  iconColor="text-[#DC2626]"
+                  color="#E84D4D"
                 />
               </div>
             </section>
