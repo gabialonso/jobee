@@ -1,0 +1,18 @@
+arreglos para integracion con frontend
+=======================================
+
+lo que cambie:
+
+- typo "sigin" -> "signup" en authService y userService
+- nuevas rutas: POST /api/auth/register/user y /api/auth/register/company
+- validacion basica de campos en middlewares/validationMiddleware.js
+- register devuelve token automaticamente (registra y logea de una)
+
+archivos tocados:
+- services/authService.js
+- services/userService.js
+- controllers/authController.js
+- routes/authRoutes.js
+- middlewares/validationMiddleware.js (nuevo)
+
+nota: la ruta de company por ahora hace lo mismo que user, despues se mejora

@@ -1,4 +1,5 @@
 import * as authService from '../services/authService.js';
+import * as userService from '../services/userService.js';
 
 export const login = async (req, res) => {
   try {
@@ -6,5 +7,43 @@ export const login = async (req, res) => {
     res.json({ token, user });
   } catch (error) {
     res.status(401).json({ error: error.message });
+  }
+};
+
+export const registerUser = async (req, res) => {
+  try {
+    const user = await userService.signup(req.body);
+    const { token, user: userData } = await authService.login({
+      email: user.email,
+      password: req.body.password
+    });
+    res.status(201).json({
+      success: true,
+      message: 'Usuario registrado exitosamente',
+      token,
+      user: userData
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const registerCompany = async (req, res) => {
+  try {
+    // TODO: Implementar lógica de registro de empresa
+    // Por ahora, registramos como usuario normal
+    const user = await userService.signup(req.body);
+    const { token, user: userData } = await authService.login({
+      email: user.email,
+      password: req.body.password
+    });
+    res.status(201).json({
+      success: true,
+      message: 'Empresa registrada exitosamente',
+      token,
+      user: userData
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
