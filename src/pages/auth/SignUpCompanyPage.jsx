@@ -129,8 +129,14 @@ export default function SignUpCompanyPage() {
       // Save token and user data
       saveSession(data.token, data.user);
 
-      // Redirect to dashboard
-      navigate('/company/dashboard');
+      // Redirect based on user role
+      if (data.user.role === 'companies') {
+        navigate('/company/dashboard');
+      } else if (data.user.role === 'Admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/user/dashboard');
+      }
     } catch (err) {
       setError(err.message);
     }

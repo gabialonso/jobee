@@ -89,7 +89,7 @@ ARCHIVOS CREADOS:
 
 1. src/utils/api.js
    * Función apiFetch() para hacer requests al backend
-   * URL base: http://localhost:3000/api
+   * URL base: http:+localhost:3000/api
    * Manejo automático de:
      - Headers (Content-Type, Authorization)
      - Token JWT desde localStorage

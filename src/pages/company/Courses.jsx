@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
+import Header from "../../components/common/Header";
+import { HiPlus, HiBookOpen, HiClock, HiCurrencyDollar, HiTag } from "react-icons/hi2";
 
 export default function CompanyCourses() {
+  const location = useLocation();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,130 +20,126 @@ export default function CompanyCourses() {
       setCourses(data.data || []);
     } catch (err) {
       console.error('Error fetching courses:', err);
-      setError('Failed to load courses');
+      setError('Error al cargar los cursos');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex gap-6">
-          <Link to="/company/dashboard" className="text-gray-600 hover:text-gray-900 transition">
-            Dashboard
-          </Link>
-          <Link to="/company/profile" className="text-gray-600 hover:text-gray-900 transition">
-            Profile
-          </Link>
-          <Link to="/company/users" className="text-gray-600 hover:text-gray-900 transition">
-            Candidates
-          </Link>
-          <Link to="/company/courses" className="text-gray-900 font-semibold border-b-2 border-gray-900">
-            Courses
-          </Link>
-          <Link to="/company/contacts" className="text-gray-600 hover:text-gray-900 transition">
-            Contacts
-          </Link>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-[#FFF8E7]">
+      <Header mode="company" currentPath={location.pathname} />
 
       {/* Main content */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Manage Courses</h1>
+      <main className="mx-auto w-full max-w-[90%] 2xl:max-w-[1600px] px-5 py-12 md:px-8 lg:px-12">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+          <div>
+            <span className="inline-flex items-center rounded-full bg-[#9B1756]/10 border border-[#9B1756] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#9B1756] mb-4">
+              Gestión de Cursos
+            </span>
+            <h1 className="text-3xl font-bold text-[#1F2937] md:text-4xl lg:text-5xl">
+              Tus Cursos
+            </h1>
+            <p className="text-base leading-relaxed text-[#4B5563] mt-3 md:text-lg">
+              Creá y administrá los cursos de capacitación para tu empresa.
+            </p>
+          </div>
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition flex items-center gap-2"
-            onClick={() => alert('Create course feature coming soon')}
+            className="flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-5 py-3 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2]"
+            onClick={() => alert('Funcionalidad de crear curso próximamente')}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-            </svg>
-            Create New Course
+            <HiPlus className="w-5 h-5" />
+            Crear Nuevo Curso
           </button>
         </div>
 
         {loading && (
           <div className="text-center py-12">
-            <p className="text-gray-600">Loading courses...</p>
+            <p className="text-[#6F442C]">Cargando cursos...</p>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+          <div className="bg-[#DC2626]/10 border-b-4 border-[#DC2626] text-[#DC2626] px-6 py-4 rounded-xl mb-6">
             {error}
           </div>
         )}
 
         {!loading && !error && courses.length > 0 && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {courses.map((course) => (
-              <div
+              <article
                 key={course.courseId}
-                className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition"
+                className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-6 transition hover:shadow-lg"
               >
-                <div className="flex items-start justify-between">
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    <h3 className="text-2xl font-bold text-[#1F2937] mb-3">
                       {course.title}
                     </h3>
-                    <p className="text-gray-600 mb-4">{course.description}</p>
-                    <div className="flex gap-4 text-sm text-gray-500">
+                    <p className="text-[#4B5563] leading-relaxed mb-4">{course.description}</p>
+                    <div className="flex flex-wrap gap-3">
                       {course.duration && (
-                        <span className="flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          {course.duration}h
-                        </span>
+                        <div className="flex items-center gap-2 px-3 py-2 bg-[#FFF0C2] rounded-xl border-b-4 border-[#F3B61F]">
+                          <HiClock className="w-4 h-4 text-[#E69C00]" />
+                          <span className="text-sm font-semibold text-[#1F2937]">{course.duration}h</span>
+                        </div>
                       )}
                       {course.price && (
-                        <span className="flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          ${course.price}
-                        </span>
+                        <div className="flex items-center gap-2 px-3 py-2 bg-[#10B981]/10 rounded-xl border-b-4 border-[#10B981]">
+                          <HiCurrencyDollar className="w-4 h-4 text-[#10B981]" />
+                          <span className="text-sm font-semibold text-[#1F2937]">${course.price}</span>
+                        </div>
                       )}
                       {course.theme && (
-                        <span className="flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                          </svg>
-                          {course.theme}
-                        </span>
+                        <div className="flex items-center gap-2 px-3 py-2 bg-[#0B7285]/10 rounded-xl border-b-4 border-[#0B7285]">
+                          <HiTag className="w-4 h-4 text-[#0B7285]" />
+                          <span className="text-sm font-semibold text-[#1F2937]">{course.theme}</span>
+                        </div>
                       )}
                     </div>
                   </div>
-                  <div className="flex gap-2 ml-4">
+                  <div className="flex lg:flex-col gap-3">
                     <button
-                      onClick={() => alert('Edit feature coming soon')}
-                      className="px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition"
+                      onClick={() => alert('Función de editar próximamente')}
+                      className="flex-1 lg:flex-none px-4 py-2 text-sm font-semibold text-[#0B7285] bg-[#0B7285]/10 rounded-xl border-b-4 border-[#0B7285] hover:bg-[#0B7285]/20 transition"
                     >
-                      Edit
+                      Editar
                     </button>
                     <button
-                      onClick={() => alert('Delete feature coming soon')}
-                      className="px-3 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition"
+                      onClick={() => alert('Función de eliminar próximamente')}
+                      className="flex-1 lg:flex-none px-4 py-2 text-sm font-semibold text-[#DC2626] bg-[#DC2626]/10 rounded-xl border-b-4 border-[#DC2626] hover:bg-[#DC2626]/20 transition"
                     >
-                      Delete
+                      Eliminar
                     </button>
                   </div>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         )}
 
         {!loading && !error && courses.length === 0 && (
-          <div className="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-200">
-            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            <p className="mt-4 text-lg font-medium text-gray-900">No courses created yet</p>
-            <p className="mt-2 text-sm text-gray-600">Create your first course to get started</p>
-          </div>
+          <section className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-8 md:p-12">
+            <div className="text-center">
+              <div className="inline-flex p-6 bg-[#FFF0C2] rounded-3xl border-b-4 border-[#E69C00] mb-6">
+                <HiBookOpen className="w-16 h-16 text-[#E69C00]" />
+              </div>
+              <h2 className="text-2xl font-bold text-[#1F2937] mb-3">
+                Aún no has creado cursos
+              </h2>
+              <p className="text-[#4B5563] max-w-md mx-auto mb-6">
+                Creá tu primer curso para comenzar a ofrecer capacitación a candidatos y empleados.
+              </p>
+              <button
+                onClick={() => alert('Funcionalidad de crear curso próximamente')}
+                className="inline-flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-3 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2]"
+              >
+                <HiPlus className="w-5 h-5" />
+                Crear Mi Primer Curso
+              </button>
+            </div>
+          </section>
         )}
       </main>
     </div>
