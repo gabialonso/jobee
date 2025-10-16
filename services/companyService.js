@@ -23,6 +23,10 @@ export const listCompaniesByUser = async (userId) => {
     return prisma.company.findMany({ where: { userId } });
 };
 
+export const listAllCompanies = async () => {
+    return prisma.company.findMany();
+};
+
 export const updateCompany = async (id, data) => {
     return prisma.company.update({ where: { id }, data });
 };

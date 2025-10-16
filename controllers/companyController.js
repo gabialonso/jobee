@@ -2,6 +2,7 @@ import {
         createCompany,
         getCompanyById,
         listCompaniesByUser,
+        listAllCompanies,
         updateCompany,
         deleteCompany}from "../services/companyService.js";
 import 'express-async-errors';
@@ -50,6 +51,21 @@ export const listCompaniesByUserHandler = async (req, res, next) => {
     try {
         const userId = Number(req.params.userId);
         const companies = await listCompaniesByUser(userId);
+
+        return res.status(200).json({
+            success: true,
+            message: "Companies retrieved successfully",
+            data: companies,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// GET /api/v1/companies - list all companies
+export const listAllCompaniesHandler = async (req, res, next) => {
+    try {
+        const companies = await listAllCompanies();
 
         return res.status(200).json({
             success: true,

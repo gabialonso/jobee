@@ -11,7 +11,7 @@ import {
 const router = Router();
 
 router.post("/",             createPersonHandler);
-router.get("/person/:userId",  listPersonsByUserHandler);
+router.get("/user/:userId",      listPersonsByUserHandler);
 router.get("/:userId",           getPersonByIdHandler);
 router.put("/:userId",           updatePersonHandler);
 router.patch("/:userId",         updatePersonHandler);
