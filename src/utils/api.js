@@ -1,5 +1,5 @@
-// base URL for backend API
-const API_URL = 'http://localhost:3000/api';
+// base URL for backend API (from environment variables)
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 /**
  * Fetch wrapper for backend requests
