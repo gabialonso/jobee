@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
+import { mockApi } from "../../utils/mockData";
 import CourseCard from "../../components/courses/CourseCard";
 import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
 
@@ -9,6 +10,7 @@ export default function UserCourses() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [enrolling, setEnrolling] = useState(null);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -44,6 +46,21 @@ export default function UserCourses() {
     fetchCourses();
   }, []);
 
+  const handleEnroll = async (courseId) => {
+    setEnrolling(courseId);
+    try {
+      // Simulated enrollment - in real implementation would call mockApi or apiFetch
+      await mockApi.enrollInCourse(1, courseId); // userId hardcoded to 1 for demo
+      alert('¡Inscripción exitosa! (simulación). Cuando integres con backend, descomentá la línea de apiFetch.');
+      // await apiFetch('/enrollments/', { method: 'POST', body: { courseId } });
+    } catch (err) {
+      console.error('Error enrolling in course:', err);
+      alert('Error al inscribirse en el curso');
+    } finally {
+      setEnrolling(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#FFF8E7]">
       <AuthenticatedHeader mode="user" currentPath={location.pathname} />
@@ -77,7 +94,16 @@ export default function UserCourses() {
         {!loading && !error && courses.length > 0 && (
           <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] p-6 sm:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (
-              <CourseCard key={course.courseId} course={course} />
+              <div key={course.courseId} className="flex flex-col">
+                <CourseCard course={course} />
+                <button
+                  onClick={() => handleEnroll(course.courseId)}
+                  disabled={enrolling === course.courseId}
+                  className="mt-4 w-full px-5 py-3 rounded-xl bg-[#10B981] border-b-4 border-[#059669] text-white font-semibold transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {enrolling === course.courseId ? 'Inscribiendo...' : 'Inscribirse Ahora'}
+                </button>
+              </div>
             ))}
           </section>
         )}
