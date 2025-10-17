@@ -2,6 +2,14 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+      '3xl': '1920px',
+    },
     extend: {
       fontFamily: {
         atkinson: ['"Atkinson Hyperlegible"', "sans-serif"],
@@ -24,6 +32,9 @@ export default {
         vibrantBlue: "#3B82F6",
         lightRed: "#F87171",
         brightHoney: "#F3B61F",
+      },
+      maxWidth: {
+        'container': 'min(90%, 1400px)',
       },
     },
   },

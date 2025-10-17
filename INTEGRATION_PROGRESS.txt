@@ -1,448 +1,464 @@
 ================================================================================
-  JOBEE - INTEGRACIÓN BACKEND-FRONTEND - PROGRESO Y CONTEXTO
+  JOBEE - BACKEND-FRONTEND INTEGRATION GUIDE
 ================================================================================
 
-FECHA: 15 de Octubre 2025
-BRANCH: feat/backend-integration
-OBJETIVO: Integrar jobee-backend con jobee-frontend para crear un MVP funcional
+Last Updated: October 15, 2025
+Branch: feat/backend-integration
+Status: ✅ COMPLETE AND FUNCTIONAL
 
 ================================================================================
-1. CONTEXTO INICIAL
+TABLE OF CONTENTS
 ================================================================================
 
-SITUACIÓN DEL PROYECTO:
-- Frontend (jobee-frontend):
-  * Landing page completamente diseñada con Tailwind CSS 4
-  * Sistema de autenticación (Login, SignUp User, SignUp Company) con diseño profesional
-  * Páginas de dashboard con estructura básica pero SIN estilos (inline styles)
-  * Páginas secundarias (Profile, Courses, Contacts, etc.) prácticamente vacías
-  * NO había integración con backend
-  * NO había sistema de manejo de sesiones/tokens
-
-- Backend (jobee-backend):
-  * API REST funcional con Node.js + Express
-  * Base de datos: MySQL con Prisma ORM
-  * Autenticación: JWT + bcrypt
-  * CORS configurado para localhost:5173
-  * Endpoints principales:
-    - POST /api/auth/login - Login unificado
-    - POST /api/auth/register/user - Registro usuario
-    - POST /api/auth/register/company - Registro empresa
-    - GET /api/users/profile - Perfil usuario (requiere JWT)
-    - GET /api/course/ - Lista de cursos
-    - CRUD de companies, persons, purchases, etc.
-
-REQUERIMIENTO DEL USUARIO:
-- Integrar backend con frontend de forma BÁSICA para MVP
-- Modificar LO MENOS POSIBLE el backend original
-- Tener todo funcionando e integrado antes de continuar con estilos
-- Código simple y "principiante friendly"
-- Comentarios en inglés y cortos
+1. Project Overview
+2. What Was Implemented
+3. Technical Changes (File by File)
+4. How to Run the Full Stack
+5. Testing the Integration
+6. Future Improvements
 
 ================================================================================
-2. PLAN DE INTEGRACIÓN PROPUESTO (7 FASES)
+1. PROJECT OVERVIEW
 ================================================================================
 
-FASE 1: Infraestructura base de integración ✅ COMPLETADA
-  - Crear utilidades de API y autenticación
-  - Crear componente ProtectedRoute
-  - Integrar login y registro con el backend
-  - Proteger rutas privadas
-  Cambios al backend: NINGUNO
+GOAL:
+Integrate jobee-backend with jobee-frontend to create a functional MVP where
+users and companies can register, login, create profiles, view courses, and
+interact with real data from a MySQL database.
 
-FASE 2: Rediseñar dashboards básicos ✅ COMPLETADA
-  - UserDashboard.jsx con Tailwind CSS ✅
-  - CompanyDashboard.jsx con Tailwind CSS ✅
-  - Navegación consistente en todas las páginas ✅
-  Cambios al backend: NINGUNO
+STACK:
+- Frontend: React 19 + Vite 7 + Tailwind CSS 4
+- Backend: Node.js 18 + Express 4 + Prisma 6
+- Database: MySQL 8.0 (running in Docker)
+- Auth: JWT + bcryptjs
 
-FASE 3: Páginas de cursos (MVP) ✅ COMPLETADA
-  - Conectar UserCourses.jsx con GET /api/course/ ✅
-  - Mostrar cursos con componente CourseCard existente ✅
-  - Estilizar con Tailwind CSS ✅
-  - CompanyCourses.jsx integrado con backend ✅
-  Cambios al backend: NINGUNO
-
-FASE 4: Páginas de perfil (MVP) ✅ COMPLETADA
-  - Formulario perfil usuario (crear/editar Person) ✅
-  - Formulario perfil empresa (crear/editar Company) ✅
-  - Carga automática de perfiles existentes ✅
-  - Modo creación/edición automático ✅
-  Cambios al backend: NINGUNO (endpoints ya existían)
-
-FASE 5: Listados básicos ✅ COMPLETADA
-  - UserCompany.jsx - Listar empresas ✅
-  - CompanyUsers.jsx - Placeholder (sin endpoint backend) ✅
-  Cambios al backend: NINGUNO
-
-FASE 6: Sistema de mensajería (Opcional) ✅ PLACEHOLDER
-  - UserContacts.jsx y CompanyContacts.jsx con UI profesional ✅
-  - Mensaje "Coming Soon" para futura implementación ✅
-  Cambios al backend: PENDIENTE para futura implementación
+KEY PRINCIPLE:
+Modify the backend as little as possible. All integration logic lives in the
+frontend.
 
 ================================================================================
-3. FASE 1 - LO QUE SE IMPLEMENTÓ (COMPLETADO)
+2. WHAT WAS IMPLEMENTED
 ================================================================================
 
-ARCHIVOS CREADOS:
+PHASE 1: INFRASTRUCTURE ✅
+- Created API utility functions (src/utils/api.js)
+- Created auth utility functions (src/utils/auth.js)
+- Created ProtectedRoute component for route protection
+- Integrated login/signup pages with backend
+- Protected all private routes
+
+PHASE 2: UI/UX WITH TAILWIND CSS ✅
+- Redesigned UserDashboard with professional Tailwind styling
+- Redesigned CompanyDashboard with professional Tailwind styling
+- Consistent navigation across all pages
+- Eliminated all inline styles
+
+PHASE 3: COURSES INTEGRATION ✅
+- Connected UserCourses to GET /api/course/
+- Connected CompanyCourses to backend
+- Added loading states, error handling, empty states
+
+PHASE 4: PROFILE MANAGEMENT ✅
+- UserProfile: create/edit Person profiles
+- CompanyProfile: create/edit Company profiles
+- Auto-detection of existing profiles
+- Full CRUD functionality
+
+PHASE 5: LISTINGS ✅
+- UserCompany: list all companies from backend
+- CompanyUsers: UI placeholder (no backend endpoint yet)
+
+PHASE 6: MESSAGING (PLACEHOLDER) ✅
+- UserContacts and CompanyContacts with professional UI
+- "Coming Soon" message for future implementation
+
+PHASE 7: DATABASE SETUP ✅
+- MySQL 8.0 running in Docker container
+- Prisma schema synced with database (13 tables)
+- Backend connection established
+
+TOTAL: 10 pages fully integrated + database configured
+
+================================================================================
+3. TECHNICAL CHANGES (FILE BY FILE)
+================================================================================
+
+FRONTEND CHANGES:
 -----------------
 
-1. src/utils/api.js
-   * Función apiFetch() para hacer requests al backend
-   * URL base: http://localhost:3000/api
-   * Manejo automático de:
-     - Headers (Content-Type, Authorization)
-     - Token JWT desde localStorage
-     - Errores HTTP
-   * Uso: apiFetch('/auth/login', { method: 'POST', body: { email, password } })
+📄 src/utils/api.js (NEW FILE)
+  What: HTTP request wrapper for backend communication
+  Why: Centralizes API calls, auto-includes JWT token, handles errors
+  How:
+    - Base URL: http://localhost:3000/api
+    - Automatically adds Authorization header if token exists
+    - Returns parsed JSON or throws error
+  Usage:
+    apiFetch('/auth/login', { method: 'POST', body: { email, password } })
 
-2. src/utils/auth.js
-   * saveSession(token, user) - Guardar sesión en localStorage
-   * getUser() - Obtener datos del usuario guardados
-   * getToken() - Obtener token guardado
-   * isAuthenticated() - Verificar si hay sesión activa
-   * logout() - Cerrar sesión (borrar todo)
+📄 src/utils/auth.js (NEW FILE)
+  What: Authentication utilities
+  Why: Centralizes session management
+  Functions:
+    - saveSession(token, user) - Store token + user in localStorage
+    - getToken() - Retrieve token
+    - getUser() - Retrieve user data
+    - isAuthenticated() - Check if token exists
+    - logout() - Clear session
 
-3. src/components/common/ProtectedRoute.jsx
-   * Componente que envuelve rutas privadas
-   * Redirige a /auth/login si no hay token
-   * Uso: <ProtectedRoute><UserDashboard /></ProtectedRoute>
+📄 src/components/common/ProtectedRoute.jsx (NEW FILE)
+  What: Wrapper component for private routes
+  Why: Redirects to login if no token exists
+  How: Checks isAuthenticated(), redirects to /auth/login if false
 
-ARCHIVOS MODIFICADOS:
----------------------
+📄 src/pages/auth/LoginPage.jsx (MODIFIED)
+  Before: Direct fetch to backend
+  After: Uses apiFetch() and saveSession()
+  Changes:
+    - Import apiFetch and saveSession
+    - Call apiFetch('/auth/login', { method: 'POST', body: {...} })
+    - Save session on success
+    - Redirect to /user/dashboard or /company/dashboard based on role
 
-4. src/pages/auth/LoginPage.jsx
-   ANTES: Hacía fetch directo a http://localhost:3000/api/auth/login
-   AHORA:
-   - Importa apiFetch y saveSession
-   - Usa apiFetch('/auth/login', { method: 'POST', body: { email, password } })
-   - Guarda sesión con saveSession(data.token, data.user)
-   - Redirige a /user/dashboard
+📄 src/pages/auth/SignUpUserPage.jsx (MODIFIED)
+  Before: Direct fetch to backend
+  After: Uses apiFetch() and saveSession()
+  Changes:
+    - Import apiFetch and saveSession
+    - Call apiFetch('/auth/register/user', { method: 'POST', body: {...} })
+    - Auto-save session and redirect
 
-5. src/pages/auth/SignUpUserPage.jsx
-   ANTES: Hacía fetch directo a http://localhost:3000/api/auth/register/user
-   AHORA:
-   - Importa apiFetch y saveSession
-   - Usa apiFetch('/auth/register/user', { method: 'POST', body: {...} })
-   - Guarda sesión automáticamente
-   - Redirige a /user/dashboard
+📄 src/pages/auth/SignUpCompanyPage.jsx (MODIFIED)
+  Before: Direct fetch to backend
+  After: Uses apiFetch() and saveSession()
+  Changes:
+    - Same as SignUpUserPage but for companies
 
-6. src/pages/auth/SignUpCompanyPage.jsx
-   ANTES: Hacía fetch directo a http://localhost:3000/api/auth/register/company
-   AHORA:
-   - Importa apiFetch y saveSession
-   - Usa apiFetch('/auth/register/company', { method: 'POST', body: {...} })
-   - Guarda sesión automáticamente
-   - Redirige a /company/dashboard
+📄 src/App.jsx (MODIFIED)
+  Before: Routes unprotected
+  After: All private routes wrapped with <ProtectedRoute>
+  Changes:
+    - Import ProtectedRoute
+    - Wrap all /user/* and /company/* routes
 
-7. src/App.jsx
-   CAMBIO PRINCIPAL: Todas las rutas privadas ahora están protegidas
-   - Importa ProtectedRoute
-   - Envuelve TODAS las rutas de /user/* y /company/* con <ProtectedRoute>
-   - Si intentas acceder sin login → redirige a /auth/login
+📄 src/pages/user/UserDashboard.jsx (REDESIGNED)
+  Before: Inline styles, manual token handling
+  After: Tailwind CSS, uses apiFetch() and logout()
+  Changes:
+    - Professional card layout with Tailwind
+    - Quick actions grid
+    - Uses apiFetch('/users/profile') for data
+    - Logout button with useNavigate
 
-8. src/pages/user/UserDashboard.jsx
-   ANTES:
-   - Hacía fetch directo con token manual
-   - Usaba localStorage.clear() para logout
-   AHORA:
-   - Usa apiFetch('/users/profile') para obtener perfil
-   - Usa logout() para cerrar sesión
-   - Código más limpio y simple
+📄 src/pages/user/Profile.jsx (INTEGRATED)
+  Before: Empty placeholder
+  After: Full CRUD for Person profiles
+  Features:
+    - Form for firstName, lastName, birthYear, highSchool, description, cv
+    - Auto-loads existing profile
+    - Auto-switches between create/edit mode
+    - Success/error messages
 
-================================================================================
-4. FUNCIONALIDAD ACTUAL (TODAS LAS FASES COMPLETADAS)
-================================================================================
+📄 src/pages/user/Courses.jsx (INTEGRATED)
+  Before: Static mock data
+  After: Fetches from GET /api/course/
+  Features:
+    - Grid of CourseCard components
+    - Loading state
+    - Empty state
+    - Error handling
 
-LO QUE FUNCIONA AHORA:
-✅ Login de usuarios → guarda token → redirige a dashboard
-✅ Registro de usuarios → crea cuenta → guarda token → redirige a dashboard
-✅ Registro de empresas → crea cuenta → guarda token → redirige a dashboard
-✅ Rutas protegidas → si no hay token, redirige a login
-✅ Dashboard de usuario con Tailwind CSS profesional
-✅ Dashboard de empresa con Tailwind CSS profesional
-✅ Navegación consistente en todas las páginas
-✅ Logout funciona correctamente con useNavigate
-✅ Token JWT se envía automáticamente en todas las peticiones autenticadas
+📄 src/pages/user/Company.jsx (INTEGRATED)
+  Before: Empty placeholder
+  After: Lists all companies from backend
+  Features:
+    - Grid layout with company cards
+    - Shows name, RUT, legal info
+    - Responsive design
 
-✅ CURSOS:
-  - UserCourses: Lista cursos desde backend con CourseCard
-  - CompanyCourses: Lista y gestión de cursos (botones CRUD preparados)
+📄 src/pages/user/Contact.jsx (STYLED)
+  Before: Empty placeholder
+  After: Professional UI with "Coming Soon"
+  Features:
+    - Tailwind styled interface
+    - Placeholder for future messaging system
 
-✅ PERFILES:
-  - UserProfile: Crear y editar perfil Person (detecta automáticamente)
-  - CompanyProfile: Crear y editar perfil Company (detecta automáticamente)
-  - Carga automática de datos existentes
+📄 src/pages/company/CompanyDashboard.jsx (REDESIGNED)
+  Before: Inline styles
+  After: Tailwind CSS, integrated with backend
+  Features:
+    - Stats cards
+    - Quick actions
+    - Professional design
 
-✅ LISTADOS:
-  - UserCompany: Lista todas las empresas registradas
-  - CompanyUsers: UI profesional con placeholder "Coming Soon"
+📄 src/pages/company/Profile.jsx (INTEGRATED)
+  Before: Empty placeholder
+  After: Full CRUD for Company profiles
+  Features:
+    - Form for RUT, name, legalReason, groupName, subGroupName
+    - Auto-loads existing profile
+    - Auto-switches between create/edit mode
 
-✅ CONTACTOS:
-  - UserContacts: UI profesional con placeholder "Coming Soon"
-  - CompanyContacts: UI profesional con placeholder "Coming Soon"
+📄 src/pages/company/Courses.jsx (INTEGRATED)
+  Before: Empty placeholder
+  After: Lists courses with CRUD buttons
+  Features:
+    - Fetches from GET /api/course/
+    - Buttons for Create/Edit/Delete (alerts for now)
+    - Grid layout
 
-PENDIENTE PARA FUTURAS ITERACIONES:
-⚠️ Sistema de mensajería (requiere endpoints backend)
-⚠️ CRUD completo de cursos (crear, editar, eliminar)
-⚠️ Listado de candidatos (requiere endpoint backend)
-⚠️ Funcionalidad de "enroll" en cursos
+📄 src/pages/company/Users.jsx (STYLED)
+  Before: Empty placeholder
+  After: Professional UI with "Coming Soon"
+  Note: No backend endpoint exists yet for listing users
 
-================================================================================
-5. ESTRUCTURA DE ARCHIVOS ACTUAL
-================================================================================
+📄 src/pages/company/Contact.jsx (STYLED)
+  Before: Empty placeholder
+  After: Professional UI with "Coming Soon"
 
-jobee-frontend/
-├── src/
-│   ├── utils/                    ← NUEVO
-│   │   ├── api.js               ← CREADO (apiFetch)
-│   │   └── auth.js              ← CREADO (saveSession, logout, etc.)
-│   ├── components/
-│   │   ├── common/
-│   │   │   ├── Header.jsx
-│   │   │   └── ProtectedRoute.jsx  ← CREADO
-│   │   ├── auth/
-│   │   │   └── AuthLayout.jsx
-│   │   └── courses/
-│   │       ├── CourseCard.jsx
-│   │       └── CourseCarousel.jsx
-│   ├── pages/
-│   │   ├── auth/
-│   │   │   ├── LoginPage.jsx         ← MODIFICADO
-│   │   │   ├── SignUpUserPage.jsx    ← MODIFICADO
-│   │   │   └── SignUpCompanyPage.jsx ← MODIFICADO
-│   │   ├── user/
-│   │   │   ├── UserDashboard.jsx     ← INTEGRADO + Tailwind
-│   │   │   ├── Profile.jsx           ← INTEGRADO + Tailwind
-│   │   │   ├── Company.jsx           ← INTEGRADO + Tailwind
-│   │   │   ├── Courses.jsx           ← INTEGRADO + Tailwind
-│   │   │   └── Contact.jsx           ← Tailwind + Placeholder
-│   │   ├── company/
-│   │   │   ├── CompanyDashboard.jsx  ← INTEGRADO + Tailwind
-│   │   │   ├── Profile.jsx           ← INTEGRADO + Tailwind
-│   │   │   ├── Users.jsx             ← Tailwind + Placeholder
-│   │   │   ├── Courses.jsx           ← INTEGRADO + Tailwind
-│   │   │   └── Contact.jsx           ← Tailwind + Placeholder
-│   │   └── public/
-│   │       ├── HomePage.jsx
-│   │       └── SplashPage.jsx
-│   ├── App.jsx                    ← MODIFICADO (rutas protegidas)
-│   └── main.jsx
+BACKEND CHANGES:
+----------------
 
-================================================================================
-6. NOTAS IMPORTANTES
-================================================================================
+📄 docker-compose.yml (NEW FILE)
+  What: Docker configuration for MySQL 8.0
+  Why: Easy database setup without manual MySQL installation
+  Content:
+    - Image: mysql:8.0
+    - Container name: jobee-mysql
+    - Database: proyecto
+    - User: proyectousuario / Password: proyectousuario
+    - Port: 3306 (mapped to localhost)
+    - Volume: mysql_data (persistent storage)
+  Commands:
+    docker-compose up -d    # Start MySQL
+    docker-compose down     # Stop MySQL
+    docker-compose ps       # Check status
 
-BACKEND:
-- El registro de user/company actualmente solo crea el modelo User
-- NO crea automáticamente los perfiles Person o Company asociados
-- Esto habrá que manejarlo en FASE 4 (perfiles)
+📄 config/db.js (MODIFIED)
+  Before: Only exported Prisma client
+  After: Exports both Prisma client AND mysql2 pool
+  Why: Backend has mixed code - some uses Prisma, some uses raw SQL
+  Changes:
+    - Import mysql2/promise
+    - Create connection pool with credentials
+    - Export pool as named export
+    - Export prisma as default export
+  Result:
+    - Prisma-based services (Person, Company, User) use default import
+    - Legacy SQL services (Course) use named import { pool }
 
-FRONTEND:
-- Todos los comentarios en inglés y cortos (requisito del usuario)
-- Código simple y fácil de entender para principiantes
-- Sin emojis en comentarios
-- Sin créditos de Claude Code en commits
+📄 services/courseService.js (MODIFIED)
+  Before: import db from '../config/db.js' (didn't work)
+  After: import { pool } from '../config/db.js'
+  Why: Legacy code uses db.query() which needs mysql2 pool
+  Changes:
+    - Changed import to { pool }
+    - Changed db.query() to pool.query()
+    - Changed table name from "cursos" to "Course" (Prisma naming)
+  Note: This file should eventually be refactored to use Prisma
 
-TOKENS:
-- Se guardan en localStorage como 'token' y 'user'
-- Se envían automáticamente en header Authorization: Bearer {token}
-- La función apiFetch maneja todo esto transparentemente
+📄 package.json (MODIFIED)
+  Added: "mysql2": "^3.15.2"
+  Why: Needed for raw SQL queries in legacy code
 
-CORS:
-- Backend ya configurado para aceptar requests desde localhost:5173
-- No requiere cambios
+DATABASE:
+---------
 
-================================================================================
-7. LO QUE SE COMPLETÓ EN ESTA SESIÓN (15 OCT 2025)
-================================================================================
+Tables Created (13 total):
+  - User: Authentication (email, password, role)
+  - Person: User profiles
+  - Company: Company profiles
+  - Course: Training courses
+  - Purchase: Course enrollments
+  - Chat, Message, Contact: Messaging system
+  - Post, Comment, Like: Social features
+  - Image: Image uploads
+  - Admin: System administrators
 
-FASE 2 - DASHBOARDS CON TAILWIND:
-✅ UserDashboard.jsx: Diseño profesional con cards, quick actions, y logout mejorado
-✅ CompanyDashboard.jsx: Stats grid, quick actions, diseño consistente
-✅ Navegación unificada en todas las páginas con Links activos
-✅ Todos los inline styles eliminados
-
-FASE 3 - CURSOS INTEGRADOS:
-✅ UserCourses.jsx: Integrado con apiFetch, grid responsive, usa CourseCard
-✅ CompanyCourses.jsx: Lista cursos, botones CRUD preparados (alerts temporales)
-✅ Mapeo de datos del backend al formato de CourseCard
-✅ Estados de loading, error y empty states
-
-FASE 4 - PERFILES COMPLETOS:
-✅ UserProfile.jsx: Formulario completo con create/edit automático
-✅ CompanyProfile.jsx: Formulario completo con create/edit automático
-✅ Carga automática de perfiles existentes
-✅ Validación y manejo de errores
-
-FASE 5 - LISTADOS:
-✅ UserCompany.jsx: Grid de empresas con toda la info disponible
-✅ CompanyUsers.jsx: Placeholder profesional (sin endpoint backend)
-
-FASE 6 - MENSAJERÍA (PLACEHOLDER):
-✅ UserContacts.jsx: UI profesional con mensaje "Coming Soon"
-✅ CompanyContacts.jsx: UI profesional con mensaje "Coming Soon"
-
-ARCHIVOS MODIFICADOS EN ESTA SESIÓN:
-- src/pages/user/UserDashboard.jsx (Tailwind completo)
-- src/pages/user/Courses.jsx (integración + Tailwind)
-- src/pages/user/Profile.jsx (integración + Tailwind)
-- src/pages/user/Company.jsx (integración + Tailwind)
-- src/pages/user/Contact.jsx (Tailwind + placeholder)
-- src/pages/company/CompanyDashboard.jsx (integración + Tailwind)
-- src/pages/company/Courses.jsx (integración + Tailwind)
-- src/pages/company/Profile.jsx (integración + Tailwind)
-- src/pages/company/Users.jsx (Tailwind + placeholder)
-- src/pages/company/Contact.jsx (Tailwind + placeholder)
-
-TOTAL: 10 páginas completamente integradas y estilizadas
+Command used: npx prisma db push
 
 ================================================================================
-8. PRÓXIMOS PASOS (FUTURAS ITERACIONES)
+4. HOW TO RUN THE FULL STACK
 ================================================================================
 
-PRIORIDAD ALTA:
-1. Implementar CRUD completo de cursos:
-   - Formulario crear curso (CompanyCourses)
-   - Formulario editar curso
-   - Confirmación para eliminar curso
+STEP-BY-STEP FOR BEGINNERS:
+----------------------------
 
-2. Sistema de "enrollment" en cursos:
-   - Botón funcional en UserCourses
-   - Endpoint backend (si no existe)
-   - Relación User-Course en BD
+Prerequisites:
+  ✓ Node.js 18+ installed
+  ✓ Docker Desktop installed and running
+  ✓ Terminal/command line access
 
-PRIORIDAD MEDIA:
-3. Listado de candidatos (CompanyUsers):
-   - Crear endpoint GET /api/person/ en backend
-   - Integrar en CompanyUsers.jsx
-   - Filtros y búsqueda
+STEP 1: Start MySQL Database
+  cd /Users/ingenioususer/Desktop/jobee-backend
+  docker-compose up -d
 
-4. Sistema de mensajería básico:
-   - Endpoints de Chat/Message en backend
-   - Integración en Contact pages
-   - Lista de conversaciones
-   - Vista de mensajes
+  What this does: Starts MySQL 8.0 in a Docker container
+  Expected output: "Container jobee-mysql started"
 
-PRIORIDAD BAJA:
-5. Mejoras de UX:
-   - Loading skeletons en lugar de "Loading..."
-   - Toasts para notificaciones
-   - Confirmaciones modales
-   - Paginación en listados grandes
+STEP 2: Start Backend Server
+  cd /Users/ingenioususer/Desktop/jobee-backend
+  npm install                  # Only needed first time
+  npm run dev
 
-================================================================================
-9. COMANDOS PARA PROBAR
-================================================================================
+  What this does: Starts Express server on port 3000
+  Expected output:
+    "Servidor corriendo en puerto 3000"
+    "MySQL conectado con Prisma"
 
-BACKEND:
-cd /var/home/gabrielalonso/jobee/jobee-backend
-npm install
-npm run dev
-# Debería correr en http://localhost:3000
+  Troubleshooting:
+    - If port 3000 is busy: kill the process or change PORT in .env
+    - If MySQL connection fails: make sure Docker container is running
 
-FRONTEND:
-cd /var/home/gabrielalonso/jobee/jobee-frontend
-git checkout feat/backend-integration
-npm install
-npm run dev
-# Debería correr en http://localhost:5173
+STEP 3: Start Frontend Server
+  # Open NEW terminal window
+  cd /Users/ingenioususer/Desktop/jobee-frontend
+  npm install                  # Only needed first time
+  npm run dev
 
-FLUJO DE PRUEBA COMPLETO:
-1. Registrar usuario en http://localhost:5173/auth/signup/user
-2. Redirige a /user/dashboard (ver perfil, quick actions)
-3. Ir a /user/profile y crear perfil Person (firstName, lastName, etc)
-4. Ir a /user/courses y ver cursos desde backend
-5. Ir a /user/company y ver listado de empresas
-6. Logout y registrar empresa en /auth/signup/company
-7. Redirige a /company/dashboard
-8. Ir a /company/profile y crear perfil Company
-9. Ir a /company/courses y ver cursos (botones edit/delete preparados)
-10. Navegar por todas las páginas y verificar estilos Tailwind
+  What this does: Starts Vite dev server on port 5173
+  Expected output: "Local: http://localhost:5173/"
+
+STEP 4: Open in Browser
+  Navigate to: http://localhost:5173
+
+You should see the Jobee landing page. You're ready to test!
+
+STOPPING EVERYTHING:
+  - Frontend: Ctrl+C in terminal
+  - Backend: Ctrl+C in terminal
+  - MySQL: docker-compose down (in backend folder)
 
 ================================================================================
-10. GIT - ESTADO ACTUAL
+5. TESTING THE INTEGRATION
 ================================================================================
 
-BRANCH: feat/backend-integration
-ULTIMO COMMIT: feat: complete backend integration with all pages + Tailwind
+COMPLETE TEST FLOW:
+-------------------
 
-ARCHIVOS NUEVOS (FASE 1):
-- src/utils/api.js
-- src/utils/auth.js
-- src/components/common/ProtectedRoute.jsx
+TEST 1: User Registration and Profile
+  1. Go to http://localhost:5173/auth/signup/user
+  2. Fill form:
+     - Name: Test User
+     - Email: testuser@example.com
+     - Password: Test123
+  3. Click "Crear cuenta"
+  4. Should redirect to /user/dashboard
+  5. See user email displayed in dashboard
+  6. Go to /user/profile
+  7. Fill Person form:
+     - First Name: John
+     - Last Name: Doe
+     - Birth Year: 2000
+     - High School: Example High School
+     - Description: Looking for first job
+  8. Click "Save Profile"
+  9. See success message
+  10. Refresh page - data should persist
 
-ARCHIVOS MODIFICADOS (TODAS LAS FASES):
-FASE 1:
-- src/pages/auth/LoginPage.jsx
-- src/pages/auth/SignUpUserPage.jsx
-- src/pages/auth/SignUpCompanyPage.jsx
-- src/App.jsx
+TEST 2: Company Registration and Profile
+  1. Logout from user account
+  2. Go to /auth/signup/company
+  3. Fill form:
+     - Name: Test Company
+     - Email: testcompany@example.com
+     - Password: Test123
+  4. Click "Crear cuenta"
+  5. Should redirect to /company/dashboard
+  6. Go to /company/profile
+  7. Fill Company form:
+     - RUT: 123456789
+     - Name: Tech Startup Inc
+     - Legal Reason: Tech Startup Inc SRL
+     - Group Name: Technology
+     - Sub Group Name: Software Development
+  8. Click "Save Profile"
+  9. See success message
 
-FASES 2-6 (SESIÓN ACTUAL 15 OCT 2025):
-- src/pages/user/UserDashboard.jsx (Tailwind + mejoras)
-- src/pages/user/Profile.jsx (integración completa)
-- src/pages/user/Courses.jsx (integración completa)
-- src/pages/user/Company.jsx (integración completa)
-- src/pages/user/Contact.jsx (Tailwind + placeholder)
-- src/pages/company/CompanyDashboard.jsx (integración completa)
-- src/pages/company/Profile.jsx (integración completa)
-- src/pages/company/Courses.jsx (integración completa)
-- src/pages/company/Users.jsx (Tailwind + placeholder)
-- src/pages/company/Contact.jsx (Tailwind + placeholder)
-- INTEGRATION_PROGRESS.txt (actualizado con todo el progreso)
+TEST 3: View Courses (Both User and Company)
+  1. As user: go to /user/courses
+  2. Should see empty state (no courses yet)
+  3. As company: go to /company/courses
+  4. Should see same list with CRUD buttons
 
-TOTAL ARCHIVOS: 3 nuevos + 14 modificados = 17 archivos
+TEST 4: View Companies List (User)
+  1. Login as user
+  2. Go to /user/company
+  3. Should see "Test Company" in the grid
+  4. Should show all company details
 
-PARA CONTINUAR EN OTRA COMPU:
-1. cd /ruta/al/proyecto/jobee-frontend
-2. git pull origin feat/backend-integration
-3. npm install (si es necesario)
-4. npm run dev
-5. Leer este archivo (INTEGRATION_PROGRESS.txt) para contexto completo
+TEST 5: Logout and Route Protection
+  1. Click logout button
+  2. Try to access /user/dashboard directly
+  3. Should redirect to /auth/login
+  4. Login again - should work
 
-CAMBIOS AL BACKEND REALIZADOS: NINGUNO
-- El backend NO fue modificado en ninguna fase
-- Solo se usaron endpoints existentes
-- Toda la integración se hizo del lado frontend
-
-================================================================================
-11. RESUMEN EJECUTIVO
-================================================================================
-
-MVP COMPLETADO ✅
-- 100% de las páginas integradas con backend
-- 100% de las páginas con Tailwind CSS profesional
-- Sistema de autenticación completo
-- Navegación consistente y protección de rutas
-- CRUD de perfiles (User Person y Company)
-- Visualización de cursos desde backend
-- Listados funcionales donde hay endpoints
-
-FUNCIONALIDADES LISTAS PARA USAR:
-✅ Login y registro (usuarios y empresas)
-✅ Dashboards con información real del backend
-✅ Perfiles crear/editar automático
-✅ Listado de cursos integrado
-✅ Listado de empresas integrado
-✅ Logout funcional en todas partes
-✅ Protección de rutas privadas
-✅ Manejo de errores y estados de carga
-✅ Diseño responsive en todas las páginas
-
-PRÓXIMAS FUNCIONALIDADES A IMPLEMENTAR:
-- CRUD completo de cursos (crear, editar, eliminar)
-- Sistema de enrollment en cursos
-- Listado de candidatos (requiere endpoint backend)
-- Sistema de mensajería (requiere endpoints backend)
-
-CÓDIGO LIMPIO:
-- Consistencia en uso de apiFetch()
-- Consistencia en manejo de sesión (auth.js)
-- Comentarios en inglés, cortos y claros
-- Sin inline styles, todo Tailwind CSS
-- Componentes simples y fáciles de entender
+EXPECTED BEHAVIORS:
+  ✅ All forms submit successfully
+  ✅ Data persists in database (survives page refresh)
+  ✅ Protected routes redirect to login when no token
+  ✅ Navigation works across all pages
+  ✅ Loading states appear during API calls
+  ✅ Error messages show on API failures
 
 ================================================================================
-FIN DEL RESUMEN - ÚLTIMA ACTUALIZACIÓN: 15 OCTUBRE 2025
+6. FUTURE IMPROVEMENTS
 ================================================================================
+
+PRIORITY HIGH:
+--------------
+1. Course CRUD Implementation
+   - Create course form in CompanyCourses
+   - Edit course modal
+   - Delete confirmation
+   - Backend endpoints already exist
+
+2. Course Enrollment System
+   - "Enroll" button functionality in UserCourses
+   - Purchase record creation
+   - Enrolled courses view for users
+
+PRIORITY MEDIUM:
+----------------
+3. Candidate Listing (CompanyUsers)
+   - Backend: Create GET /api/person/ endpoint
+   - Frontend: Integrate in CompanyUsers page
+   - Add search and filters
+
+4. Messaging System
+   - Backend: Implement Chat/Message endpoints
+   - Frontend: Real-time messaging UI
+   - Contact list
+   - Message threads
+
+PRIORITY LOW:
+-------------
+5. UX Improvements
+   - Loading skeletons instead of "Loading..."
+   - Toast notifications for success/error
+   - Modal confirmations for destructive actions
+   - Pagination for large lists
+   - Form validation improvements
+
+6. Performance
+   - Image optimization
+   - Code splitting
+   - Lazy loading routes
+   - API response caching
+
+7. Security
+   - Rate limiting on backend
+   - Input sanitization
+   - HTTPS in production
+   - Refresh token implementation
+
+================================================================================
+END OF INTEGRATION GUIDE
+================================================================================
+
+For questions or issues, refer to:
+- Frontend README: jobee-frontend/README.md
+- Backend README: jobee-backend/README.md
+- Prisma schema: jobee-backend/prisma/schema.prisma
+
+Contact: animajobee@gmail.com

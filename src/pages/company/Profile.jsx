@@ -1,20 +1,39 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
 import { getUser } from "../../utils/auth";
+import Header from "../../components/common/Header";
+import StatCard from "../../components/common/StatCard";
+import { HiUsers, HiBriefcase, HiBookOpen } from "react-icons/hi2";
+import { FiEdit2, FiGlobe, FiMapPin, FiCamera } from "react-icons/fi";
+
+// Datos de ejemplo para estadísticas (luego del backend)
+const MOCK_STATS = {
+  totalCandidates: 45,
+  activeJobs: 8,
+  publishedCourses: 3,
+};
 
 export default function CompanyProfile() {
+  const location = useLocation();
   const [formData, setFormData] = useState({
     rut: '',
     name: '',
     legalReason: '',
     groupName: '',
-    subGroupName: ''
+    subGroupName: '',
+    description: '',
+    industry: '',
+    website: '',
+    location: '',
+    logoPhoto: '',
+    bannerPhoto: ''
   });
   const [companyId, setCompanyId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -26,11 +45,9 @@ export default function CompanyProfile() {
           return;
         }
 
-        // Try to get existing company profile
         const data = await apiFetch(`/company/user/${user.id}`);
 
         if (data.data && data.data.length > 0) {
-          // Profile exists, load it
           const company = data.data[0];
           setCompanyId(company.companyId);
           setFormData({
@@ -38,13 +55,18 @@ export default function CompanyProfile() {
             name: company.name || '',
             legalReason: company.legalReason || '',
             groupName: company.groupName || '',
-            subGroupName: company.subGroupName || ''
+            subGroupName: company.subGroupName || '',
+            description: company.description || '',
+            industry: company.industry || '',
+            website: company.website || '',
+            location: company.location || '',
+            logoPhoto: company.logoPhoto || '',
+            bannerPhoto: company.bannerPhoto || ''
           });
           setIsEditing(true);
         }
       } catch (err) {
         console.error('Error loading company profile:', err);
-        // Profile doesn't exist yet, that's ok
       } finally {
         setLoading(false);
       }
@@ -59,22 +81,21 @@ export default function CompanyProfile() {
 
     try {
       if (isEditing && companyId) {
-        // Update existing profile
         await apiFetch(`/company/${companyId}`, {
           method: 'PUT',
           body: formData
         });
-        setMessage('Company profile updated successfully');
+        setMessage('Perfil de empresa actualizado exitosamente');
       } else {
-        // Create new profile
         const data = await apiFetch('/company/', {
           method: 'POST',
           body: formData
         });
         setCompanyId(data.data.companyId);
         setIsEditing(true);
-        setMessage('Company profile created successfully');
+        setMessage('Perfil de empresa creado exitosamente');
       }
+      setEditMode(false);
     } catch (err) {
       console.error('Error saving company profile:', err);
       setMessage(`Error: ${err.message || 'Failed to save company profile'}`);
@@ -83,124 +104,321 @@ export default function CompanyProfile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Loading company profile...</p>
+      <div className="min-h-screen bg-[#FFF8E7] flex items-center justify-center">
+        <p className="text-[#6F442C]">Cargando perfil de empresa...</p>
       </div>
     );
   }
 
+  const companyName = formData.name || 'Tu Empresa';
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex gap-6">
-          <Link to="/company/dashboard" className="text-gray-600 hover:text-gray-900 transition">
-            Dashboard
-          </Link>
-          <Link to="/company/profile" className="text-gray-900 font-semibold border-b-2 border-gray-900">
-            Profile
-          </Link>
-          <Link to="/company/users" className="text-gray-600 hover:text-gray-900 transition">
-            Candidates
-          </Link>
-          <Link to="/company/courses" className="text-gray-600 hover:text-gray-900 transition">
-            Courses
-          </Link>
-          <Link to="/company/contacts" className="text-gray-600 hover:text-gray-900 transition">
-            Contacts
-          </Link>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-[#FFF8E7]">
+      <Header
+        mode="company"
+        currentPath={location.pathname}
+      />
 
-      {/* Main content */}
-      <main className="max-w-3xl mx-auto px-6 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          {isEditing ? 'Edit Company Profile' : 'Create Company Profile'}
-        </h1>
-
+      <main className="mx-auto w-full max-w-container px-5 py-8 md:px-8 lg:px-12">
         {message && (
-          <div className={`mb-6 px-4 py-3 rounded-lg ${
+          <div className={`mb-6 px-6 py-4 rounded-xl border-b-4 ${
             message.includes('Error') || message.includes('error')
-              ? 'bg-red-50 border border-red-200 text-red-700'
-              : 'bg-green-50 border border-green-200 text-green-700'
+              ? 'bg-[#DC2626]/10 border-[#DC2626] text-[#DC2626]'
+              : 'bg-[#10B981]/10 border-[#10B981] text-[#10B981]'
           }`}>
             {message}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-sm">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              RUT (Tax ID)
-            </label>
-            <input
-              type="text"
-              value={formData.rut}
-              onChange={(e) => setFormData({...formData, rut: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-              placeholder="12-34567890-1"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Company Name
-            </label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Legal Reason (Razón Social)
-            </label>
-            <input
-              type="text"
-              value={formData.legalReason}
-              onChange={(e) => setFormData({...formData, legalReason: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Group Name
-              </label>
-              <input
-                type="text"
-                value={formData.groupName}
-                onChange={(e) => setFormData({...formData, groupName: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        {/* Company Header with Banner and Logo */}
+        <section className="relative mb-8 rounded-3xl overflow-hidden bg-white border-b-4 border-[#E69C00]">
+          {/* Banner */}
+          <div className="relative h-48 md:h-64 bg-gradient-to-r from-[#0B7285] via-[#10B981] to-[#0B7285]">
+            {formData.bannerPhoto && (
+              <img
+                src={formData.bannerPhoto}
+                alt="Banner"
+                className="w-full h-full object-cover"
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Subgroup Name
-              </label>
-              <input
-                type="text"
-                value={formData.subGroupName}
-                onChange={(e) => setFormData({...formData, subGroupName: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+            )}
+            {editMode && (
+              <button
+                type="button"
+                className="absolute top-4 right-4 p-3 bg-white/90 rounded-xl border-b-4 border-[#E69C00] text-[#1F2937] hover:bg-white transition"
+              >
+                <FiCamera className="w-5 h-5" />
+              </button>
+            )}
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition"
-          >
-            {isEditing ? 'Update Company Profile' : 'Create Company Profile'}
-          </button>
-        </form>
+          {/* Company Logo and Info */}
+          <div className="relative px-6 pb-6 md:px-8">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+              {/* Company Logo */}
+              <div className="relative -mt-16 md:-mt-20">
+                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl border-4 border-white bg-white overflow-hidden shadow-lg">
+                  {formData.logoPhoto ? (
+                    <img
+                      src={formData.logoPhoto}
+                      alt={companyName}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-4xl md:text-5xl font-bold text-[#E69C00] bg-[#FFF0C2]">
+                      {formData.name?.[0] || 'E'}
+                    </div>
+                  )}
+                  {editMode && (
+                    <button
+                      type="button"
+                      className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition"
+                    >
+                      <FiCamera className="w-6 h-6 text-white" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Company Name and Actions */}
+              <div className="flex-1 flex flex-col md:flex-row md:items-end md:justify-between gap-4 pt-2">
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-bold text-[#1F2937]">{companyName}</h1>
+                  <p className="text-base text-[#4B5563] mt-1">
+                    {formData.industry || 'Industria'} {formData.location && `• ${formData.location}`}
+                  </p>
+                  <div className="flex gap-3 mt-3">
+                    {formData.website && (
+                      <a
+                        href={formData.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#0B7285] text-[#0B7285] hover:bg-[#FFF0C2] transition text-sm font-semibold"
+                      >
+                        <FiGlobe className="w-4 h-4" />
+                        Sitio Web
+                      </a>
+                    )}
+                    {formData.location && (
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#DC2626] text-[#DC2626] text-sm font-semibold">
+                        <FiMapPin className="w-4 h-4" />
+                        {formData.location}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setEditMode(!editMode)}
+                  className="self-start md:self-auto px-5 py-2 rounded-xl bg-[#FFD65B] border-b-4 border-[#E69C00] text-[#1F2937] font-semibold hover:bg-[#FFF0C2] transition flex items-center gap-2"
+                >
+                  <FiEdit2 className="w-4 h-4" />
+                  {editMode ? 'Cancelar' : 'Editar Perfil'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {editMode ? (
+          /* Edit Form */
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <section className="rounded-3xl bg-[#FFF0C2] p-6 md:p-8">
+              <h2 className="text-2xl font-bold text-[#1F2937] mb-6">Información de la Empresa</h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Nombre de la Empresa <span className="text-[#DC2626]">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    RUT <span className="text-[#DC2626]">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.rut}
+                    onChange={(e) => setFormData({...formData, rut: e.target.value})}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                    required
+                    placeholder="12-34567890-1"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Razón Social
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.legalReason}
+                    onChange={(e) => setFormData({...formData, legalReason: e.target.value})}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Industria
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.industry}
+                    onChange={(e) => setFormData({...formData, industry: e.target.value})}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                    placeholder="Tecnología, Retail, etc."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Ubicación
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.location}
+                    onChange={(e) => setFormData({...formData, location: e.target.value})}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                    placeholder="Montevideo, Uruguay"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Sitio Web
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.website}
+                    onChange={(e) => setFormData({...formData, website: e.target.value})}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                    placeholder="https://..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Nombre del Grupo
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.groupName}
+                    onChange={(e) => setFormData({...formData, groupName: e.target.value})}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Nombre del Subgrupo
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.subGroupName}
+                    onChange={(e) => setFormData({...formData, subGroupName: e.target.value})}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Descripción de la Empresa
+                  </label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition resize-none"
+                    rows="4"
+                    placeholder="Describí tu empresa, su misión y valores..."
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full mt-6 bg-[#FFD65B] text-[#1F2937] py-4 px-6 rounded-xl font-bold text-lg border-b-4 border-[#E69C00] hover:bg-[#FFF0C2] transition"
+              >
+                Guardar Cambios
+              </button>
+            </section>
+          </form>
+        ) : (
+          /* View Mode */
+          <div className="space-y-8">
+            {/* About Section */}
+            <section className="rounded-3xl bg-[#FFF0C2] p-6 md:p-8">
+              <h2 className="text-2xl font-bold text-[#1F2937] mb-4">Sobre la Empresa</h2>
+              <p className="text-base leading-relaxed text-[#4B5563]">
+                {formData.description || 'Aún no has agregado una descripción de tu empresa. Editá tu perfil para agregar información sobre tu organización.'}
+              </p>
+
+              {(formData.legalReason || formData.groupName || formData.subGroupName) && (
+                <div className="mt-6 pt-6 border-t-2 border-[#FFD65B]">
+                  <h3 className="text-sm font-semibold text-[#6F442C] mb-3">Información Legal</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {formData.legalReason && (
+                      <div>
+                        <p className="text-xs text-[#4B5563] mb-1">Razón Social</p>
+                        <p className="text-base font-semibold text-[#1F2937]">{formData.legalReason}</p>
+                      </div>
+                    )}
+                    {formData.groupName && (
+                      <div>
+                        <p className="text-xs text-[#4B5563] mb-1">Grupo</p>
+                        <p className="text-base font-semibold text-[#1F2937]">{formData.groupName}</p>
+                      </div>
+                    )}
+                    {formData.subGroupName && (
+                      <div>
+                        <p className="text-xs text-[#4B5563] mb-1">Subgrupo</p>
+                        <p className="text-base font-semibold text-[#1F2937]">{formData.subGroupName}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </section>
+
+            {/* Stats Section */}
+            <section className="rounded-3xl bg-[#FFF8E7] p-6 md:p-8">
+              <h2 className="text-2xl font-bold text-[#1F2937] mb-6">Estadísticas</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <StatCard
+                  label="Candidatos Contactados"
+                  value={MOCK_STATS.totalCandidates}
+                  icon={HiUsers}
+                  borderColor="border-[#0B7285]"
+                  iconBgColor="bg-[#0B7285]/10"
+                  iconColor="text-[#0B7285]"
+                />
+                <StatCard
+                  label="Ofertas Activas"
+                  value={MOCK_STATS.activeJobs}
+                  icon={HiBriefcase}
+                  borderColor="border-[#10B981]"
+                  iconBgColor="bg-[#10B981]/10"
+                  iconColor="text-[#10B981]"
+                />
+                <StatCard
+                  label="Cursos Publicados"
+                  value={MOCK_STATS.publishedCourses}
+                  icon={HiBookOpen}
+                  borderColor="border-[#DC2626]"
+                  iconBgColor="bg-[#DC2626]/10"
+                  iconColor="text-[#DC2626]"
+                />
+              </div>
+            </section>
+          </div>
+        )}
       </main>
     </div>
   );

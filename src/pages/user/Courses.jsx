@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
 import CourseCard from "../../components/courses/CourseCard";
+import Header from "../../components/common/Header";
 
 export default function UserCourses() {
+  const location = useLocation();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -43,55 +45,51 @@ export default function UserCourses() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex gap-6">
-          <Link to="/user/dashboard" className="text-gray-600 hover:text-gray-900 transition">
-            Dashboard
-          </Link>
-          <Link to="/user/profile" className="text-gray-600 hover:text-gray-900 transition">
-            Profile
-          </Link>
-          <Link to="/user/company" className="text-gray-600 hover:text-gray-900 transition">
-            Companies
-          </Link>
-          <Link to="/user/courses" className="text-gray-900 font-semibold border-b-2 border-gray-900">
-            Courses
-          </Link>
-          <Link to="/user/contacts" className="text-gray-600 hover:text-gray-900 transition">
-            Contacts
-          </Link>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-[#FFF8E7]">
+      <Header mode="user" currentPath={location.pathname} />
 
       {/* Main content */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Available Courses</h1>
+      <main className="mx-auto w-full max-w-container px-5 py-12 md:px-8 lg:px-12">
+        <div className="mb-10">
+          <span className="inline-flex items-center rounded-full bg-[#9B1756]/10 border border-[#9B1756] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#9B1756] mb-4">
+            Catálogo de Cursos
+          </span>
+          <h1 className="text-3xl font-bold text-[#1F2937] md:text-4xl lg:text-5xl">
+            Cursos Disponibles
+          </h1>
+          <p className="text-base leading-relaxed text-[#4B5563] mt-3 md:text-lg">
+            Desarrollá nuevas habilidades con nuestros cursos especializados para tu crecimiento profesional.
+          </p>
+        </div>
 
         {loading && (
           <div className="text-center py-12">
-            <p className="text-gray-600">Loading courses...</p>
+            <p className="text-[#6F442C]">Cargando cursos...</p>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <div className="bg-[#DC2626]/10 border-b-4 border-[#DC2626] text-[#DC2626] px-6 py-4 rounded-xl">
             {error}
           </div>
         )}
 
         {!loading && !error && courses.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] p-6 sm:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (
               <CourseCard key={course.courseId} course={course} />
             ))}
-          </div>
+          </section>
         )}
 
         {!loading && !error && courses.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-600">No courses available at the moment</p>
+          <div className="text-center py-16">
+            <div className="inline-flex p-6 bg-white rounded-3xl border-b-4 border-[#E69C00] mb-4">
+              <svg className="w-16 h-16 text-[#E69C00]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <p className="text-[#6F442C] text-lg">No hay cursos disponibles en este momento</p>
           </div>
         )}
       </main>

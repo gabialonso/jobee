@@ -7,92 +7,92 @@ import { MdPlace } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { GoMail } from "react-icons/go";
 
-function Hero() {
+function UserHero() {
   return (
     <section className="grid gap-10 rounded-3xl bg-[#FFF0C2] p-8 md:grid-cols-2 md:items-center lg:p-12">
       <div className="flex flex-col gap-6 text-left">
         <span className="text-sm font-semibold uppercase tracking-wide text-[#9B1756]">
-          Primera experiencia laboral
+          Tu primera oportunidad laboral
         </span>
         <h1 className="text-3xl font-bold text-[#1F2937] md:text-4xl lg:text-5xl">
-          Conectamos talento joven con empresas reales
+          Empezá tu carrera profesional con Jobee
         </h1>
         <p className="text-base leading-relaxed text-[#4B5563] md:text-lg">
-          <strong>¿Tenés entre 18 y 27 años?</strong> Sumate a Jobee, aprendé nuevas
-          habilidades y llegá a tu primera entrevista con respaldo y oportunidades reales.
+          <strong>¿Tenés entre 18 y 27 años?</strong> Capacitate con cursos profesionales,
+          creá tu perfil destacado y conectá con empresas que buscan talento joven como vos.
         </p>
         <div className="flex flex-wrap gap-4">
           <Link
             to="/auth/signup/user"
             className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
           >
-            Registrate como usuario
+            Registrate gratis
           </Link>
-          <Link
-            to="/auth/signup/company"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+          <a
+            href="#cursos"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] md:text-base"
           >
-            Soy empresa aliada
-          </Link>
+            Ver cursos
+          </a>
         </div>
       </div>
       <div className="relative flex justify-center">
         <img
           src={BannerImage}
-          alt="Ilustración de jóvenes conectando oportunidades laborales"
+          alt="Jóvenes profesionales conectando con oportunidades"
           className="h-64 w-full max-w-md rounded-[32px] object-cover md:h-72 lg:h-80"
         />
         <div className="absolute -bottom-6 right-6 hidden rounded-xl bg-[#FFF8E7] px-4 py-3 text-sm text-[#1F2937] md:block">
-          <p className="font-semibold">¡Animáte a dar el paso!</p>
-          <p className="text-xs text-[#4B5563]">Seguro tenemos un plan que se ajusta a vos.</p>
+          <p className="font-semibold">¡Empezá hoy!</p>
+          <p className="text-xs text-[#4B5563]">Tu primer trabajo está a un clic</p>
         </div>
       </div>
     </section>
   );
 }
 
-function FeatureHighlights() {
+function UserBenefits() {
   return (
     <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] px-6 py-2 sm:grid-cols-2 lg:grid-cols-4">
-      <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-3">
-        <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Acceso directo a talento joven</h3>
+      <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#0B7285] bg-[#FFF0C2] px-5 py-3">
+        <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Cursos profesionales</h3>
         <p className="text-sm text-[#4B5563]">
-          Encontrá candidatos entre 18–27 años listos para aprender. Sin filtros de años de experiencia.
+          Accedé a formación de calidad diseñada para tu primer empleo
+        </p>
+      </article>
+      <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#DC2626] bg-[#FFF0C2] px-5 py-3">
+        <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Perfil destacado</h3>
+        <p className="text-sm text-[#4B5563]">
+          Creá tu CV digital y mostrá tus habilidades a empresas reales
+        </p>
+      </article>
+      <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#10B981] bg-[#FFF0C2] px-5 py-3">
+        <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Conexión directa</h3>
+        <p className="text-sm text-[#4B5563]">
+          Chateá directamente con reclutadores y empresas interesadas
         </p>
       </article>
       <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-3">
-        <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Impacto social positivo</h3>
+        <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Oportunidades reales</h3>
         <p className="text-sm text-[#4B5563]">
-          Apostá al futuro dando oportunidades a quienes recién comienzan su camino laboral.
-        </p>
-      </article>
-      <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-3">
-        <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Cursos de diferentes niveles</h3>
-        <p className="text-sm text-[#4B5563]">
-          Entrá a la sección de cursos para elegir niveles, áreas específicas y formatos a tu medida.
-        </p>
-      </article>
-      <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-3">
-        <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Gestión simple de ofertas</h3>
-        <p className="text-sm text-[#4B5563]">
-          Publicá, editá y gestioná postulaciones en minutos desde una plataforma intuitiva.
+          Accedé a ofertas laborales exclusivas para jóvenes talentos
         </p>
       </article>
     </section>
   );
 }
 
-function CoursesSection() {
+function UserCoursesSection() {
   return (
     <section id="cursos" className="flex flex-col gap-6">
       <header className="flex flex-col gap-3 text-left">
-        <p className="text-sm font-semibold uppercase tracking-wide text-[#9B1756]">Cursos destacados</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-[#9B1756]">Capacitación profesional</p>
         <h2 className="text-2xl font-bold text-[#1F2937] md:text-3xl">
-          Diseñados para impulsar tu próximo paso
+          Aprendé las habilidades que las empresas buscan
         </h2>
         <p className="max-w-3xl text-sm text-[#4B5563] md:text-base">
-          Cada plan incluye proyectos reales, acompañamiento personalizado y acceso a oportunidades laborales
-          de nuestra red. Elegí por dónde empezar y avanzá a tu ritmo.
+          Nuestros cursos están diseñados junto a empresas líderes. Incluyen proyectos prácticos,
+          certificados reconocidos y acceso directo a oportunidades laborales.
         </p>
       </header>
       <CourseCarousel courses={COURSES} />
@@ -100,61 +100,58 @@ function CoursesSection() {
   );
 }
 
-function Metrics() {
+function UserStats() {
   return (
-    <section
-      id="empresas"
-      className="grid gap-6 rounded-3xl bg-[#FFF8E7] px-4 text-center sm:grid-cols-2 lg:grid-cols-4"
-    >
+    <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] px-4 text-center sm:grid-cols-2 lg:grid-cols-4">
       <article className="flex flex-col gap-2 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-4 py-6">
         <span className="text-3xl font-bold text-[#1F2937] md:text-4xl">+12.000</span>
         <span className="text-sm font-medium uppercase tracking-wide text-[#4B5563]">
-          jóvenes registrados
+          jóvenes capacitados
         </span>
       </article>
       <article className="flex flex-col gap-2 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-4 py-6">
         <span className="text-3xl font-bold text-[#1F2937] md:text-4xl">+80</span>
         <span className="text-sm font-medium uppercase tracking-wide text-[#4B5563]">
-          empresas aliadas
+          empresas contratando
         </span>
       </article>
       <article className="flex flex-col gap-2 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-4 py-6">
         <span className="text-3xl font-bold text-[#1F2937] md:text-4xl">+1.500</span>
         <span className="text-sm font-medium uppercase tracking-wide text-[#4B5563]">
-          ofertas publicadas
+          ofertas disponibles
         </span>
       </article>
       <article className="flex flex-col gap-2 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-4 py-6">
-        <span className="text-3xl font-bold text-[#1F2937] md:text-4xl">9/10</span>
+        <span className="text-3xl font-bold text-[#1F2937] md:text-4xl">85%</span>
         <span className="text-sm font-medium uppercase tracking-wide text-[#4B5563]">
-          empresas recomiendan Jobee
+          consigue empleo en 3 meses
         </span>
       </article>
     </section>
   );
 }
 
-function CallToAction() {
+function UserCallToAction() {
   return (
     <section className="rounded-3xl bg-[#FFF0C2] px-8 py-12 text-center">
       <h3 className="text-2xl font-bold text-[#1F2937] md:text-3xl">
-        ¿Listo para dar tu primer paso profesional?
+        ¿Listo para tu primera experiencia profesional?
       </h3>
       <p className="mt-3 text-sm text-[#4B5563] md:text-base">
-        Creamos un espacio sencillo para aprender, practicar y conectar. Elegí tu plan y empecemos hoy.
+        Registrate hoy, completá tu perfil y empezá a recibir propuestas de empresas.
       </p>
       <div className="mt-6 flex flex-wrap justify-center gap-4">
         <Link
           to="/auth/signup/user"
           className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
         >
-          Crear cuenta joven
+          Crear mi cuenta
         </Link>
         <Link
-          to="/auth/signup/company"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+          to="/auth/login"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] md:text-base"
         >
-          Sumarse como empresa
+          Ya tengo cuenta
         </Link>
       </div>
     </section>
@@ -168,7 +165,7 @@ function ContactFooter() {
       className="mt-auto w-full rounded-t-xl border-t-4 border-t-[#4B5563] bg-[#111827] px-6 py-6 text-[#FFF8E7] md:px-10"
     >
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-6 md:flex-row md:justify-between">
-        <p className="text-lg font-semibold">Conectemos</p>
+        <p className="text-lg font-semibold">¿Necesitás ayuda?</p>
         <div className="flex flex-col items-center gap-4 text-sm md:flex-row md:gap-10 md:text-base">
           <span className="flex items-center gap-2">
             <MdPlace />
@@ -188,16 +185,16 @@ function ContactFooter() {
   );
 }
 
-export default function HomePage() {
+export default function UserLanding() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#FFF8E7]">
       <Header />
       <main className="mx-auto flex w-full max-w-container flex-1 flex-col gap-16 px-5 pb-16 pt-6 md:px-8 lg:px-12">
-        <Hero />
-        <FeatureHighlights />
-        <CoursesSection />
-        <Metrics />
-        <CallToAction />
+        <UserHero />
+        <UserBenefits />
+        <UserCoursesSection />
+        <UserStats />
+        <UserCallToAction />
       </main>
       <ContactFooter />
     </div>
