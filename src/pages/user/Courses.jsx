@@ -1,22 +1,39 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { apiFetch } from "../../utils/api";
+import CourseCard from "../../components/courses/CourseCard";
 
 export default function UserCourses() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        // GET /api/course
-        const response = await fetch('http://localhost:3000/api/course');
+        // Fetch courses from backend
+        const data = await apiFetch('/course/');
 
-        if (!response.ok) throw new Error('failed to fetch courses');
+        // Map backend data to CourseCard format
+        const mappedCourses = (data.data || []).map(course => ({
+          // Map backend fields
+          title: course.title,
+          description: course.description,
+          duration: course.duration ? `${course.duration}h` : null,
 
-        const data = await response.json();
-        setCourses(data.data || []);
+          // Add default values for missing fields
+          plan: 'basico',
+          planLabel: 'Curso',
+          modality: 'Online',
+
+          // Keep original ID for key prop
+          courseId: course.courseId
+        }));
+
+        setCourses(mappedCourses);
       } catch (err) {
-        console.error(err);
+        console.error('Error fetching courses:', err);
+        setError('Failed to load courses');
       } finally {
         setLoading(false);
       }
@@ -26,35 +43,58 @@ export default function UserCourses() {
   }, []);
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <nav style={{ marginBottom: '20px', borderBottom: '2px solid #333', paddingBottom: '10px' }}>
-        <Link to="/user/dashboard" style={{ marginRight: '15px' }}>dashboard</Link>
-        <Link to="/user/profile" style={{ marginRight: '15px' }}>profile</Link>
-        <Link to="/user/company" style={{ marginRight: '15px' }}>companies</Link>
-        <Link to="/user/courses" style={{ marginRight: '15px', fontWeight: 'bold' }}>courses</Link>
-        <Link to="/user/contacts" style={{ marginRight: '15px' }}>contacts</Link>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation */}
+      <nav className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex gap-6">
+          <Link to="/user/dashboard" className="text-gray-600 hover:text-gray-900 transition">
+            Dashboard
+          </Link>
+          <Link to="/user/profile" className="text-gray-600 hover:text-gray-900 transition">
+            Profile
+          </Link>
+          <Link to="/user/company" className="text-gray-600 hover:text-gray-900 transition">
+            Companies
+          </Link>
+          <Link to="/user/courses" className="text-gray-900 font-semibold border-b-2 border-gray-900">
+            Courses
+          </Link>
+          <Link to="/user/contacts" className="text-gray-600 hover:text-gray-900 transition">
+            Contacts
+          </Link>
+        </div>
       </nav>
 
-      <h1>available courses</h1>
+      {/* Main content */}
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">Available Courses</h1>
 
-      {loading && <p>loading...</p>}
+        {loading && (
+          <div className="text-center py-12">
+            <p className="text-gray-600">Loading courses...</p>
+          </div>
+        )}
 
-      {courses.length > 0 ? (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {courses.map((course) => (
-            <li key={course.courseId} style={{ border: '1px solid #ddd', padding: '15px', marginBottom: '10px', backgroundColor: '#f9f9f9' }}>
-              <h3>{course.title}</h3>
-              <p>{course.description}</p>
-              <p><strong>duration:</strong> {course.duration}h</p>
-              <p><strong>theme:</strong> {course.theme}</p>
-              <p><strong>price:</strong> ${course.price}</p>
-              <button style={{ padding: '5px 15px', cursor: 'pointer' }}>enroll</button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        !loading && <p>no courses available</p>
-      )}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            {error}
+          </div>
+        )}
+
+        {!loading && !error && courses.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {courses.map((course) => (
+              <CourseCard key={course.courseId} course={course} />
+            ))}
+          </div>
+        )}
+
+        {!loading && !error && courses.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-600">No courses available at the moment</p>
+          </div>
+        )}
+      </main>
     </div>
   );
 }

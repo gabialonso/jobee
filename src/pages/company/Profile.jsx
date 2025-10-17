@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { apiFetch } from "../../utils/api";
+import { getUser } from "../../utils/auth";
 
 export default function CompanyProfile() {
   const [formData, setFormData] = useState({
@@ -9,75 +11,197 @@ export default function CompanyProfile() {
     groupName: '',
     subGroupName: ''
   });
+  const [companyId, setCompanyId] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const user = getUser();
+        if (!user?.id) {
+          setMessage('User not found');
+          setLoading(false);
+          return;
+        }
+
+        // Try to get existing company profile
+        const data = await apiFetch(`/company/user/${user.id}`);
+
+        if (data.data && data.data.length > 0) {
+          // Profile exists, load it
+          const company = data.data[0];
+          setCompanyId(company.companyId);
+          setFormData({
+            rut: company.rut || '',
+            name: company.name || '',
+            legalReason: company.legalReason || '',
+            groupName: company.groupName || '',
+            subGroupName: company.subGroupName || ''
+          });
+          setIsEditing(true);
+        }
+      } catch (err) {
+        console.error('Error loading company profile:', err);
+        // Profile doesn't exist yet, that's ok
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage('');
+
     try {
-      const token = localStorage.getItem('token');
-      // POST /api/company
-      const response = await fetch('http://localhost:3000/api/company', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          ...formData,
-          userId: 1 // placeholder
-        })
-      });
-
-      if (!response.ok) throw new Error('failed to create company profile');
-
-      setMessage('company profile created successfully');
+      if (isEditing && companyId) {
+        // Update existing profile
+        await apiFetch(`/company/${companyId}`, {
+          method: 'PUT',
+          body: formData
+        });
+        setMessage('Company profile updated successfully');
+      } else {
+        // Create new profile
+        const data = await apiFetch('/company/', {
+          method: 'POST',
+          body: formData
+        });
+        setCompanyId(data.data.companyId);
+        setIsEditing(true);
+        setMessage('Company profile created successfully');
+      }
     } catch (err) {
-      setMessage('error: ' + err.message);
+      console.error('Error saving company profile:', err);
+      setMessage(`Error: ${err.message || 'Failed to save company profile'}`);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-gray-600">Loading company profile...</p>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <nav style={{ marginBottom: '20px', borderBottom: '2px solid #333', paddingBottom: '10px' }}>
-        <Link to="/company/dashboard" style={{ marginRight: '15px' }}>dashboard</Link>
-        <Link to="/company/profile" style={{ marginRight: '15px', fontWeight: 'bold' }}>profile</Link>
-        <Link to="/company/users" style={{ marginRight: '15px' }}>candidates</Link>
-        <Link to="/company/courses" style={{ marginRight: '15px' }}>courses</Link>
-        <Link to="/company/contacts" style={{ marginRight: '15px' }}>contacts</Link>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation */}
+      <nav className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex gap-6">
+          <Link to="/company/dashboard" className="text-gray-600 hover:text-gray-900 transition">
+            Dashboard
+          </Link>
+          <Link to="/company/profile" className="text-gray-900 font-semibold border-b-2 border-gray-900">
+            Profile
+          </Link>
+          <Link to="/company/users" className="text-gray-600 hover:text-gray-900 transition">
+            Candidates
+          </Link>
+          <Link to="/company/courses" className="text-gray-600 hover:text-gray-900 transition">
+            Courses
+          </Link>
+          <Link to="/company/contacts" className="text-gray-600 hover:text-gray-900 transition">
+            Contacts
+          </Link>
+        </div>
       </nav>
 
-      <h1>company profile</h1>
+      {/* Main content */}
+      <main className="max-w-3xl mx-auto px-6 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          {isEditing ? 'Edit Company Profile' : 'Create Company Profile'}
+        </h1>
 
-      <form onSubmit={handleSubmit} style={{ maxWidth: '500px' }}>
-        <div style={{ marginBottom: '10px' }}>
-          <label>rut:</label><br />
-          <input type="text" value={formData.rut} onChange={(e) => setFormData({...formData, rut: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+        {message && (
+          <div className={`mb-6 px-4 py-3 rounded-lg ${
+            message.includes('Error') || message.includes('error')
+              ? 'bg-red-50 border border-red-200 text-red-700'
+              : 'bg-green-50 border border-green-200 text-green-700'
+          }`}>
+            {message}
+          </div>
+        )}
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>company name:</label><br />
-          <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-sm">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              RUT (Tax ID)
+            </label>
+            <input
+              type="text"
+              value={formData.rut}
+              onChange={(e) => setFormData({...formData, rut: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+              placeholder="12-34567890-1"
+            />
+          </div>
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>legal reason:</label><br />
-          <input type="text" value={formData.legalReason} onChange={(e) => setFormData({...formData, legalReason: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Company Name
+            </label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>group name:</label><br />
-          <input type="text" value={formData.groupName} onChange={(e) => setFormData({...formData, groupName: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Legal Reason (Razón Social)
+            </label>
+            <input
+              type="text"
+              value={formData.legalReason}
+              onChange={(e) => setFormData({...formData, legalReason: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>subgroup name:</label><br />
-          <input type="text" value={formData.subGroupName} onChange={(e) => setFormData({...formData, subGroupName: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Group Name
+              </label>
+              <input
+                type="text"
+                value={formData.groupName}
+                onChange={(e) => setFormData({...formData, groupName: e.target.value})}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
 
-        <button type="submit" style={{ padding: '10px 20px', cursor: 'pointer' }}>save profile</button>
-      </form>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Subgroup Name
+              </label>
+              <input
+                type="text"
+                value={formData.subGroupName}
+                onChange={(e) => setFormData({...formData, subGroupName: e.target.value})}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
 
-      {message && <p style={{ marginTop: '20px', color: message.includes('error') ? 'red' : 'green' }}>{message}</p>}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
+            {isEditing ? 'Update Company Profile' : 'Create Company Profile'}
+          </button>
+        </form>
+      </main>
     </div>
   );
 }

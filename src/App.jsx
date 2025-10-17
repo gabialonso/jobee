@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 // ============================= Public Pages =============================
 import SplashPage from "./pages/public/SplashPage.jsx";
 import HomePage from "./pages/public/HomePage.jsx";
@@ -43,19 +44,19 @@ export default function App() {
       <Route path="/auth/signup/company" element={<SignUpCompanyPage />} />
       <Route path="/auth/signup/user" element={<SignUpUserPage />} />
 
-      {/* User routes */}
-      <Route path="/user/dashboard" element={<UserDashboard />} />
-      <Route path="/user/profile" element={<UserProfile />} />
-      <Route path="/user/company" element={<UserCompany />} />
-      <Route path="/user/contacts" element={<UserContacts />} />
-      <Route path="/user/courses" element={<UserCourses />} />
+      {/* User routes - Protected */}
+      <Route path="/user/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
+      <Route path="/user/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+      <Route path="/user/company" element={<ProtectedRoute><UserCompany /></ProtectedRoute>} />
+      <Route path="/user/contacts" element={<ProtectedRoute><UserContacts /></ProtectedRoute>} />
+      <Route path="/user/courses" element={<ProtectedRoute><UserCourses /></ProtectedRoute>} />
 
-      {/* Company routes */}
-      <Route path="/company/dashboard" element={<CompanyDashboard />} />
-      <Route path="/company/profile" element={<CompanyProfile />} />
-      <Route path="/company/users" element={<CompanyUsers />} />
-      <Route path="/company/contacts" element={<CompanyContacts />} />
-      <Route path="/company/courses" element={<CompanyCourses />} />
+      {/* Company routes - Protected */}
+      <Route path="/company/dashboard" element={<ProtectedRoute><CompanyDashboard /></ProtectedRoute>} />
+      <Route path="/company/profile" element={<ProtectedRoute><CompanyProfile /></ProtectedRoute>} />
+      <Route path="/company/users" element={<ProtectedRoute><CompanyUsers /></ProtectedRoute>} />
+      <Route path="/company/contacts" element={<ProtectedRoute><CompanyContacts /></ProtectedRoute>} />
+      <Route path="/company/courses" element={<ProtectedRoute><CompanyCourses /></ProtectedRoute>} />
 
       {/* 404 */}
       <Route path="*" element={<NotFound />} />

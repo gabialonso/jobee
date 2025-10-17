@@ -1,103 +1,258 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { apiFetch } from "../../utils/api";
+import { getUser } from "../../utils/auth";
 
 export default function UserProfile() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     birthday: '',
-    ci: '',
+    Ci: '',
     highSchool: '',
     description: '',
     cv: '',
     linkedin: ''
   });
+  const [personId, setPersonId] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const user = getUser();
+        if (!user?.id) {
+          setMessage('User not found');
+          setLoading(false);
+          return;
+        }
+
+        // Try to get existing profile
+        const data = await apiFetch(`/person/user/${user.id}`);
+
+        if (data.data && data.data.length > 0) {
+          // Profile exists, load it
+          const person = data.data[0];
+          setPersonId(person.personId);
+          setFormData({
+            firstName: person.firstName || '',
+            lastName: person.lastName || '',
+            birthday: person.birthday || '',
+            Ci: person.Ci || '',
+            highSchool: person.highSchool || '',
+            description: person.description || '',
+            cv: person.cv || '',
+            linkedin: person.linkedin || ''
+          });
+          setIsEditing(true);
+        }
+      } catch (err) {
+        console.error('Error loading profile:', err);
+        // Profile doesn't exist yet, that's ok
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage('');
+
     try {
-      const token = localStorage.getItem('token');
-      // POST /api/person
-      const response = await fetch('http://localhost:3000/api/person', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          ...formData,
-          birthday: parseInt(formData.birthday),
-          Ci: parseInt(formData.ci),
-          userId: 1 // placeholder, deberia venir del token
-        })
-      });
+      const payload = {
+        ...formData,
+        birthday: formData.birthday ? parseInt(formData.birthday) : null,
+        Ci: formData.Ci ? parseInt(formData.Ci) : null,
+      };
 
-      if (!response.ok) throw new Error('failed to create profile');
-
-      setMessage('profile created successfully');
+      if (isEditing && personId) {
+        // Update existing profile
+        await apiFetch(`/person/${personId}`, {
+          method: 'PUT',
+          body: payload
+        });
+        setMessage('Profile updated successfully');
+      } else {
+        // Create new profile
+        const data = await apiFetch('/person/', {
+          method: 'POST',
+          body: payload
+        });
+        setPersonId(data.data.personId);
+        setIsEditing(true);
+        setMessage('Profile created successfully');
+      }
     } catch (err) {
-      setMessage('error: ' + err.message);
+      console.error('Error saving profile:', err);
+      setMessage(`Error: ${err.message || 'Failed to save profile'}`);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-gray-600">Loading profile...</p>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <nav style={{ marginBottom: '20px', borderBottom: '2px solid #333', paddingBottom: '10px' }}>
-        <Link to="/user/dashboard" style={{ marginRight: '15px' }}>dashboard</Link>
-        <Link to="/user/profile" style={{ marginRight: '15px', fontWeight: 'bold' }}>profile</Link>
-        <Link to="/user/company" style={{ marginRight: '15px' }}>companies</Link>
-        <Link to="/user/courses" style={{ marginRight: '15px' }}>courses</Link>
-        <Link to="/user/contacts" style={{ marginRight: '15px' }}>contacts</Link>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation */}
+      <nav className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex gap-6">
+          <Link to="/user/dashboard" className="text-gray-600 hover:text-gray-900 transition">
+            Dashboard
+          </Link>
+          <Link to="/user/profile" className="text-gray-900 font-semibold border-b-2 border-gray-900">
+            Profile
+          </Link>
+          <Link to="/user/company" className="text-gray-600 hover:text-gray-900 transition">
+            Companies
+          </Link>
+          <Link to="/user/courses" className="text-gray-600 hover:text-gray-900 transition">
+            Courses
+          </Link>
+          <Link to="/user/contacts" className="text-gray-600 hover:text-gray-900 transition">
+            Contacts
+          </Link>
+        </div>
       </nav>
 
-      <h1>user profile</h1>
+      {/* Main content */}
+      <main className="max-w-3xl mx-auto px-6 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          {isEditing ? 'Edit Your Profile' : 'Create Your Profile'}
+        </h1>
 
-      <form onSubmit={handleSubmit} style={{ maxWidth: '500px' }}>
-        <div style={{ marginBottom: '10px' }}>
-          <label>first name:</label><br />
-          <input type="text" value={formData.firstName} onChange={(e) => setFormData({...formData, firstName: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+        {message && (
+          <div className={`mb-6 px-4 py-3 rounded-lg ${
+            message.includes('Error') || message.includes('error')
+              ? 'bg-red-50 border border-red-200 text-red-700'
+              : 'bg-green-50 border border-green-200 text-green-700'
+          }`}>
+            {message}
+          </div>
+        )}
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>last name:</label><br />
-          <input type="text" value={formData.lastName} onChange={(e) => setFormData({...formData, lastName: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                First Name
+              </label>
+              <input
+                type="text"
+                value={formData.firstName}
+                onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+            </div>
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>birthday (year):</label><br />
-          <input type="number" value={formData.birthday} onChange={(e) => setFormData({...formData, birthday: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Last Name
+              </label>
+              <input
+                type="text"
+                value={formData.lastName}
+                onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+            </div>
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>ci:</label><br />
-          <input type="number" value={formData.ci} onChange={(e) => setFormData({...formData, ci: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Birth Year
+              </label>
+              <input
+                type="number"
+                value={formData.birthday}
+                onChange={(e) => setFormData({...formData, birthday: e.target.value})}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="1990"
+              />
+            </div>
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>high school:</label><br />
-          <input type="text" value={formData.highSchool} onChange={(e) => setFormData({...formData, highSchool: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                CI (ID Number)
+              </label>
+              <input
+                type="number"
+                value={formData.Ci}
+                onChange={(e) => setFormData({...formData, Ci: e.target.value})}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>description:</label><br />
-          <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} style={{ width: '100%', padding: '5px' }} rows="4"></textarea>
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              High School
+            </label>
+            <input
+              type="text"
+              value={formData.highSchool}
+              onChange={(e) => setFormData({...formData, highSchool: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>cv url:</label><br />
-          <input type="text" value={formData.cv} onChange={(e) => setFormData({...formData, cv: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Description
+            </label>
+            <textarea
+              value={formData.description}
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              rows="4"
+              placeholder="Tell us about yourself..."
+            />
+          </div>
 
-        <div style={{ marginBottom: '10px' }}>
-          <label>linkedin:</label><br />
-          <input type="text" value={formData.linkedin} onChange={(e) => setFormData({...formData, linkedin: e.target.value})} style={{ width: '100%', padding: '5px' }} />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              CV URL
+            </label>
+            <input
+              type="url"
+              value={formData.cv}
+              onChange={(e) => setFormData({...formData, cv: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="https://..."
+            />
+          </div>
 
-        <button type="submit" style={{ padding: '10px 20px', cursor: 'pointer' }}>save profile</button>
-      </form>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              LinkedIn Profile
+            </label>
+            <input
+              type="url"
+              value={formData.linkedin}
+              onChange={(e) => setFormData({...formData, linkedin: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="https://linkedin.com/in/..."
+            />
+          </div>
 
-      {message && <p style={{ marginTop: '20px', color: message.includes('error') ? 'red' : 'green' }}>{message}</p>}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
+            {isEditing ? 'Update Profile' : 'Create Profile'}
+          </button>
+        </form>
+      </main>
     </div>
   );
 }
