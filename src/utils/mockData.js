@@ -113,7 +113,7 @@ export const mockApi = {
   },
 
   // Eliminar oferta laboral
-  async deleteJobOffer(offerId) {
+  async deleteJobOffer() {
     await delay(400);
     return {
       success: true,
@@ -122,7 +122,7 @@ export const mockApi = {
   },
 
   // Inscribirse a un curso
-  async enrollInCourse(userId, courseId) {
+  async enrollInCourse() {
     await delay(500);
     return {
       success: true,
