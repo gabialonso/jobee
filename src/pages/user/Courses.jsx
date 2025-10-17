@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
 import { mockApi } from "../../utils/mockData";
+import { COURSES } from "../../data/courses.js";
 import CourseCard from "../../components/courses/CourseCard";
 import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
 
@@ -15,44 +16,35 @@ export default function UserCourses() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        // Fetch courses from backend
         const data = await apiFetch('/course/');
-
-        // Map backend data to CourseCard format
         const mappedCourses = (data.data || []).map(course => ({
-          // Map backend fields
           title: course.title,
           description: course.description,
           duration: course.duration ? `${course.duration}h` : null,
-
-          // Add default values for missing fields
           plan: 'basico',
           planLabel: 'Curso',
           modality: 'Online',
-
-          // Keep original ID for key prop
           courseId: course.courseId
         }));
-
         setCourses(mappedCourses);
       } catch (err) {
-        console.error('Error fetching courses:', err);
-        setError('Failed to load courses');
+        // backend: si no hay backend disponible, usa datos mock de /data/courses.js
+        console.error('error al cargar cursos, usando datos mock:', err);
+        setCourses(COURSES);
       } finally {
         setLoading(false);
       }
     };
-
     fetchCourses();
   }, []);
 
   const handleEnroll = async (courseId) => {
     setEnrolling(courseId);
     try {
-      // Simulated enrollment - in real implementation would call mockApi or apiFetch
-      await mockApi.enrollInCourse(1, courseId); // userId hardcoded to 1 for demo
-      alert('¡Inscripción exitosa! (simulación). Cuando integres con backend, descomentá la línea de apiFetch.');
+      // backend: reemplazar mockApi por apiFetch cuando esté el endpoint
       // await apiFetch('/enrollments/', { method: 'POST', body: { courseId } });
+      await mockApi.enrollInCourse(1, courseId);
+      alert('¡Inscripción exitosa!');
     } catch (err) {
       console.error('Error enrolling in course:', err);
       alert('Error al inscribirse en el curso');

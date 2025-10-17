@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiFetch } from "../../utils/api.js";
+import { COURSES } from "../../data/courses.js";
 import PublicHeader from "../../components/common/PublicHeader.jsx";
 import CourseCarousel from "../../components/courses/CourseCarousel.jsx";
 import BannerImage from "../../assets/LandingBannerImg.svg";
@@ -213,10 +214,11 @@ export default function HomePage() {
         }));
         setCourses(mappedCourses);
       } catch (err) {
-        console.error('Error fetching courses:', err);
+        // backend: si no hay backend disponible, usa datos mock de /data/courses.js
+        console.error('error al cargar cursos, usando datos mock:', err);
+        setCourses(COURSES);
       }
     };
-
     fetchCourses();
   }, []);
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
 import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
-import { HiPlus, HiBookOpen, HiClock, HiCurrencyDollar, HiTag, HiX } from "react-icons/hi2";
+import { HiPlus, HiBookOpen, HiClock, HiCurrencyDollar, HiTag, HiXMark } from "react-icons/hi2";
 
 export default function CompanyCourses() {
   const location = useLocation();
@@ -10,7 +10,7 @@ export default function CompanyCourses() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState('create'); // 'create', 'edit', 'delete'
+  const [modalType, setModalType] = useState('create');
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -60,20 +60,19 @@ export default function CompanyCourses() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       if (modalType === 'create') {
-        // Simulated create - in real implementation would call apiFetch
-        alert('Curso creado (simulación). Cuando integres con backend, descomentá la línea de apiFetch.');
+        // backend: descomentar la siguiente línea para crear curso
         // await apiFetch('/course/', { method: 'POST', body: formData });
+        alert('Curso creado (simulación)');
       } else if (modalType === 'edit') {
-        // Simulated edit - in real implementation would call apiFetch
-        alert('Curso editado (simulación). Cuando integres con backend, descomentá la línea de apiFetch.');
+        // backend: descomentar la siguiente línea para editar curso
         // await apiFetch(`/course/${selectedCourse.courseId}`, { method: 'PUT', body: formData });
+        alert('Curso editado (simulación)');
       }
-
       closeModal();
-      // fetchCourses(); // Refresh after real API call
+      // backend: descomentar para refrescar lista después de crear/editar
+      // fetchCourses();
     } catch (err) {
       console.error('Error saving course:', err);
       alert('Error al guardar el curso');
@@ -82,12 +81,12 @@ export default function CompanyCourses() {
 
   const handleDelete = async () => {
     try {
-      // Simulated delete - in real implementation would call apiFetch
-      alert('Curso eliminado (simulación). Cuando integres con backend, descomentá la línea de apiFetch.');
+      // backend: descomentar la siguiente línea para eliminar curso
       // await apiFetch(`/course/${selectedCourse.courseId}`, { method: 'DELETE' });
-
+      alert('Curso eliminado (simulación)');
       closeModal();
-      // fetchCourses(); // Refresh after real API call
+      // backend: descomentar para refrescar lista después de eliminar
+      // fetchCourses();
     } catch (err) {
       console.error('Error deleting course:', err);
       alert('Error al eliminar el curso');
@@ -210,7 +209,6 @@ export default function CompanyCourses() {
         )}
       </main>
 
-      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-3xl border-b-4 border-[#E69C00] w-full max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -222,7 +220,7 @@ export default function CompanyCourses() {
                   {modalType === 'delete' && 'Eliminar Curso'}
                 </h2>
                 <button onClick={closeModal} className="p-2 hover:bg-[#FFF8E7] rounded-xl transition">
-                  <HiX className="w-6 h-6 text-[#4B5563]" />
+                  <HiXMark className="w-6 h-6 text-[#4B5563]" />
                 </button>
               </div>
 
