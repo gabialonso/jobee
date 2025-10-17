@@ -462,3 +462,399 @@ For questions or issues, refer to:
 - Prisma schema: jobee-backend/prisma/schema.prisma
 
 Contact: animajobee@gmail.com
+
+================================================================================
+
+> Hola! Te paso las funcionalidades del frontend que están simuladas o pendientes de integración con backend:
+
+  1. Estadísticas de Empresa
+
+  Archivos: src/pages/company/Profile.jsx y src/pages/company/CompanyDashboard.jsx
+
+  Actualmente muestra "-" en todas las estadísticas. El frontend tiene un estado stats que espera un objeto con:
+  - totalCandidates - Total de candidatos contactados
+  - activeJobs - Ofertas laborales activas
+  - publishedCourses - Cursos publicados
+
+  Necesito un endpoint que devuelva estas métricas para la empresa logueada.
+
+  ---
+  2. Cursos Inscritos del Usuario
+
+  Archivo: src/pages/user/Profile.jsx
+
+  Usa datos simulados (MOCK_COURSES) con 3 cursos hardcodeados. El frontend espera un array de cursos con:
+  - id - ID del curso
+  - title - Nombre del curso
+  - description - Descripción
+  - progress - Progreso de 0 a 100
+  - status - "completed" o "in_progress"
+
+  Necesito un endpoint que devuelva los cursos en los que está inscrito el usuario con su progreso.
+
+  ---
+  3. Sistema de Mensajería
+
+  Archivos: src/pages/user/Contact.jsx y src/pages/company/Contact.jsx
+
+  Páginas completas que muestran "Próximamente". Necesito endpoints para:
+  - Listar conversaciones del usuario
+  - Ver mensajes de una conversación
+  - Enviar nuevos mensajes
+
+  ---
+  4. Gestión de Candidatos
+
+  Archivo: src/pages/company/Users.jsx
+
+  Página que muestra "Próximamente". Las empresas necesitan ver lista de candidatos/usuarios disponibles, con sus datos básicos y cursos
+  completados.
+
+  ---
+  5. Ofertas Laborales
+
+  Uso: Estadísticas en dashboard y perfil de empresa
+
+  Actualmente solo se muestra el contador (en "-"). Falta el CRUD completo de ofertas y sistema de postulaciones.
+
+  ---
+  6. Gestión de Cursos (Empresa)
+
+  Archivo: src/pages/company/Courses.jsx
+
+  Los botones de "Crear", "Editar" y "Eliminar" muestran alert("Funcionalidad próximamente"). Los endpoints ya existen en backend (POST /course/,
+   PUT /course/:id, DELETE /course/:id), solo falta que implemente los formularios en el frontend.
+
+  ---
+  7. Inscripción a Cursos (Usuario)
+
+  Archivo: src/pages/user/Courses.jsx
+
+  Lista los cursos correctamente, pero falta la funcionalidad para que los usuarios se inscriban y accedan al contenido.
+
+  ---
+  Cómo funciona el frontend:
+  - Todas las llamadas usan apiFetch() desde src/utils/api.js
+  - Patrón común: useState para datos, useEffect para cargar, manejo de loading y error
+  - Cuando no hay datos del backend, muestro "-" o mensaje "Próximamente"
+  - El token JWT está en localStorage como authToken
+
+  Prioridad:
+  1. Estadísticas de empresa (está visible mostrando "-")
+  2. Cursos inscritos del usuario (usa datos fake)
+  3. Sistema de mensajería
+  4. Lo demás es menos urgente
+
+  Cualquier duda avisame!
+
+> de momento dejemoslo pronto para implementar, pero simulemoslo hardcodeado con archivos json en data, que saque la info de ahi. crees que es
+buena idea para una demo? por si no llegamos a implementarlo poder mostrar como seria. necesito dejarlo pronto para integración con backend, y lo que no
+está simulado, siguiendo los estilos y la consistencia dejarlo simulado momentaneamente.
+
+● ¡Excelente idea! Simular con archivos JSON es perfecto para una demo y mantiene el código listo para integración. Voy a:
+
+  1. Crear carpeta data/ con archivos JSON
+  2. Crear helpers para leer estos datos
+  3. Implementar las funcionalidades pendientes con datos simulados
+  4. Mantener la misma estructura que usarías con el backend real
+
+  Así cuando llegue el momento de integrar, solo cambias la fuente de datos.
+
+● Voy a crear los archivos JSON con datos simulados:
+
+● Write(src/data/companyStats.json)
+  ⎿  Wrote 13 lines to src/data/companyStats.json
+     {
+       "1": {
+         "totalCandidates": 45,
+         "activeJobs": 8,
+         "publishedCourses": 3
+       },
+       "2": {
+         "totalCandidates": 120,
+         "activeJobs": 15,
+         "publishedCourses": 7
+     … +3 lines (ctrl+o to expand)
+
+● Write(src/data/userCourses.json)
+  ⎿  Wrote 42 lines to src/data/userCourses.json
+     {
+       "1": [
+         {
+           "id": 1,
+           "title": "Introducción a la Programación",
+           "description": "Fundamentos de JavaScript y lógica de programación",
+           "progress": 100,
+           "status": "completed"
+         },
+         {
+     … +32 lines (ctrl+o to expand)
+
+● Write(src/data/conversations.json)
+  ⎿  Wrote 39 lines to src/data/conversations.json
+     {
+       "user_1": [
+         {
+           "id": 1,
+           "participantName": "TechCorp Solutions",
+           "participantPhoto": "",
+           "lastMessage": "Nos interesa tu perfil para una posición junior",
+           "lastMessageDate": "2025-10-16T14:30:00Z",
+           "unreadCount": 2
+         },
+     … +29 lines (ctrl+o to expand)
+
+● Write(src/data/messages.json)
+  ⎿  Wrote 35 lines to src/data/messages.json
+     {
+       "1": [
+         {
+           "id": 1,
+           "senderId": "company_1",
+           "senderName": "TechCorp Solutions",
+           "text": "Hola! Vimos tu perfil y nos gustaría conversar sobre una oportunidad.",
+           "timestamp": "2025-10-16T14:00:00Z"
+         },
+         {
+     … +25 lines (ctrl+o to expand)
+
+● Write(src/data/candidates.json)
+  ⎿  Wrote 47 lines to src/data/candidates.json
+     [
+       {
+         "id": 1,
+         "firstName": "Juan",
+         "lastName": "Pérez",
+         "profilePhoto": "",
+         "highSchool": "Liceo 1",
+         "birthday": 2003,
+         "completedCourses": ["Introducción a la Programación", "React desde Cero"],
+         "inProgressCourses": ["Diseño UX para Product Teams"],
+     … +37 lines (ctrl+o to expand)
+
+● Write(src/data/jobOffers.json)
+  ⎿  Wrote 46 lines to src/data/jobOffers.json
+     {
+       "1": [
+         {
+           "id": 1,
+           "title": "Desarrollador Junior React",
+           "company": "TechCorp Solutions",
+           "description": "Buscamos desarrollador junior con conocimientos en React para unirse a nuestro equipo",
+           "requirements": ["JavaScript", "React", "HTML/CSS"],
+           "modality": "Presencial",
+           "location": "Montevideo",
+     … +36 lines (ctrl+o to expand)
+
+● Ahora creo un helper para leer estos datos fácilmente:
+
+● Write(src/utils/mockData.js)
+  ⎿  Wrote 133 lines to src/utils/mockData.js
+     // Helper para leer datos simulados de archivos JSON
+     // Cuando se integre con backend, solo reemplazar estas funciones con llamadas a apiFetch()
+     import companyStatsData from '../data/companyStats.json';
+     import userCoursesData from '../data/userCourses.json';
+     import conversationsData from '../data/conversations.json';
+     import messagesData from '../data/messages.json';
+     import candidatesData from '../data/candidates.json';
+     import jobOffersData from '../data/jobOffers.json';
+     … +123 lines (ctrl+o to expand)
+
+● Ahora implemento las estadísticas de empresa. Primero actualizo el Profile de empresa:
+
+● Read(src/pages/company/Profile.jsx)
+  ⎿  Read 80 lines
+
+● Update(src/pages/company/Profile.jsx)
+  ⎿  Updated src/pages/company/Profile.jsx with 1 addition
+       2    import { useLocation } from "react-router-dom";
+       3    import { apiFetch } from "../../utils/api";
+       4    import { getUser } from "../../utils/auth";
+       5 +  import { mockApi } from "../../utils/mockData";
+       6    import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
+       7    import StatCard from "../../components/common/StatCard";
+       8    import { HiUsers, HiBriefcase, HiBookOpen } from "react-icons/hi2";
+
+● Update(src/pages/company/Profile.jsx)
+  ⎿  Updated src/pages/company/Profile.jsx with 6 additions
+       63                bannerPhoto: company.bannerPhoto || ''
+       64              });
+       65              setIsEditing(true);
+       66 +
+       67 +            // Cargar estadísticas (datos simulados)
+       68 +            const statsData = await mockApi.getCompanyStats(company.companyId);
+       69 +            if (statsData.success) {
+       70 +              setStats(statsData.data);
+       71 +            }
+       72            }
+       73          } catch (err) {
+       74            console.error('Error loading company profile:', err);
+
+● Ahora actualizo el Dashboard de empresa también:
+
+● Read(src/pages/company/CompanyDashboard.jsx)
+  ⎿  Read 99 lines
+
+● Update(src/pages/company/CompanyDashboard.jsx)
+  ⎿  Updated src/pages/company/CompanyDashboard.jsx with 33 additions
+       1 +  import { useState, useEffect } from "react";
+       2    import { useLocation } from "react-router-dom";
+       3    import { getUser } from "../../utils/auth";
+       4 +  import { apiFetch } from "../../utils/api";
+       5 +  import { mockApi } from "../../utils/mockData";
+       6    import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
+       7    import StatCard from "../../components/common/StatCard";
+       8    import ActionCard from "../../components/common/ActionCard";
+     ...
+        8    export default function CompanyDashboard() {
+        9      const user = getUser();
+       10      const location = useLocation();
+       11 +    const [stats, setStats] = useState({
+       12 +      totalCandidates: '-',
+       13 +      activeJobs: '-',
+       14 +      publishedCourses: '-'
+       15 +    });
+       16
+       17 +    useEffect(() => {
+       18 +      const loadStats = async () => {
+       19 +        try {
+       20 +          const user = getUser();
+       21 +          if (!user?.id) return;
+       22 +
+       23 +          // Obtener companyId del usuario
+       24 +          const companyData = await apiFetch(`/company/user/${user.id}`);
+       25 +          if (companyData.data && companyData.data.length > 0) {
+       26 +            const company = companyData.data[0];
+       27 +
+       28 +            // Cargar estadísticas (datos simulados)
+       29 +            const statsData = await mockApi.getCompanyStats(company.companyId);
+       30 +            if (statsData.success) {
+       31 +              setStats(statsData.data);
+       32 +            }
+       33 +          }
+       34 +        } catch (err) {
+       35 +          console.error('Error loading stats:', err);
+       36 +        }
+       37 +      };
+       38 +
+       39 +      loadStats();
+       40 +    }, []);
+       41 +
+       42      return (
+       43        <div className="min-h-screen bg-[#FFF8E7]">
+       44          <AuthenticatedHeader
+
+● Update(src/pages/company/CompanyDashboard.jsx)
+  ⎿  Updated src/pages/company/CompanyDashboard.jsx with 3 additions and 3 removals
+       69              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+       70                <StatCard
+       71                  label="Total de Candidatos"
+       72 -                value="-"
+       72 +                value={stats.totalCandidates}
+       73                  icon={HiUsers}
+       74                  color="#2A8A9E"
+       75                />
+       76                <StatCard
+       77                  label="Ofertas Activas"
+       78 -                value="-"
+       78 +                value={stats.activeJobs}
+       79                  icon={HiBriefcase}
+       80                  color="#F5C34D"
+       81                />
+       82                <StatCard
+       83                  label="Cursos Publicados"
+       84 -                value="-"
+       84 +                value={stats.publishedCourses}
+       85                  icon={HiBookOpen}
+       86                  color="#E84D4D"
+       87                />
+
+● Ahora actualizo el perfil de usuario para cargar los cursos desde los datos simulados:
+
+● Update(src/pages/user/Profile.jsx)
+  ⎿  Updated src/pages/user/Profile.jsx with 1 addition and 25 removals
+        2    import { useLocation } from "react-router-dom";
+        3    import { apiFetch } from "../../utils/api";
+        4    import { getUser } from "../../utils/auth";
+        5 +  import { mockApi } from "../../utils/mockData";
+        6    import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
+        7    import CourseProgressCard from "../../components/courses/CourseProgressCard";
+        8    import { FiEdit2, FiLinkedin, FiFileText, FiCamera, FiX, FiCheck } from "react-icons/fi";
+        9
+       10 -  // cursos de ejemplo (futura integración con backend)
+       11 -  const MOCK_COURSES = [
+       12 -    {
+       13 -      id: 1,
+       14 -      title: "Introducción a la Programación",
+       15 -      description: "Fundamentos de JavaScript y lógica de programación",
+       16 -      progress: 100,
+       17 -      status: "completed"
+       18 -    },
+       19 -    {
+       20 -      id: 2,
+       21 -      title: "React desde Cero",
+       22 -      description: "Desarrollo de aplicaciones web con React",
+       23 -      progress: 65,
+       24 -      status: "in_progress"
+       25 -    },
+       26 -    {
+       27 -      id: 3,
+       28 -      title: "Diseño UX para Product Teams",
+       29 -      description: "Wireframes, prototipos y research con usuarios",
+       30 -      progress: 40,
+       31 -      status: "in_progress"
+       32 -    },
+       33 -  ];
+       34 -
+       10    export default function UserProfile() {
+       11      const location = useLocation();
+       12      const [formData, setFormData] = useState({
+
+● Update(src/pages/user/Profile.jsx)
+  ⎿  Updated src/pages/user/Profile.jsx with 1 addition
+       26      const [message, setMessage] = useState('');
+       27      const [isEditing, setIsEditing] = useState(false);
+       28      const [editMode, setEditMode] = useState(false);
+       29 +    const [courses, setCourses] = useState([]);
+       30
+       31      useEffect(() => {
+       32        const loadProfile = async () => {
+
+● Update(src/pages/user/Profile.jsx)
+  ⎿  Updated src/pages/user/Profile.jsx with 6 additions
+       56                bannerPhoto: person.bannerPhoto || ''
+       57              });
+       58              setIsEditing(true);
+       59 +
+       60 +            // Cargar cursos inscritos (datos simulados)
+       61 +            const coursesData = await mockApi.getUserCourses(user.id);
+       62 +            if (coursesData.success) {
+       63 +              setCourses(coursesData.data);
+       64 +            }
+       65            }
+       66          } catch (err) {
+       67            console.error('Error loading profile:', err);
+
+● Update(src/pages/user/Profile.jsx)
+  ⎿  Updated src/pages/user/Profile.jsx with 3 additions and 3 removals
+       393                      </p>
+       394                    </div>
+       395                    <span className="text-sm font-semibold text-[#9B1756] bg-[#9B1756]/10 border border-[#9B1756] px-3 py-1 rounded-full">
+       396 -                    {MOCK_COURSES.filter(c => c.status === 'completed').length} Completados
+       396 +                    {courses.filter(c => c.status === 'completed').length} Completados
+       397                    </span>
+       398                  </div>
+       399
+       400                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+       401 -                  {MOCK_COURSES.map((course) => (
+       401 +                  {courses.map((course) => (
+       402                      <CourseProgressCard key={course.id} course={course} />
+       403                    ))}
+       404                  </div>
+       405
+       406 -                {MOCK_COURSES.length === 0 && (
+       406 +                {courses.length === 0 && (
+       407                    <div className="text-center py-12">
+       408                      <p className="text-[#4B5563]">Aún no estás inscripto en ningún curso.</p>
+       409                      <a
+  ⎿  Session limit reached ∙ resets 1pm

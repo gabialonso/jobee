@@ -16,7 +16,7 @@
 
 ## 📚 Overview
 
-**Jobee Frontend** is a modern, responsive web application focused on connecting **young people (ages 18-27)** with **their first job opportunities**. The platform enables interaction between **users and companies** through **job offers**, **training courses**, and **personalized profiles**.
+**Jobee Frontend** is a modern, responsive web application focused on connecting **young people (ages 18-24)** with **their first job opportunities**. The platform enables interaction between **users and companies** through **job offers**, **training courses**, and **personalized profiles**.
 
 Built with **React 19**, **Vite 7**, and **Tailwind CSS 4**, it's optimized for **performance**, **modularity**, and **scalability**.
 

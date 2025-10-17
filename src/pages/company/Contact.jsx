@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import Header from "../../components/common/Header";
+import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
 import { HiChatBubbleLeftRight, HiInformationCircle } from "react-icons/hi2";
 
 export default function CompanyContacts() {
@@ -7,7 +7,7 @@ export default function CompanyContacts() {
 
   return (
     <div className="min-h-screen bg-[#FFF8E7]">
-      <Header mode="company" currentPath={location.pathname} />
+      <AuthenticatedHeader mode="company" currentPath={location.pathname} />
 
       {/* Main content */}
       <main className="mx-auto w-full max-w-container px-5 py-12 md:px-8 lg:px-12">
@@ -24,16 +24,16 @@ export default function CompanyContacts() {
         </div>
 
         {/* Feature Coming Soon Banner */}
-        <div className="bg-[#0B7285]/10 border-b-4 border-[#0B7285] rounded-xl p-6 mb-8">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 p-3 bg-[#0B7285]/20 rounded-xl">
+        <div className="bg-[#0B7285]/10 border-b-4 border-[#0B7285] rounded-2xl p-6 mb-8 md:p-8">
+          <div className="flex items-start gap-4 md:gap-5">
+            <div className="flex-shrink-0 p-3 bg-[#0B7285]/20 rounded-xl border-b-4 border-[#0B7285]">
               <HiInformationCircle className="w-6 h-6 text-[#0B7285]" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-[#0B7285] mb-2">
                 Próximamente
               </h3>
-              <p className="text-[#4B5563] leading-relaxed">
+              <p className="text-sm md:text-base text-[#4B5563] leading-relaxed">
                 El sistema de mensajería está en desarrollo. Pronto podrás comunicarte directamente con candidatos y otras empresas de la plataforma.
               </p>
             </div>
@@ -41,7 +41,7 @@ export default function CompanyContacts() {
         </div>
 
         {/* Empty State */}
-        <section className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-8 md:p-12">
+        <section className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-10 md:p-16">
           <div className="text-center">
             <div className="inline-flex p-6 bg-[#FFF0C2] rounded-3xl border-b-4 border-[#E69C00] mb-6">
               <HiChatBubbleLeftRight className="w-16 h-16 text-[#E69C00]" />
@@ -49,7 +49,7 @@ export default function CompanyContacts() {
             <h2 className="text-2xl font-bold text-[#1F2937] mb-3">
               Aún no tenés mensajes
             </h2>
-            <p className="text-[#4B5563] max-w-md mx-auto">
+            <p className="text-[#4B5563] leading-relaxed max-w-md mx-auto">
               Cuando recibas o envíes mensajes, aparecerán aquí. Mantené un seguimiento de todas tus conversaciones en un solo lugar.
             </p>
           </div>

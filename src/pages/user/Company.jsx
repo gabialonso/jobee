@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
-import Header from "../../components/common/Header";
+import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
 
 export default function UserCompany() {
   const location = useLocation();
@@ -28,7 +28,7 @@ export default function UserCompany() {
 
   return (
     <div className="min-h-screen bg-[#FFF8E7]">
-      <Header mode="user" currentPath={location.pathname} />
+      <AuthenticatedHeader mode="user" currentPath={location.pathname} />
 
       {/* Main content */}
       <main className="mx-auto w-full max-w-container px-5 py-12 md:px-8 lg:px-12">
@@ -61,14 +61,14 @@ export default function UserCompany() {
             {companies.map((company) => (
               <article
                 key={company.companyId}
-                className="flex flex-col justify-between gap-4 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] p-6 hover:bg-white transition group"
+                className="flex flex-col justify-between gap-4 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] p-6 transition-transform duration-150 ease-out hover:scale-[1.02]"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-2xl font-bold text-[#2F1C10] group-hover:text-[#E69C00] transition">
+                    <h3 className="text-2xl font-bold text-[#2F1C10]">
                       {company.name}
                     </h3>
-                    <div className="p-3 bg-[#FFD65B] rounded-xl border-b-4 border-[#E69C00] group-hover:scale-110 transition">
+                    <div className="p-3 bg-[#FFD65B] rounded-xl border-b-4 border-[#E69C00]">
                       <svg className="w-5 h-5 text-[#1F2937]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                       </svg>
@@ -124,7 +124,7 @@ export default function UserCompany() {
                   </div>
                 </div>
 
-                <button className="w-full bg-[#FFD65B] text-[#1F2937] py-3 px-4 rounded-xl font-semibold border-b-4 border-[#E69C00] hover:bg-[#FFF0C2] transition">
+                <button className="w-full bg-[#FFD65B] text-[#1F2937] py-3 px-4 rounded-xl font-semibold border-b-4 border-[#E69C00] transition-transform duration-150 ease-out hover:scale-105">
                   Ver Detalles
                 </button>
               </article>
@@ -133,14 +133,21 @@ export default function UserCompany() {
         )}
 
         {!loading && !error && companies.length === 0 && (
-          <div className="text-center py-16">
-            <div className="inline-flex p-6 bg-white rounded-3xl border-b-4 border-[#E69C00] mb-4">
-              <svg className="w-16 h-16 text-[#E69C00]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
+          <section className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-10 md:p-16">
+            <div className="text-center">
+              <div className="inline-flex p-6 bg-[#FFF0C2] rounded-3xl border-b-4 border-[#E69C00] mb-6">
+                <svg className="w-16 h-16 text-[#E69C00]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-[#1F2937] mb-3">
+                No hay empresas disponibles
+              </h2>
+              <p className="text-[#4B5563] leading-relaxed max-w-md mx-auto">
+                En este momento no hay empresas registradas. Volvé pronto para descubrir nuevas oportunidades laborales.
+              </p>
             </div>
-            <p className="text-[#6F442C] text-lg">No hay empresas disponibles en este momento</p>
-          </div>
+          </section>
         )}
       </main>
     </div>

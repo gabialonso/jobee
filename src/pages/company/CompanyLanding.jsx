@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Header from "../../components/common/Header.jsx";
+import PublicHeader from "../../components/common/PublicHeader.jsx";
 import CourseCarousel from "../../components/courses/CourseCarousel.jsx";
 import { COURSES } from "../../data/courses.js";
 import BannerImage from "../../assets/LandingBannerImg.svg";
@@ -24,13 +24,13 @@ function CompanyHero() {
         <div className="flex flex-wrap gap-4">
           <Link
             to="/auth/signup/company"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937]"
           >
             Registrar mi empresa
           </Link>
           <a
             href="#beneficios"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937]"
           >
             Conocé los beneficios
           </a>
@@ -57,7 +57,7 @@ function CompanyBenefits() {
       <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#0B7285] bg-[#FFF0C2] px-5 py-3">
         <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Talento pre-seleccionado</h3>
         <p className="text-sm text-[#4B5563]">
-          Accedé a candidatos capacitados y verificados entre 18-27 años
+          Accedé a candidatos capacitados y verificados entre 18-24 años
         </p>
       </article>
       <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#DC2626] bg-[#FFF0C2] px-5 py-3">
@@ -143,13 +143,13 @@ function CompanyCallToAction() {
       <div className="mt-6 flex flex-wrap justify-center gap-4">
         <Link
           to="/auth/signup/company"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937]"
         >
           Registrar empresa
         </Link>
         <Link
           to="/auth/login"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937]"
         >
           Ya tengo cuenta
         </Link>
@@ -188,7 +188,7 @@ function ContactFooter() {
 export default function CompanyLanding() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#FFF8E7]">
-      <Header />
+      <PublicHeader />
       <main className="mx-auto flex w-full max-w-container flex-1 flex-col gap-16 px-5 pb-16 pt-6 md:px-8 lg:px-12">
         <CompanyHero />
         <CompanyBenefits />

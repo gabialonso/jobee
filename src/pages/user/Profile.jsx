@@ -2,34 +2,10 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
 import { getUser } from "../../utils/auth";
-import Header from "../../components/common/Header";
+import { mockApi } from "../../utils/mockData";
+import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
 import CourseProgressCard from "../../components/courses/CourseProgressCard";
-import { FiEdit2, FiLinkedin, FiFileText, FiCamera } from "react-icons/fi";
-
-// cursos de ejemplo (futura integración con backend)
-const MOCK_COURSES = [
-  {
-    id: 1,
-    title: "Introducción a la Programación",
-    description: "Fundamentos de JavaScript y lógica de programación",
-    progress: 100,
-    status: "completed"
-  },
-  {
-    id: 2,
-    title: "React desde Cero",
-    description: "Desarrollo de aplicaciones web con React",
-    progress: 65,
-    status: "in_progress"
-  },
-  {
-    id: 3,
-    title: "Diseño UX para Product Teams",
-    description: "Wireframes, prototipos y research con usuarios",
-    progress: 40,
-    status: "in_progress"
-  },
-];
+import { FiEdit2, FiLinkedin, FiFileText, FiCamera, FiX, FiCheck } from "react-icons/fi";
 
 export default function UserProfile() {
   const location = useLocation();
@@ -50,6 +26,7 @@ export default function UserProfile() {
   const [message, setMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -79,6 +56,12 @@ export default function UserProfile() {
             bannerPhoto: person.bannerPhoto || ''
           });
           setIsEditing(true);
+
+          // Cargar cursos inscritos (datos simulados)
+          const coursesData = await mockApi.getUserCourses(user.id);
+          if (coursesData.success) {
+            setCourses(coursesData.data);
+          }
         }
       } catch (err) {
         console.error('Error loading profile:', err);
@@ -137,12 +120,12 @@ export default function UserProfile() {
 
   return (
     <div className="min-h-screen bg-[#FFF8E7]">
-      <Header
+      <AuthenticatedHeader
         mode="user"
         currentPath={location.pathname}
       />
 
-      <main className="mx-auto w-full max-w-container px-5 py-8 md:px-8 lg:px-12">
+      <main className="mx-auto w-full max-w-container px-5 py-10 md:px-8 lg:px-12">
         {message && (
           <div className={`mb-6 px-6 py-4 rounded-xl border-b-4 ${message.includes('Error') || message.includes('error')
             ? 'bg-[#DC2626]/10 border-[#DC2626] text-[#DC2626]'
@@ -166,7 +149,7 @@ export default function UserProfile() {
             {editMode && (
               <button
                 type="button"
-                className="absolute top-4 right-4 p-3 bg-white/90 rounded-xl border-b-4 border-[#E69C00] text-[#1F2937] hover:bg-white transition"
+                className="absolute top-4 right-4 p-3 bg-white/90 rounded-xl border-b-4 border-[#E69C00] text-[#1F2937]"
               >
                 <FiCamera className="w-5 h-5" />
               </button>
@@ -178,7 +161,7 @@ export default function UserProfile() {
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               {/* Profile Photo */}
               <div className="relative -mt-16 md:-mt-20">
-                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white bg-[#FFF0C2] overflow-hidden">
+                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl border-4 border-white bg-[#FFF0C2] overflow-hidden">
                   {formData.profilePhoto ? (
                     <img
                       src={formData.profilePhoto}
@@ -193,7 +176,7 @@ export default function UserProfile() {
                   {editMode && (
                     <button
                       type="button"
-                      className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition"
+                      className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100"
                     >
                       <FiCamera className="w-6 h-6 text-white" />
                     </button>
@@ -214,7 +197,7 @@ export default function UserProfile() {
                         href={formData.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#0B7285] text-[#0B7285] hover:bg-[#FFF0C2] transition"
+                        className="p-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#0B7285] text-[#0B7285] transition-transform duration-150 ease-out hover:scale-110"
                       >
                         <FiLinkedin className="w-5 h-5" />
                       </a>
@@ -224,7 +207,7 @@ export default function UserProfile() {
                         href={formData.cv}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#DC2626] text-[#DC2626] hover:bg-[#FFF0C2] transition"
+                        className="p-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#DC2626] text-[#DC2626] transition-transform duration-150 ease-out hover:scale-110"
                       >
                         <FiFileText className="w-5 h-5" />
                       </a>
@@ -232,13 +215,29 @@ export default function UserProfile() {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => setEditMode(!editMode)}
-                  className="self-start md:self-auto px-5 py-2 rounded-xl bg-[#FFD65B] border-b-4 border-[#E69C00] text-[#1F2937] font-semibold hover:bg-[#FFF0C2] transition flex items-center gap-2"
-                >
-                  <FiEdit2 className="w-4 h-4" />
-                  {editMode ? 'Cancelar' : 'Editar Perfil'}
-                </button>
+                <div className="flex flex-col md:flex-row gap-3 self-start md:self-auto">
+                  <button
+                    onClick={() => setEditMode(!editMode)}
+                    className={`px-5 py-2 rounded-xl border-b-4 font-semibold flex items-center gap-2 transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] ${
+                      editMode
+                        ? 'bg-[#FCE7F3] border-[#9B1756] text-[#9B1756]'
+                        : 'bg-[#FFF0C2] border-[#E69C00] text-[#1F2937]'
+                    }`}
+                  >
+                    {editMode ? <FiX className="w-4 h-4" /> : <FiEdit2 className="w-4 h-4" />}
+                    {editMode ? 'Cancelar' : 'Editar Perfil'}
+                  </button>
+
+                  {editMode && (
+                    <button
+                      onClick={handleSubmit}
+                      className="px-5 py-2 rounded-xl border-b-4 border-[#2A8B9F] bg-[#D4E9EC] text-[#2A8B9F] font-semibold flex items-center gap-2 transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7]"
+                    >
+                      <FiCheck className="w-4 h-4" />
+                      Guardar
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -353,13 +352,6 @@ export default function UserProfile() {
                   />
                 </div>
               </div>
-
-              <button
-                type="submit"
-                className="w-full mt-6 bg-[#FFD65B] text-[#1F2937] py-4 px-6 rounded-xl font-bold text-lg border-b-4 border-[#E69C00] hover:bg-[#FFF0C2] transition"
-              >
-                Guardar Cambios
-              </button>
             </section>
           </form>
         ) : (
@@ -401,22 +393,22 @@ export default function UserProfile() {
                   </p>
                 </div>
                 <span className="text-sm font-semibold text-[#9B1756] bg-[#9B1756]/10 border border-[#9B1756] px-3 py-1 rounded-full">
-                  {MOCK_COURSES.filter(c => c.status === 'completed').length} Completados
+                  {courses.filter(c => c.status === 'completed').length} Completados
                 </span>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {MOCK_COURSES.map((course) => (
+                {courses.map((course) => (
                   <CourseProgressCard key={course.id} course={course} />
                 ))}
               </div>
 
-              {MOCK_COURSES.length === 0 && (
+              {courses.length === 0 && (
                 <div className="text-center py-12">
                   <p className="text-[#4B5563]">Aún no estás inscripto en ningún curso.</p>
                   <a
                     href="/user/courses"
-                    className="inline-block mt-4 px-6 py-2 rounded-xl bg-[#FFD65B] border-b-4 border-[#E69C00] text-[#1F2937] font-semibold hover:bg-[#FFF0C2] transition"
+                    className="inline-block mt-4 px-6 py-2 rounded-xl bg-[#FFD65B] border-b-4 border-[#E69C00] text-[#1F2937] font-semibold transition-transform duration-150 ease-out hover:scale-105"
                   >
                     Explorar Cursos
                   </a>

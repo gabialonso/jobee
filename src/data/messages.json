@@ -1,0 +1,34 @@
+{
+  "1": [
+    {
+      "id": 1,
+      "senderId": "company_1",
+      "senderName": "TechCorp Solutions",
+      "text": "Hola! Vimos tu perfil y nos gustaría conversar sobre una oportunidad.",
+      "timestamp": "2025-10-16T14:00:00Z"
+    },
+    {
+      "id": 2,
+      "senderId": "user_1",
+      "senderName": "Yo",
+      "text": "¡Hola! Claro, me encantaría saber más.",
+      "timestamp": "2025-10-16T14:15:00Z"
+    },
+    {
+      "id": 3,
+      "senderId": "company_1",
+      "senderName": "TechCorp Solutions",
+      "text": "Nos interesa tu perfil para una posición junior",
+      "timestamp": "2025-10-16T14:30:00Z"
+    }
+  ],
+  "2": [
+    {
+      "id": 4,
+      "senderId": "company_2",
+      "senderName": "Innovate Labs",
+      "text": "¿Cuándo podés empezar?",
+      "timestamp": "2025-10-15T10:20:00Z"
+    }
+  ]
+}
