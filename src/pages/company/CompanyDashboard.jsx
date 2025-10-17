@@ -1,6 +1,9 @@
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getUser } from "../../utils/auth";
-import Header from "../../components/common/Header";
+import { apiFetch } from "../../utils/api";
+import { mockApi } from "../../utils/mockData";
+import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
 import StatCard from "../../components/common/StatCard";
 import ActionCard from "../../components/common/ActionCard";
 import { HiUsers, HiBriefcase, HiBookOpen, HiUser, HiPlus, HiMagnifyingGlass, HiChatBubbleLeftRight } from "react-icons/hi2";
@@ -8,10 +11,40 @@ import { HiUsers, HiBriefcase, HiBookOpen, HiUser, HiPlus, HiMagnifyingGlass, Hi
 export default function CompanyDashboard() {
   const user = getUser();
   const location = useLocation();
+  const [stats, setStats] = useState({
+    totalCandidates: '-',
+    activeJobs: '-',
+    publishedCourses: '-'
+  });
+
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        const user = getUser();
+        if (!user?.id) return;
+
+        // Obtener companyId del usuario
+        const companyData = await apiFetch(`/company/user/${user.id}`);
+        if (companyData.data && companyData.data.length > 0) {
+          const company = companyData.data[0];
+
+          // Cargar estadísticas (datos simulados)
+          const statsData = await mockApi.getCompanyStats(company.companyId);
+          if (statsData.success) {
+            setStats(statsData.data);
+          }
+        }
+      } catch (err) {
+        console.error('Error loading stats:', err);
+      }
+    };
+
+    loadStats();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#FFF8E7]">
-      <Header
+      <AuthenticatedHeader
         mode="company"
         currentPath={location.pathname}
       />
@@ -36,19 +69,19 @@ export default function CompanyDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <StatCard
               label="Total de Candidatos"
-              value="-"
+              value={stats.totalCandidates}
               icon={HiUsers}
               color="#2A8A9E"
             />
             <StatCard
               label="Ofertas Activas"
-              value="-"
+              value={stats.activeJobs}
               icon={HiBriefcase}
               color="#F5C34D"
             />
             <StatCard
               label="Cursos Publicados"
-              value="-"
+              value={stats.publishedCourses}
               icon={HiBookOpen}
               color="#E84D4D"
             />

@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "firstName": "Juan",
+    "lastName": "Pérez",
+    "profilePhoto": "",
+    "highSchool": "Liceo 1",
+    "birthday": 2003,
+    "completedCourses": ["Introducción a la Programación", "React desde Cero"],
+    "inProgressCourses": ["Diseño UX para Product Teams"],
+    "description": "Estudiante apasionado por la tecnología y el desarrollo web"
+  },
+  {
+    "id": 2,
+    "firstName": "María",
+    "lastName": "González",
+    "profilePhoto": "",
+    "highSchool": "Liceo 5",
+    "birthday": 2004,
+    "completedCourses": ["Marketing Digital"],
+    "inProgressCourses": ["Introducción a la Programación"],
+    "description": "Interesada en marketing digital y redes sociales"
+  },
+  {
+    "id": 3,
+    "firstName": "Carlos",
+    "lastName": "Rodríguez",
+    "profilePhoto": "",
+    "highSchool": "UTU Maldonado",
+    "birthday": 2002,
+    "completedCourses": ["Introducción a la Programación", "Diseño UX para Product Teams"],
+    "inProgressCourses": [],
+    "description": "Diseñador UX con experiencia en proyectos personales"
+  },
+  {
+    "id": 4,
+    "firstName": "Ana",
+    "lastName": "Martínez",
+    "profilePhoto": "",
+    "highSchool": "Liceo 12",
+    "birthday": 2005,
+    "completedCourses": [],
+    "inProgressCourses": ["React desde Cero"],
+    "description": "Comenzando mi carrera en desarrollo frontend"
+  }
+]

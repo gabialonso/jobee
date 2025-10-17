@@ -24,7 +24,7 @@ export default function CourseCard({ course }) {
 
   return (
     <article
-      className={`flex min-h-[18rem] flex-1 flex-col justify-between gap-4 rounded-3xl bg-[#FFF8E7] p-6 ${styles.border}`}
+      className={`flex min-h-[18rem] flex-1 flex-col justify-between gap-4 rounded-3xl bg-[#FFF8E7] p-6 transition-transform duration-150 ease-out hover:scale-[1.02] ${styles.border}`}
     >
       <div className="space-y-3">
         <span
@@ -53,7 +53,7 @@ export default function CourseCard({ course }) {
 
       <Link
         to="/auth/login"
-        className={`inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition ${styles.button}`}
+        className={`inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition-transform duration-150 ease-out hover:scale-105 ${styles.button}`}
       >
         Conocer más
       </Link>

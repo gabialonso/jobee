@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
-import Header from "../../components/common/Header";
+import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
 import { HiPlus, HiBookOpen, HiClock, HiCurrencyDollar, HiTag } from "react-icons/hi2";
 
 export default function CompanyCourses() {
@@ -28,7 +28,7 @@ export default function CompanyCourses() {
 
   return (
     <div className="min-h-screen bg-[#FFF8E7]">
-      <Header mode="company" currentPath={location.pathname} />
+      <AuthenticatedHeader mode="company" currentPath={location.pathname} />
 
       {/* Main content */}
       <main className="mx-auto w-full max-w-container px-5 py-12 md:px-8 lg:px-12">
@@ -45,7 +45,7 @@ export default function CompanyCourses() {
             </p>
           </div>
           <button
-            className="flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-5 py-3 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2]"
+            className="flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-5 py-3 text-sm font-semibold text-[#1F2937] transition-transform duration-150 ease-out hover:scale-105"
             onClick={() => alert('Funcionalidad de crear curso próximamente')}
           >
             <HiPlus className="w-5 h-5" />
@@ -133,7 +133,7 @@ export default function CompanyCourses() {
               </p>
               <button
                 onClick={() => alert('Funcionalidad de crear curso próximamente')}
-                className="inline-flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-3 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2]"
+                className="inline-flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-3 text-sm font-semibold text-[#1F2937] transition-transform duration-150 ease-out hover:scale-105"
               >
                 <HiPlus className="w-5 h-5" />
                 Crear Mi Primer Curso

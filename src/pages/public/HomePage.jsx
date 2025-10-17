@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiFetch } from "../../utils/api.js";
-import Header from "../../components/common/Header.jsx";
+import PublicHeader from "../../components/common/PublicHeader.jsx";
 import CourseCarousel from "../../components/courses/CourseCarousel.jsx";
 import BannerImage from "../../assets/LandingBannerImg.svg";
 import { MdPlace } from "react-icons/md";
@@ -19,19 +19,19 @@ function Hero() {
           Conectamos talento joven con empresas reales
         </h1>
         <p className="text-base leading-relaxed text-[#4B5563] md:text-lg">
-          <strong>¿Tenés entre 18 y 27 años?</strong> Sumate a Jobee, aprendé nuevas
+          <strong>¿Tenés entre 18 y 24 años?</strong> Sumate a Jobee, aprendé nuevas
           habilidades y llegá a tu primera entrevista con respaldo y oportunidades reales.
         </p>
         <div className="flex flex-wrap gap-4">
           <Link
             to="/auth/signup/user"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
           >
             Registrate como usuario
           </Link>
           <Link
             to="/auth/signup/company"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
           >
             Soy empresa aliada
           </Link>
@@ -58,7 +58,7 @@ function FeatureHighlights() {
       <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-3">
         <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Acceso directo a talento joven</h3>
         <p className="text-sm text-[#4B5563]">
-          Encontrá candidatos entre 18–27 años listos para aprender. Sin filtros de años de experiencia.
+          Encontrá candidatos entre 18–24 años listos para aprender. Sin filtros de años de experiencia.
         </p>
       </article>
       <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-3">
@@ -153,13 +153,13 @@ function CallToAction() {
       <div className="mt-6 flex flex-wrap justify-center gap-4">
         <Link
           to="/auth/signup/user"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
         >
           Crear cuenta joven
         </Link>
         <Link
           to="/auth/signup/company"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
         >
           Sumarse como empresa
         </Link>
@@ -222,7 +222,7 @@ export default function HomePage() {
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#FFF8E7]">
-      <Header />
+      <PublicHeader />
       <main className="mx-auto flex w-full max-w-container flex-1 flex-col gap-16 px-5 pb-16 pt-6 md:px-8 lg:px-12">
         <Hero />
         <FeatureHighlights />

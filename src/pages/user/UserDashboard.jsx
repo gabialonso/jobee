@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api.js";
-import Header from "../../components/common/Header";
+import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
 import ActionCard from "../../components/common/ActionCard";
 import { HiUser, HiBookOpen, HiBuildingOffice2, HiChatBubbleLeftRight } from "react-icons/hi2";
 
@@ -29,7 +29,7 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-[#FFF8E7]">
-      <Header
+      <AuthenticatedHeader
         mode="user"
         currentPath={location.pathname}
       />

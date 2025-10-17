@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Header from "../../components/common/Header.jsx";
+import PublicHeader from "../../components/common/PublicHeader.jsx";
 import CourseCarousel from "../../components/courses/CourseCarousel.jsx";
 import { COURSES } from "../../data/courses.js";
 import BannerImage from "../../assets/LandingBannerImg.svg";
@@ -18,19 +18,19 @@ function UserHero() {
           Empezá tu carrera profesional con Jobee
         </h1>
         <p className="text-base leading-relaxed text-[#4B5563] md:text-lg">
-          <strong>¿Tenés entre 18 y 27 años?</strong> Capacitate con cursos profesionales,
+          <strong>¿Tenés entre 18 y 24 años?</strong> Capacitate con cursos profesionales,
           creá tu perfil destacado y conectá con empresas que buscan talento joven como vos.
         </p>
         <div className="flex flex-wrap gap-4">
           <Link
             to="/auth/signup/user"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937]"
           >
             Registrate gratis
           </Link>
           <a
             href="#cursos"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937]"
           >
             Ver cursos
           </a>
@@ -143,13 +143,13 @@ function UserCallToAction() {
       <div className="mt-6 flex flex-wrap justify-center gap-4">
         <Link
           to="/auth/signup/user"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937]"
         >
           Crear mi cuenta
         </Link>
         <Link
           to="/auth/login"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF0C2] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-2 text-sm font-semibold text-[#1F2937]"
         >
           Ya tengo cuenta
         </Link>
@@ -188,7 +188,7 @@ function ContactFooter() {
 export default function UserLanding() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#FFF8E7]">
-      <Header />
+      <PublicHeader />
       <main className="mx-auto flex w-full max-w-container flex-1 flex-col gap-16 px-5 pb-16 pt-6 md:px-8 lg:px-12">
         <UserHero />
         <UserBenefits />
