@@ -51,7 +51,7 @@ export default function UserCompany() {
         )}
 
         {error && (
-          <div className="bg-[#DC2626]/10 border-b-4 border-[#DC2626] text-[#DC2626] px-6 py-4 rounded-xl">
+          <div className="bg-[#E84D4D]/10 border-b-4 border-[#E84D4D] text-[#E84D4D] px-6 py-4 rounded-xl">
             {error}
           </div>
         )}

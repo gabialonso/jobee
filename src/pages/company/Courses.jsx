@@ -70,7 +70,7 @@ export default function CompanyCourses() {
             {courses.map((course) => (
               <article
                 key={course.courseId}
-                className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-6 transition hover:shadow-lg"
+                className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-6 transition"
               >
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                   <div className="flex-1">

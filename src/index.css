@@ -99,7 +99,6 @@
 
     .interactive-logo:hover {
         transform: scale(1.06);
-        filter: drop-shadow(0 0 1.5em #edaa39);
     }
 
     .nav_stylized {
