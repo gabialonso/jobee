@@ -10,7 +10,6 @@ export default function UserCourses() {
   const location = useLocation();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [enrolling, setEnrolling] = useState(null);
 
   useEffect(() => {
@@ -77,13 +76,7 @@ export default function UserCourses() {
           </div>
         )}
 
-        {error && (
-          <div className="bg-[#DC2626]/10 border-b-4 border-[#DC2626] text-[#DC2626] px-6 py-4 rounded-xl">
-            {error}
-          </div>
-        )}
-
-        {!loading && !error && courses.length > 0 && (
+        {!loading && courses.length > 0 && (
           <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] p-6 sm:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (
               <div key={course.courseId} className="flex flex-col">
@@ -100,7 +93,7 @@ export default function UserCourses() {
           </section>
         )}
 
-        {!loading && !error && courses.length === 0 && (
+        {!loading && courses.length === 0 && (
           <section className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-10 md:p-16">
             <div className="text-center">
               <div className="inline-flex p-6 bg-[#FFF0C2] rounded-3xl border-b-4 border-[#E69C00] mb-6">
