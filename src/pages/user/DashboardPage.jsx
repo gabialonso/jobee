@@ -14,7 +14,6 @@ export default function UserDashboard() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        // fetch user profile from backend
         const data = await apiFetch('/users/profile');
         setProfile(data.data);
       } catch (err) {
@@ -34,7 +33,6 @@ export default function UserDashboard() {
         currentPath={location.pathname}
       />
 
-      {/* Main content */}
       <main className="mx-auto w-full max-w-container px-5 py-12 md:px-8 lg:px-12">
         <div className="mb-10">
           <span className="inline-flex items-center rounded-full bg-[#9B1756]/10 border border-[#9B1756] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#9B1756] mb-4">
@@ -80,7 +78,6 @@ export default function UserDashboard() {
               </div>
             </section>
 
-            {/* Quick Actions */}
             <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] p-6 md:p-8">
               <header className="flex flex-col gap-2">
                 <p className="text-sm font-semibold uppercase tracking-wide text-[#9B1756]">Acceso Rápido</p>

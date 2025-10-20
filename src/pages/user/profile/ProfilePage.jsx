@@ -57,7 +57,6 @@ export default function UserProfile() {
           });
           setIsEditing(true);
 
-          // Cargar cursos inscritos (datos simulados)
           const coursesData = await mockApi.getUserCourses(user.id);
           if (coursesData.success) {
             setCourses(coursesData.data);
@@ -135,9 +134,7 @@ export default function UserProfile() {
           </div>
         )}
 
-        {/* Profile Header with Banner and Photo */}
         <section className="relative mb-8 rounded-3xl overflow-hidden bg-white border-b-4 border-[#E69C00]">
-          {/* Banner */}
           <div className="relative h-48 md:h-64 bg-gradient-to-r from-[#FFD65B] via-[#FFF0C2] to-[#FFD65B]">
             {formData.bannerPhoto && (
               <img
@@ -156,10 +153,8 @@ export default function UserProfile() {
             )}
           </div>
 
-          {/* Profile Photo and Info */}
           <div className="relative px-6 pb-6 md:px-8">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              {/* Profile Photo */}
               <div className="relative -mt-16 md:-mt-20">
                 <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl border-4 border-white bg-[#FFF0C2] overflow-hidden">
                   {formData.profilePhoto ? (
@@ -184,7 +179,6 @@ export default function UserProfile() {
                 </div>
               </div>
 
-              {/* Name and Actions */}
               <div className="flex-1 flex flex-col md:flex-row md:items-end md:justify-between gap-4 pt-2">
                 <div>
                   <h1 className="text-2xl md:text-3xl font-bold text-[#1F2937]">{fullName}</h1>
@@ -244,7 +238,6 @@ export default function UserProfile() {
         </section>
 
         {editMode ? (
-          /* Edit Form */
           <form onSubmit={handleSubmit} className="space-y-6">
             <section className="rounded-3xl bg-[#FFF0C2] p-6 md:p-8">
               <h2 className="text-2xl font-bold text-[#1F2937] mb-6">Información Personal</h2>
@@ -355,9 +348,7 @@ export default function UserProfile() {
             </section>
           </form>
         ) : (
-          /* View Mode */
           <div className="space-y-8">
-            {/* About Section */}
             <section className="rounded-3xl bg-[#FFF0C2] p-6 md:p-8">
               <h2 className="text-2xl font-bold text-[#1F2937] mb-4">Sobre mí</h2>
               <p className="text-base leading-relaxed text-[#4B5563]">
@@ -383,7 +374,6 @@ export default function UserProfile() {
               )}
             </section>
 
-            {/* Courses Section */}
             <section className="rounded-3xl bg-[#FFF8E7] p-6 md:p-8">
               <div className="flex items-center justify-between mb-6">
                 <div>
