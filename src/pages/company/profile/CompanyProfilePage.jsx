@@ -64,7 +64,6 @@ export default function CompanyProfile() {
           });
           setIsEditing(true);
 
-          // Cargar estadísticas (datos simulados)
           const statsData = await mockApi.getCompanyStats(company.companyId);
           if (statsData.success) {
             setStats(statsData.data);
@@ -134,9 +133,7 @@ export default function CompanyProfile() {
           </div>
         )}
 
-        {/* Company Header with Banner and Logo */}
         <section className="relative mb-8 rounded-3xl overflow-hidden bg-white border-b-4 border-[#E69C00]">
-          {/* Banner */}
           <div className="relative h-48 md:h-64 bg-gradient-to-r from-[#0B7285] via-[#10B981] to-[#0B7285]">
             {formData.bannerPhoto && (
               <img
@@ -155,10 +152,8 @@ export default function CompanyProfile() {
             )}
           </div>
 
-          {/* Company Logo and Info */}
           <div className="relative px-6 pb-6 md:px-8">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              {/* Company Logo */}
               <div className="relative -mt-16 md:-mt-20">
                 <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl border-4 border-white bg-white overflow-hidden">
                   {formData.logoPhoto ? (
@@ -183,7 +178,6 @@ export default function CompanyProfile() {
                 </div>
               </div>
 
-              {/* Company Name and Actions */}
               <div className="flex-1 flex flex-col md:flex-row md:items-end md:justify-between gap-4 pt-2">
                 <div>
                   <h1 className="text-2xl md:text-3xl font-bold text-[#1F2937]">{companyName}</h1>
@@ -240,7 +234,6 @@ export default function CompanyProfile() {
         </section>
 
         {editMode ? (
-          /* Edit Form */
           <form onSubmit={handleSubmit} className="space-y-6">
             <section className="rounded-3xl bg-[#FFF0C2] p-6 md:p-8">
               <h2 className="text-2xl font-bold text-[#1F2937] mb-6">Información de la Empresa</h2>
@@ -364,9 +357,7 @@ export default function CompanyProfile() {
             </section>
           </form>
         ) : (
-          /* View Mode */
           <div className="space-y-8">
-            {/* About Section */}
             <section className="rounded-3xl bg-[#FFF0C2] p-6 md:p-8">
               <h2 className="text-2xl font-bold text-[#1F2937] mb-4">Sobre la Empresa</h2>
               <p className="text-base leading-relaxed text-[#4B5563]">
@@ -400,7 +391,6 @@ export default function CompanyProfile() {
               )}
             </section>
 
-            {/* Stats Section */}
             <section className="rounded-3xl bg-[#FFF8E7] p-6 md:p-8">
               <h2 className="text-2xl font-bold text-[#1F2937] mb-6">Estadísticas</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
