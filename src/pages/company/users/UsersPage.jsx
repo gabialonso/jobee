@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { mockApi } from "../../utils/mockData";
-import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
-import PageHeader from "../../components/features/shared/PageHeader";
-import SearchBar from "../../components/common/SearchBar";
-import EmptyState from "../../components/common/EmptyState";
-import CandidateCard from "../../components/features/users/CandidateCard";
+import { mockApi } from "../../../utils/mockData";
+import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
+import PageHeader from "../../../components/features/shared/PageHeader";
+import SearchBar from "../../../components/common/SearchBar";
+import EmptyState from "../../../components/common/EmptyState";
+import CandidateCard from "../../../components/features/users/CandidateCard";
 import { HiUsers, HiAcademicCap, HiCheckCircle } from "react-icons/hi2";
 
 export default function CompanyUsers() {

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { apiFetch } from "../../utils/api";
-import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
-import PageHeader from "../../components/features/shared/PageHeader";
-import EmptyState from "../../components/common/EmptyState";
-import CourseModal from "../../components/features/courses/CourseModal";
+import { apiFetch } from "../../../utils/api";
+import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
+import PageHeader from "../../../components/features/shared/PageHeader";
+import EmptyState from "../../../components/common/EmptyState";
+import CourseModal from "../../../components/features/courses/CourseModal";
 import { HiPlus, HiBookOpen, HiClock, HiCurrencyDollar, HiTag } from "react-icons/hi2";
 
 export default function CompanyCourses() {

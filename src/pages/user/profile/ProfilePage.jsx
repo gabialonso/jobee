@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { apiFetch } from "../../utils/api";
-import { getUser } from "../../utils/auth";
-import { mockApi } from "../../utils/mockData";
-import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
-import CourseProgressCard from "../../components/features/courses/CourseProgressCard";
+import { apiFetch } from "../../../utils/api";
+import { getUser } from "../../../utils/auth";
+import { mockApi } from "../../../utils/mockData";
+import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
+import CourseProgressCard from "../../../components/features/courses/CourseProgressCard";
 import { FiEdit2, FiLinkedin, FiFileText, FiCamera, FiX, FiCheck } from "react-icons/fi";
 
 export default function UserProfile() {

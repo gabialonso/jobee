@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { getUser } from "../../utils/auth";
-import { mockApi } from "../../utils/mockData";
-import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
-import PageHeader from "../../components/features/shared/PageHeader";
-import EmptyState from "../../components/common/EmptyState";
-import MessagingInterface from "../../components/features/messaging/MessagingInterface";
+import { getUser } from "../../../utils/auth";
+import { mockApi } from "../../../utils/mockData";
+import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
+import PageHeader from "../../../components/features/shared/PageHeader";
+import EmptyState from "../../../components/common/EmptyState";
+import MessagingInterface from "../../../components/features/messaging/MessagingInterface";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 
 export default function CompanyContacts() {
