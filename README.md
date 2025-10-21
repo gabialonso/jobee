@@ -8,248 +8,261 @@
 [![React Router](https://img.shields.io/badge/React_Router-7.0-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)](https://reactrouter.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](./LICENSE)
 
-**Modern web app connecting young people with their first work experience**
+**Aplicación web moderna que conecta jóvenes con su primera experiencia laboral**
 
 </div>
 
 ---
 
-## 📚 Overview
+## 📚 Descripción
 
-**Jobee Frontend** is a modern, responsive web application focused on connecting **young people (ages 18-24)** with **their first job opportunities**. The platform enables interaction between **users and companies** through **job offers**, **training courses**, and **personalized profiles**.
+**Jobee Frontend** es una aplicación web moderna y responsiva enfocada en conectar **jóvenes (18-24 años)** con **sus primeras oportunidades laborales**. La plataforma permite la interacción entre **usuarios y empresas** a través de **ofertas de trabajo**, **cursos de capacitación** y **perfiles personalizados**.
 
-Built with **React 19**, **Vite 7**, and **Tailwind CSS 4**, it's optimized for **performance**, **modularity**, and **scalability**.
-
----
-
-## ✨ Main Features
-
-| Category | Description |
-|----------|-------------|
-| 🔐 **Dual Authentication** | Separate registration and login for users and companies |
-| 👤 **Profile Management** | Personalized dashboards for candidates and organizations |
-| 📚 **Training Platform** | Course system for professional development |
-| 🏢 **Company Dashboard** | Job posting and candidate management |
-| 👨‍💼 **User Dashboard** | Job search and application tracking |
-| 💬 **Messaging System** | Direct communication between companies and applicants |
-| 📱 **Responsive Design** | Adaptive interface for multiple devices |
-| 🔄 **Backend Integration** | Full integration with RESTful API |
+Construida con **React 19**, **Vite 7** y **Tailwind CSS 4**, está optimizada para **rendimiento**, **modularidad** y **escalabilidad**.
 
 ---
 
-## 🧱 Tech Stack
+## 🚀 Comenzando
 
-| Layer | Technology |
-|-------|------------|
-| **Frontend Framework** | [React 19](https://react.dev/) |
-| **Build Tool** | [Vite 7](https://vitejs.dev/) |
-| **Styling** | [Tailwind CSS 4](https://tailwindcss.com/) |
-| **Routing** | [React Router 7](https://reactrouter.com/) |
-| **Icons** | [React Icons](https://react-icons.github.io/react-icons/) |
-| **HTTP Client** | Fetch API (custom wrapper) |
+Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
+
+### 📋 Pre-requisitos
+
+Antes de comenzar, asegúrate de tener instalado lo siguiente:
+
+- **Node.js:** ≥ 18.0.0
+- **npm:** ≥ 9.0.0 (también soporta yarn y pnpm)
+- **Git:** Última versión
+- **Backend:** [Jobee Backend](https://github.com/galonsoo/jobee-backend) corriendo en http://localhost:3000
+
+Verifica tus versiones de Node.js y npm:
+
+```bash
+node --version
+npm --version
+```
+
+---
+
+## ✨ Características Principales
+
+| Categoría | Descripción |
+|-----------|-------------|
+| 🔐 **Autenticación Dual** | Registro e inicio de sesión separado para usuarios y empresas |
+| 👤 **Gestión de Perfiles** | Dashboards personalizados para candidatos y organizaciones |
+| 📚 **Plataforma de Capacitación** | Sistema de cursos para desarrollo profesional |
+| 🏢 **Panel de Empresa** | Publicación de ofertas y gestión de candidatos |
+| 👨‍💼 **Panel de Usuario** | Búsqueda de empleos y seguimiento de postulaciones |
+| 💬 **Sistema de Mensajería** | Comunicación directa entre empresas y postulantes |
+| 📱 **Diseño Responsivo** | Interfaz adaptable para múltiples dispositivos |
+| 🔄 **Integración con Backend** | Integración completa con API RESTful |
+
+---
+
+## 🔧 Instalación
+
+### Instalación Completa (Recomendada)
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/galonsoo/jobee-frontend.git
+cd jobee-frontend
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Asegúrate de que el backend esté corriendo (ver README de jobee-backend)
+# El backend debe estar corriendo en http://localhost:3000
+
+# 4. Iniciar servidor de desarrollo
+npm run dev
+```
+
+La aplicación estará disponible en: 👉 **http://localhost:5173**
+
+### Instalación Solo Frontend
+
+```bash
+# 1-2. Igual que arriba
+
+# 3. (Opcional) Configurar URL de la API en src/utils/api.js
+# Por defecto: http://localhost:3000/api
+
+# 4. Iniciar servidor de desarrollo
+npm run dev
+```
+
+---
+
+## ⚙️ Configuración
+
+El frontend se conecta al backend a través de `src/utils/api.js`:
+
+```javascript
+// URL base de la API por defecto
+const API_BASE_URL = 'http://localhost:3000/api';
+```
+
+Para cambiar la URL del backend, edita este archivo antes de construir para producción.
+
+---
+
+## 🛠️ Construido Con
+
+| Capa | Tecnología |
+|------|------------|
+| **Framework Frontend** | [React 19](https://react.dev/) |
+| **Herramienta de Build** | [Vite 7](https://vitejs.dev/) |
+| **Estilos** | [Tailwind CSS 4](https://tailwindcss.com/) |
+| **Enrutamiento** | [React Router 7](https://reactrouter.com/) |
+| **Iconos** | [React Icons](https://react-icons.github.io/react-icons/) |
+| **Cliente HTTP** | Fetch API (wrapper personalizado) |
 | **Linting** | [ESLint 9](https://eslint.org/) |
 
 ---
 
-## ⚙️ System Requirements
+## 🧩 Scripts Disponibles
 
-- **Node.js:** ≥ 18.0.0
-- **npm:** ≥ 9.0.0 (yarn and pnpm also supported)
-- **Supported browsers:** Latest versions of Chrome, Firefox, Edge, and Safari
-- **Backend:** Jobee Backend running on http://localhost:3000
-
----
-
-## 🚀 Installation & Setup
-
-### Full Stack Setup (Recommended)
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/galonsoo/jobee-frontend.git
-cd jobee-frontend
-
-# 2. Install dependencies
-npm install
-
-# 3. Make sure backend is running (see jobee-backend README)
-# Backend should be running on http://localhost:3000
-
-# 4. Start development server
-npm run dev
-```
-
-The application will be available at: 👉 **http://localhost:5173**
-
-### Frontend Only Setup
-
-```bash
-# 1-2. Same as above
-
-# 3. (Optional) Configure API URL in src/utils/api.js
-# Default: http://localhost:3000/api
-
-# 4. Start development server
-npm run dev
-```
-
----
-
-## 🔧 Configuration
-
-The frontend connects to the backend via `src/utils/api.js`:
-
-```javascript
-// Default API base URL
-const API_BASE_URL = 'http://localhost:3000/api';
-```
-
-To change the backend URL, edit this file before building for production.
-
----
-
-## 🧩 Available Scripts
-
-| Command | Description |
+| Comando | Descripción |
 |---------|-------------|
-| `npm run dev` | Start development server with hot reload |
-| `npm run build` | Generate optimized production bundle |
-| `npm run preview` | Serve production build locally |
-| `npm run lint` | Run ESLint for code analysis and fixes |
+| `npm run dev` | Inicia servidor de desarrollo con hot reload |
+| `npm run build` | Genera build optimizado para producción |
+| `npm run preview` | Sirve el build de producción localmente |
+| `npm run lint` | Ejecuta ESLint para análisis y corrección de código |
 
 ---
 
-## 📁 Project Structure
+## 📁 Estructura del Proyecto
 
 ```
 jobee-frontend/
 ├── src/
-│   ├── assets/              # Static resources (images, icons)
-│   ├── components/          # Reusable components
-│   │   ├── common/          # Common components (Header, ProtectedRoute)
-│   │   ├── auth/            # Auth components (AuthLayout)
-│   │   └── courses/         # Course components (CourseCard)
-│   ├── pages/               # Main application pages
-│   │   ├── auth/            # Authentication (Login, Signup)
-│   │   ├── public/          # Public pages (Home, Splash)
-│   │   ├── company/         # Company dashboard
-│   │   └── user/            # User dashboard
-│   ├── utils/               # Utility functions
-│   │   ├── api.js           # API fetch wrapper
-│   │   └── auth.js          # Authentication utilities
-│   ├── App.jsx              # Route configuration and layout
-│   ├── main.jsx             # Application entry point
-│   └── index.css            # Global styles
-├── public/                  # Public static files
-├── dist/                    # Production build output
-└── package.json             # Dependencies and scripts
+│   ├── assets/              # Recursos estáticos (imágenes, iconos)
+│   ├── components/          # Componentes reutilizables
+│   │   ├── common/          # Componentes comunes (Header, ProtectedRoute)
+│   │   ├── auth/            # Componentes de autenticación (AuthLayout)
+│   │   └── courses/         # Componentes de cursos (CourseCard)
+│   ├── pages/               # Páginas principales de la aplicación
+│   │   ├── auth/            # Autenticación (Login, Signup)
+│   │   ├── public/          # Páginas públicas (Home, Splash)
+│   │   ├── company/         # Dashboard de empresa
+│   │   └── user/            # Dashboard de usuario
+│   ├── utils/               # Funciones utilitarias
+│   │   ├── api.js           # Wrapper de fetch para API
+│   │   └── auth.js          # Utilidades de autenticación
+│   ├── App.jsx              # Configuración de rutas y layout
+│   ├── main.jsx             # Punto de entrada de la aplicación
+│   └── index.css            # Estilos globales
+├── public/                  # Archivos estáticos públicos
+├── dist/                    # Build de producción
+└── package.json             # Dependencias y scripts
 ```
 
 ---
 
-## 🗺️ Main Routes
+## 🗺️ Rutas Principales
 
-### Public Routes
+### Rutas Públicas
 
-| Route | Description | Auth |
-|-------|-------------|------|
-| `/` | Landing page | ❌ |
-| `/splash` | Welcome page | ❌ |
-| `/auth/login` | Login page | ❌ |
-| `/auth/signup/user` | User registration | ❌ |
-| `/auth/signup/company` | Company registration | ❌ |
+| Ruta | Descripción | Auth |
+|------|-------------|------|
+| `/` | Página de inicio | ❌ |
+| `/splash` | Página de bienvenida | ❌ |
+| `/auth/login` | Página de inicio de sesión | ❌ |
+| `/auth/signup/user` | Registro de usuario | ❌ |
+| `/auth/signup/company` | Registro de empresa | ❌ |
 
-### User Routes (Protected)
+### Rutas de Usuario (Protegidas)
 
-| Route | Description | Auth |
-|-------|-------------|------|
-| `/user/dashboard` | User main dashboard | ✅ |
-| `/user/profile` | User profile management | ✅ |
-| `/user/company` | Company listings | ✅ |
-| `/user/courses` | Available courses | ✅ |
-| `/user/contacts` | Contact system | ✅ |
+| Ruta | Descripción | Auth |
+|------|-------------|------|
+| `/user/dashboard` | Dashboard principal del usuario | ✅ |
+| `/user/profile` | Gestión de perfil de usuario | ✅ |
+| `/user/company` | Listado de empresas | ✅ |
+| `/user/courses` | Cursos disponibles | ✅ |
+| `/user/contacts` | Sistema de contactos | ✅ |
 
-### Company Routes (Protected)
+### Rutas de Empresa (Protegidas)
 
-| Route | Description | Auth |
-|-------|-------------|------|
-| `/company/dashboard` | Company main dashboard | ✅ |
-| `/company/profile` | Company profile management | ✅ |
-| `/company/users` | Candidate management | ✅ |
-| `/company/courses` | Published courses management | ✅ |
-| `/company/contacts` | Contact with applicants | ✅ |
-
----
-
-## 🔐 Authentication
-
-The frontend implements JWT-based authentication:
-
-- **Login:** Users/companies authenticate via `/api/auth/login`
-- **Token Storage:** JWT token stored in `localStorage`
-- **Protected Routes:** `ProtectedRoute` component wraps private routes
-- **Auto-redirect:** Unauthorized access redirects to `/auth/login`
-- **Logout:** Clears session and redirects to home
-
-See `src/utils/auth.js` and `src/components/common/ProtectedRoute.jsx` for implementation details.
+| Ruta | Descripción | Auth |
+|------|-------------|------|
+| `/company/dashboard` | Dashboard principal de empresa | ✅ |
+| `/company/profile` | Gestión de perfil de empresa | ✅ |
+| `/company/users` | Gestión de candidatos | ✅ |
+| `/company/courses` | Gestión de cursos publicados | ✅ |
+| `/company/contacts` | Contacto con postulantes | ✅ |
 
 ---
 
-## 🎨 Styling
+## 🔐 Autenticación
 
-The project uses **Tailwind CSS 4** with custom configuration:
+El frontend implementa autenticación basada en JWT:
 
-- **Responsive design:** Mobile-first approach
-- **Custom colors:** Brand colors defined in `tailwind.config.js`
-- **Dark mode:** Ready for implementation
-- **Component classes:** Utility-first approach
-- **No inline styles:** All styling via Tailwind classes
+- **Login:** Usuarios/empresas se autentican vía `/api/auth/login`
+- **Almacenamiento de Token:** Token JWT almacenado en `localStorage`
+- **Rutas Protegidas:** Componente `ProtectedRoute` envuelve rutas privadas
+- **Auto-redirección:** Acceso no autorizado redirige a `/auth/login`
+- **Logout:** Limpia la sesión y redirige a inicio
 
----
-
-## 🧑‍💻 Development Guide
-
-1. **Creating new components:**
-   - Place in appropriate folder (`common/`, `auth/`, `courses/`)
-   - Use functional components with hooks
-   - Follow existing naming conventions
-
-2. **Adding new routes:**
-   - Define route in `App.jsx`
-   - Wrap with `ProtectedRoute` if auth required
-   - Create corresponding page component
-
-3. **API integration:**
-   - Use `apiFetch()` from `src/utils/api.js`
-   - Token automatically included for authenticated requests
-   - Error handling centralized
-
-4. **Conventional commits:**
-   - `feat:` - New feature
-   - `fix:` - Bug fix
-   - `refactor:` - Refactoring
-   - `style:` - Styling changes
-   - `docs:` - Documentation
+Ver `src/utils/auth.js` y `src/components/common/ProtectedRoute.jsx` para detalles de implementación.
 
 ---
 
-## 🔗 Integration with Backend
+## 🎨 Estilos
 
-The frontend integrates with [Jobee Backend](https://github.com/galonsoo/jobee-backend):
+El proyecto utiliza **Tailwind CSS 4** con configuración personalizada:
 
-**API Utilities:**
-- `src/utils/api.js` - HTTP request wrapper
-- `src/utils/auth.js` - Session management
+- **Diseño responsivo:** Enfoque mobile-first
+- **Colores personalizados:** Colores de marca definidos en `tailwind.config.js`
+- **Modo oscuro:** Listo para implementación
+- **Clases de componentes:** Enfoque utility-first
+- **Sin estilos inline:** Todo el estilado vía clases de Tailwind
 
-**Key Functions:**
+---
+
+## 🧑‍💻 Guía de Desarrollo
+
+1. **Crear nuevos componentes:**
+   - Colocar en la carpeta apropiada (`common/`, `auth/`, `courses/`)
+   - Usar componentes funcionales con hooks
+   - Seguir las convenciones de nombres existentes
+
+2. **Agregar nuevas rutas:**
+   - Definir ruta en `App.jsx`
+   - Envolver con `ProtectedRoute` si requiere autenticación
+   - Crear el componente de página correspondiente
+
+3. **Integración con API:**
+   - Usar `apiFetch()` desde `src/utils/api.js`
+   - Token incluido automáticamente para requests autenticados
+   - Manejo de errores centralizado
+
+4. **Commits convencionales:**
+   - `feat:` - Nueva característica
+   - `fix:` - Corrección de bug
+   - `refactor:` - Refactorización
+   - `style:` - Cambios de estilos
+   - `docs:` - Documentación
+
+---
+
+## 🔗 Integración con Backend
+
+El frontend se integra con [Jobee Backend](https://github.com/galonsoo/jobee-backend):
+
+**Utilidades de API:**
+- `src/utils/api.js` - Wrapper de requests HTTP
+- `src/utils/auth.js` - Gestión de sesiones
+
+**Funciones Principales:**
 ```javascript
-// Making API requests
+// Realizar requests a la API
 apiFetch('/auth/login', {
   method: 'POST',
   body: { email, password }
 });
 
-// Session management
+// Gestión de sesiones
 saveSession(token, user);
 isAuthenticated();
 logout();
@@ -257,39 +270,49 @@ logout();
 
 ---
 
-## 🚀 Production Build
+## 📦 Despliegue
 
 ```bash
-# Build for production
+# Construir para producción
 npm run build
 
-# Preview production build
+# Previsualizar build de producción
 npm run preview
 
-# Deploy dist/ folder to your hosting service
+# Despliega la carpeta dist/ en tu servicio de hosting
 ```
 
-The `dist/` folder contains the optimized production build.
+La carpeta `dist/` contiene el build de producción optimizado.
 
 ---
 
-## 🧾 License
+## 👥 Autores
 
-This project is licensed under the **MIT License**.
-See the [LICENSE](./LICENSE) file for more information.
+Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios:
+
+- **Equipo Jobee** - Desarrollo inicial y mantenimiento
+
+También puedes mirar la lista de todos los [contribuyentes](https://github.com/galonsoo/jobee-frontend/contributors) que han participado en este proyecto.
 
 ---
 
-## 📞 Contact
+## 📄 Licencia
+
+Este proyecto está bajo la **Licencia MIT**.
+Consulta el archivo [LICENSE](./LICENSE) para más información.
+
+---
+
+## 📞 Contacto
 
 - **Email:** [animajobee@gmail.com](mailto:animajobee@gmail.com)
-- **Phone:** +598 92 502 958
-- **Address:** Canelones 1564, Uruguay
+- **Teléfono:** +598 92 502 958
+- **Dirección:** Canelones 1564, Uruguay
 
 ---
 
 <div align="center">
 
-💡 **Developed with precision and passion by the Jobee Team**
+**Desarrollado con precisión y pasión por el equipo de Jobee** 💼
 
 </div>
