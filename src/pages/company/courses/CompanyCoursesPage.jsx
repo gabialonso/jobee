@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../../utils/api";
+import { COURSES } from "../../../data/courses.js";
 import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
 import PageHeader from "../../../components/features/shared/PageHeader";
 import EmptyState from "../../../components/common/EmptyState";
@@ -28,15 +29,30 @@ export default function CompanyCourses() {
   }, []);
 
   const fetchCourses = async () => {
-    try {
-      const data = await apiFetch('/course/');
-      setCourses(data.data || []);
-    } catch (err) {
-      console.error('Error fetching courses:', err);
-      setError('Error al cargar los cursos');
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+
+    // MVP: Usar datos mock directamente (simular que la empresa creó estos 3 cursos)
+    const mockCompanyCourses = COURSES.slice(0, 3).map((course, index) => ({
+      courseId: course.id,
+      title: course.title,
+      description: course.description,
+      duration: parseInt(course.duration) || 4,
+      price: (index + 1) * 1000,
+      theme: course.plan
+    }));
+    setCourses(mockCompanyCourses);
+    setLoading(false);
+
+    // TODO: Para integrar con backend, descomentar esto y comentar lo de arriba:
+    // try {
+    //   const data = await apiFetch('/course/');
+    //   setCourses(data.data || []);
+    // } catch (err) {
+    //   console.error('Error fetching courses:', err);
+    //   setError('Error al cargar los cursos');
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const openModal = (type, course = null) => {
@@ -107,7 +123,7 @@ export default function CompanyCourses() {
           description="Creá y administrá los cursos de capacitación para tu empresa."
           actions={
             <button
-              className="flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-5 py-3 text-sm font-semibold text-[#1F2937] transition-transform duration-150 ease-out hover:scale-105"
+              className="flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-5 py-3 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90"
               onClick={() => openModal('create')}
             >
               <HiPlus className="w-5 h-5" />
@@ -190,7 +206,7 @@ export default function CompanyCourses() {
             actionButton={
               <button
                 onClick={() => openModal('create')}
-                className="inline-flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-3 text-sm font-semibold text-[#1F2937] transition-transform duration-150 ease-out hover:scale-105"
+                className="inline-flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-[#FFD65B] px-6 py-3 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90"
               >
                 <HiPlus className="w-5 h-5" />
                 Crear Mi Primer Curso

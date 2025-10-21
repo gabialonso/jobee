@@ -14,27 +14,36 @@ export default function UserCourses() {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      try {
-        const data = await apiFetch('/course/');
-        const mappedCourses = (data.data || []).map(course => ({
-          title: course.title,
-          description: course.description,
-          duration: course.duration ? `${course.duration}h` : null,
-          plan: 'basico',
-          planLabel: 'Curso',
-          modality: 'Online',
-          courseId: course.courseId
-        }));
-        setCourses(mappedCourses);
-      } catch (err) {
-        const mappedMockCourses = COURSES.map(course => ({
-          ...course,
-          courseId: course.id
-        }));
-        setCourses(mappedMockCourses);
-      } finally {
-        setLoading(false);
-      }
+      setLoading(true);
+
+      // MVP: Usar datos mock directamente
+      const mappedMockCourses = COURSES.map(course => ({
+        ...course,
+        courseId: course.id
+      }));
+      setCourses(mappedMockCourses);
+      setLoading(false);
+
+      // TODO: Para integrar con backend, descomentar esto y comentar lo de arriba:
+      // try {
+      //   const data = await apiFetch('/course/');
+      //   if (data.data && data.data.length > 0) {
+      //     const mappedCourses = data.data.map(course => ({
+      //       title: course.title,
+      //       description: course.description,
+      //       duration: course.duration ? `${course.duration}h` : null,
+      //       plan: 'basico',
+      //       planLabel: 'Curso',
+      //       modality: 'Online',
+      //       courseId: course.courseId
+      //     }));
+      //     setCourses(mappedCourses);
+      //   }
+      // } catch (err) {
+      //   console.error('Error fetching courses:', err);
+      // } finally {
+      //   setLoading(false);
+      // }
     };
     fetchCourses();
   }, []);
@@ -76,18 +85,30 @@ export default function UserCourses() {
 
         {!loading && courses.length > 0 && (
           <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] p-6 sm:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course) => (
-              <div key={course.courseId} className="flex flex-col">
-                <CourseCard course={course} />
-                <button
-                  onClick={() => handleEnroll(course.courseId)}
-                  disabled={enrolling === course.courseId}
-                  className="mt-4 w-full px-5 py-3 rounded-xl bg-[#10B981] border-b-4 border-[#059669] text-white font-semibold transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {enrolling === course.courseId ? 'Inscribiendo...' : 'Inscribirse Ahora'}
-                </button>
-              </div>
-            ))}
+            {courses.map((course) => {
+              const planColors = {
+                basico: { border: 'border-[#F5C34D]', bg: 'bg-[#FFF0C2]', text: 'text-[#1F2937]' },
+                medio: { border: 'border-[#2A8A9E]', bg: 'bg-[#D4E9EC]', text: 'text-[#2A8A9E]' },
+                avanzado: { border: 'border-[#E84D4D]', bg: 'bg-[#FED7D7]', text: 'text-[#E84D4D]' }
+              };
+              const colors = planColors[course.plan] || planColors.basico;
+
+              return (
+                <CourseCard
+                  key={course.courseId}
+                  course={course}
+                  actionButton={
+                    <button
+                      onClick={() => handleEnroll(course.courseId)}
+                      disabled={enrolling === course.courseId}
+                      className={`w-full px-5 py-2 rounded-xl border-b-4 ${colors.border} ${colors.bg} ${colors.text} font-semibold transition-all duration-150 ease-out hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed`}
+                    >
+                      {enrolling === course.courseId ? 'Inscribiendo...' : 'Inscribirse Ahora'}
+                    </button>
+                  }
+                />
+              );
+            })}
           </section>
         )}
 
