@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
+import { COMPANIES } from "../../data/companies.js";
 import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
 
 export default function UserCompany() {
@@ -11,15 +12,22 @@ export default function UserCompany() {
 
   useEffect(() => {
     const fetchCompanies = async () => {
-      try {
-        const data = await apiFetch('/company/');
-        setCompanies(data.data || []);
-      } catch (err) {
-        console.error('Error fetching companies:', err);
-        setError('Failed to load companies');
-      } finally {
-        setLoading(false);
-      }
+      setLoading(true);
+
+      // MVP: Usar datos mock directamente
+      setCompanies(COMPANIES);
+      setLoading(false);
+
+      // TODO: Para integrar con backend, descomentar esto y comentar lo de arriba:
+      // try {
+      //   const data = await apiFetch('/company/');
+      //   setCompanies(data.data || []);
+      // } catch (err) {
+      //   console.error('Error fetching companies:', err);
+      //   setError('Failed to load companies');
+      // } finally {
+      //   setLoading(false);
+      // }
     };
 
     fetchCompanies();
