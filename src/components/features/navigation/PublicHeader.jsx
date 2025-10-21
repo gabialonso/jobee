@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
-import Logo from "../../assets/Jobee_Logo.png";
+import Logo from "../../../assets/Jobee_Logo.png";
 
 const NAV_LINKS = [
   { label: "Inicio", href: "/" },

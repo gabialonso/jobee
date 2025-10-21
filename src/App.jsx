@@ -1,5 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
-import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
+import ProtectedRoute from "./components/layout/ProtectedRoute.jsx";
 // ============================= Public Pages =============================
 import SplashPage from "./pages/public/SplashPage.jsx";
 import HomePage from "./pages/public/HomePage.jsx";

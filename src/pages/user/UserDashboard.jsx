@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api.js";
-import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
+import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
 import ActionCard from "../../components/common/ActionCard";
 import { HiUser, HiBookOpen, HiBuildingOffice2, HiChatBubbleLeftRight } from "react-icons/hi2";
 

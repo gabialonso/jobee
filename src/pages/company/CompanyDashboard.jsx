@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { getUser } from "../../utils/auth";
 import { apiFetch } from "../../utils/api";
 import { mockApi } from "../../utils/mockData";
-import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
+import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
 import StatCard from "../../components/common/StatCard";
 import ActionCard from "../../components/common/ActionCard";
 import { HiUsers, HiBriefcase, HiBookOpen, HiUser, HiPlus, HiMagnifyingGlass, HiChatBubbleLeftRight } from "react-icons/hi2";

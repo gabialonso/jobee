@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import AuthLayout from "../../components/auth/AuthLayout.jsx";
+import AuthLayout from "../../components/layout/AuthLayout.jsx";
 import { apiFetch } from "../../utils/api.js";
 import { saveSession } from "../../utils/auth.js";
 

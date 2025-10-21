@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiSearch, FiX } from "react-icons/fi";
-import { logout } from "../../utils/auth";
-import Logo from "../../assets/Jobee_Logo.png";
+import { logout } from "../../../utils/auth";
+import Logo from "../../../assets/Jobee_Logo.png";
 
 const NAV_CONFIG = {
   public: [

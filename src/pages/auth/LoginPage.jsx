@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import AuthLayout from "../../components/auth/AuthLayout.jsx";
+import AuthLayout from "../../components/layout/AuthLayout.jsx";
 import { apiFetch } from "../../utils/api.js";
 import { saveSession } from "../../utils/auth.js";
 
