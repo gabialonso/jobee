@@ -23,12 +23,10 @@ export default function CompanyDashboard() {
         const user = getUser();
         if (!user?.id) return;
 
-        // Obtener companyId del usuario
         const companyData = await apiFetch(`/company/user/${user.id}`);
         if (companyData.data && companyData.data.length > 0) {
           const company = companyData.data[0];
 
-          // Cargar estadísticas (datos simulados)
           const statsData = await mockApi.getCompanyStats(company.companyId);
           if (statsData.success) {
             setStats(statsData.data);
@@ -49,7 +47,6 @@ export default function CompanyDashboard() {
         currentPath={location.pathname}
       />
 
-      {/* Main content */}
       <main className="mx-auto w-full max-w-container px-5 py-12 md:px-8 lg:px-12">
         <div className="mb-10">
           <span className="inline-flex items-center rounded-full bg-[#9B1756]/10 border border-[#9B1756] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#9B1756] mb-4">
@@ -63,7 +60,6 @@ export default function CompanyDashboard() {
           </p>
         </div>
 
-        {/* Stats Grid */}
         <section className="grid gap-6 rounded-3xl bg-[#FFF0C2] p-6 mb-12 md:p-8">
           <h2 className="text-2xl font-bold text-[#1F2937] md:text-3xl">Estadísticas</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -88,7 +84,6 @@ export default function CompanyDashboard() {
           </div>
         </section>
 
-        {/* Quick Actions */}
         <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] p-6 md:p-8">
           <header className="flex flex-col gap-2">
             <p className="text-sm font-semibold uppercase tracking-wide text-[#9B1756]">Acceso Rápido</p>

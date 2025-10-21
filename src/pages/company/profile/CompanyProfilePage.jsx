@@ -4,29 +4,35 @@ import { apiFetch } from "../../utils/api";
 import { getUser } from "../../utils/auth";
 import { mockApi } from "../../utils/mockData";
 import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
-import CourseProgressCard from "../../components/features/courses/CourseProgressCard";
-import { FiEdit2, FiLinkedin, FiFileText, FiCamera, FiX, FiCheck } from "react-icons/fi";
+import StatCard from "../../components/common/StatCard";
+import { HiUsers, HiBriefcase, HiBookOpen } from "react-icons/hi2";
+import { FiEdit2, FiGlobe, FiMapPin, FiCamera, FiX, FiCheck } from "react-icons/fi";
 
-export default function UserProfile() {
+export default function CompanyProfile() {
   const location = useLocation();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    birthday: '',
-    Ci: '',
-    highSchool: '',
+    rut: '',
+    name: '',
+    legalReason: '',
+    groupName: '',
+    subGroupName: '',
     description: '',
-    cv: '',
-    linkedin: '',
-    profilePhoto: '',
+    industry: '',
+    website: '',
+    location: '',
+    logoPhoto: '',
     bannerPhoto: ''
   });
-  const [personId, setPersonId] = useState(null);
+  const [companyId, setCompanyId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [courses, setCourses] = useState([]);
+  const [stats, setStats] = useState({
+    totalCandidates: '-',
+    activeJobs: '-',
+    publishedCourses: '-'
+  });
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -38,33 +44,33 @@ export default function UserProfile() {
           return;
         }
 
-        const data = await apiFetch(`/person/user/${user.id}`);
+        const data = await apiFetch(`/company/user/${user.id}`);
 
         if (data.data && data.data.length > 0) {
-          const person = data.data[0];
-          setPersonId(person.personId);
+          const company = data.data[0];
+          setCompanyId(company.companyId);
           setFormData({
-            firstName: person.firstName || '',
-            lastName: person.lastName || '',
-            birthday: person.birthday || '',
-            Ci: person.Ci || '',
-            highSchool: person.highSchool || '',
-            description: person.description || '',
-            cv: person.cv || '',
-            linkedin: person.linkedin || '',
-            profilePhoto: person.profilePhoto || '',
-            bannerPhoto: person.bannerPhoto || ''
+            rut: company.rut || '',
+            name: company.name || '',
+            legalReason: company.legalReason || '',
+            groupName: company.groupName || '',
+            subGroupName: company.subGroupName || '',
+            description: company.description || '',
+            industry: company.industry || '',
+            website: company.website || '',
+            location: company.location || '',
+            logoPhoto: company.logoPhoto || '',
+            bannerPhoto: company.bannerPhoto || ''
           });
           setIsEditing(true);
 
-          // Cargar cursos inscritos (datos simulados)
-          const coursesData = await mockApi.getUserCourses(user.id);
-          if (coursesData.success) {
-            setCourses(coursesData.data);
+          const statsData = await mockApi.getCompanyStats(company.companyId);
+          if (statsData.success) {
+            setStats(statsData.data);
           }
         }
       } catch (err) {
-        console.error('Error loading profile:', err);
+        console.error('Error loading company profile:', err);
       } finally {
         setLoading(false);
       }
@@ -78,61 +84,57 @@ export default function UserProfile() {
     setMessage('');
 
     try {
-      if (isEditing && personId) {
-        await apiFetch(`/person/${personId}`, {
+      if (isEditing && companyId) {
+        await apiFetch(`/company/${companyId}`, {
           method: 'PUT',
           body: formData
         });
-        setMessage('Perfil actualizado exitosamente');
+        setMessage('Perfil de empresa actualizado exitosamente');
       } else {
-        const data = await apiFetch('/person/', {
+        const data = await apiFetch('/company/', {
           method: 'POST',
           body: formData
         });
-        setPersonId(data.data.personId);
+        setCompanyId(data.data.companyId);
         setIsEditing(true);
-        setMessage('Perfil creado exitosamente');
+        setMessage('Perfil de empresa creado exitosamente');
       }
       setEditMode(false);
     } catch (err) {
-      console.error('Error saving profile:', err);
-      setMessage(`Error: ${err.message || 'Failed to save profile'}`);
+      console.error('Error saving company profile:', err);
+      setMessage(`Error: ${err.message || 'Failed to save company profile'}`);
     }
   };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-[#FFF8E7] flex items-center justify-center">
-        <p className="text-[#6F442C]">Cargando perfil...</p>
+        <p className="text-[#6F442C]">Cargando perfil de empresa...</p>
       </div>
     );
   }
 
-  const fullName = formData.firstName && formData.lastName
-    ? `${formData.firstName} ${formData.lastName}`
-    : 'Tu Nombre';
+  const companyName = formData.name || 'Tu Empresa';
 
   return (
     <div className="min-h-screen bg-[#FFF8E7]">
       <AuthenticatedHeader
-        mode="user"
+        mode="company"
         currentPath={location.pathname}
       />
 
       <main className="mx-auto w-full max-w-container px-5 py-10 md:px-8 lg:px-12">
         {message && (
           <div className={`mb-6 px-6 py-4 rounded-xl border-b-4 ${message.includes('Error') || message.includes('error')
-            ? 'bg-[#DC2626]/10 border-[#DC2626] text-[#DC2626]'
-            : 'bg-[#10B981]/10 border-[#10B981] text-[#10B981]'
+              ? 'bg-[#DC2626]/10 border-[#DC2626] text-[#DC2626]'
+              : 'bg-[#10B981]/10 border-[#10B981] text-[#10B981]'
             }`}>
             {message}
           </div>
         )}
 
-        {/* Profile Header with Banner and Photo */}
         <section className="relative mb-8 rounded-3xl overflow-hidden bg-white border-b-4 border-[#E69C00]">
-          {/* Banner */}
-          <div className="relative h-48 md:h-64 bg-gradient-to-r from-[#FFD65B] via-[#FFF0C2] to-[#FFD65B]">
+          <div className="relative h-48 md:h-64 bg-gradient-to-r from-[#0B7285] via-[#10B981] to-[#0B7285]">
             {formData.bannerPhoto && (
               <img
                 src={formData.bannerPhoto}
@@ -150,21 +152,19 @@ export default function UserProfile() {
             )}
           </div>
 
-          {/* Profile Photo and Info */}
           <div className="relative px-6 pb-6 md:px-8">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              {/* Profile Photo */}
               <div className="relative -mt-16 md:-mt-20">
-                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl border-4 border-white bg-[#FFF0C2] overflow-hidden">
-                  {formData.profilePhoto ? (
+                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl border-4 border-white bg-white overflow-hidden">
+                  {formData.logoPhoto ? (
                     <img
-                      src={formData.profilePhoto}
-                      alt={fullName}
+                      src={formData.logoPhoto}
+                      alt={companyName}
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-4xl md:text-5xl font-bold text-[#E69C00]">
-                      {formData.firstName?.[0] || 'U'}
+                    <div className="w-full h-full flex items-center justify-center text-4xl md:text-5xl font-bold text-[#E69C00] bg-[#FFF0C2]">
+                      {formData.name?.[0] || 'E'}
                     </div>
                   )}
                   {editMode && (
@@ -178,33 +178,29 @@ export default function UserProfile() {
                 </div>
               </div>
 
-              {/* Name and Actions */}
               <div className="flex-1 flex flex-col md:flex-row md:items-end md:justify-between gap-4 pt-2">
                 <div>
-                  <h1 className="text-2xl md:text-3xl font-bold text-[#1F2937]">{fullName}</h1>
+                  <h1 className="text-2xl md:text-3xl font-bold text-[#1F2937]">{companyName}</h1>
                   <p className="text-base text-[#4B5563] mt-1">
-                    {formData.highSchool || 'Estudiante en Jobee'}
+                    {formData.industry || 'Industria'} {formData.location && `• ${formData.location}`}
                   </p>
                   <div className="flex gap-3 mt-3">
-                    {formData.linkedin && (
+                    {formData.website && (
                       <a
-                        href={formData.linkedin}
+                        href={formData.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#0B7285] text-[#0B7285] transition-transform duration-150 ease-out hover:scale-110"
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#0B7285] text-[#0B7285] transition-transform duration-150 ease-out hover:scale-105 text-sm font-semibold"
                       >
-                        <FiLinkedin className="w-5 h-5" />
+                        <FiGlobe className="w-4 h-4" />
+                        Sitio Web
                       </a>
                     )}
-                    {formData.cv && (
-                      <a
-                        href={formData.cv}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#DC2626] text-[#DC2626] transition-transform duration-150 ease-out hover:scale-110"
-                      >
-                        <FiFileText className="w-5 h-5" />
-                      </a>
+                    {formData.location && (
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#DC2626] text-[#DC2626] text-sm font-semibold">
+                        <FiMapPin className="w-4 h-4" />
+                        {formData.location}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -238,20 +234,19 @@ export default function UserProfile() {
         </section>
 
         {editMode ? (
-          /* Edit Form */
           <form onSubmit={handleSubmit} className="space-y-6">
             <section className="rounded-3xl bg-[#FFF0C2] p-6 md:p-8">
-              <h2 className="text-2xl font-bold text-[#1F2937] mb-6">Información Personal</h2>
+              <h2 className="text-2xl font-bold text-[#1F2937] mb-6">Información de la Empresa</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
-                    Nombre <span className="text-[#DC2626]">*</span>
+                    Nombre de la Empresa <span className="text-[#DC2626]">*</span>
                   </label>
                   <input
                     type="text"
-                    value={formData.firstName}
-                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                     required
                   />
@@ -259,75 +254,64 @@ export default function UserProfile() {
 
                 <div>
                   <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
-                    Apellido <span className="text-[#DC2626]">*</span>
+                    RUT <span className="text-[#DC2626]">*</span>
                   </label>
                   <input
                     type="text"
-                    value={formData.lastName}
-                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    value={formData.rut}
+                    onChange={(e) => setFormData({ ...formData, rut: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                     required
+                    placeholder="12-34567890-1"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
-                    Año de Nacimiento
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.birthday}
-                    onChange={(e) => setFormData({ ...formData, birthday: e.target.value })}
-                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
-                    placeholder="2000"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
-                    CI (Cédula de Identidad)
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.Ci}
-                    onChange={(e) => setFormData({ ...formData, Ci: e.target.value })}
-                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
-                  />
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
-                    Liceo o Institución
+                    Razón Social
                   </label>
                   <input
                     type="text"
-                    value={formData.highSchool}
-                    onChange={(e) => setFormData({ ...formData, highSchool: e.target.value })}
+                    value={formData.legalReason}
+                    onChange={(e) => setFormData({ ...formData, legalReason: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
-                  />
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
-                    Descripción Personal
-                  </label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition resize-none"
-                    rows="4"
-                    placeholder="Cuéntanos sobre ti, tus habilidades y experiencia..."
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
-                    URL del CV
+                    Industria
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.industry}
+                    onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                    placeholder="Tecnología, Retail, etc."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Ubicación
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.location}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                    placeholder="Montevideo, Uruguay"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Sitio Web
                   </label>
                   <input
                     type="url"
-                    value={formData.cv}
-                    onChange={(e) => setFormData({ ...formData, cv: e.target.value })}
+                    value={formData.website}
+                    onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
                     placeholder="https://..."
                   />
@@ -335,41 +319,71 @@ export default function UserProfile() {
 
                 <div>
                   <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
-                    Perfil de LinkedIn
+                    Nombre del Grupo
                   </label>
                   <input
-                    type="url"
-                    value={formData.linkedin}
-                    onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+                    type="text"
+                    value={formData.groupName}
+                    onChange={(e) => setFormData({ ...formData, groupName: e.target.value })}
                     className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
-                    placeholder="https://linkedin.com/in/..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Nombre del Subgrupo
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.subGroupName}
+                    onChange={(e) => setFormData({ ...formData, subGroupName: e.target.value })}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-[#2F1C10] mb-2">
+                    Descripción de la Empresa
+                  </label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    className="w-full px-4 py-3 border-b-4 border-[#E69C00] rounded-xl bg-white text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#F3B61F] transition resize-none"
+                    rows="4"
+                    placeholder="Describí tu empresa, su misión y valores..."
                   />
                 </div>
               </div>
             </section>
           </form>
         ) : (
-          /* View Mode */
           <div className="space-y-8">
-            {/* About Section */}
             <section className="rounded-3xl bg-[#FFF0C2] p-6 md:p-8">
-              <h2 className="text-2xl font-bold text-[#1F2937] mb-4">Sobre mí</h2>
+              <h2 className="text-2xl font-bold text-[#1F2937] mb-4">Sobre la Empresa</h2>
               <p className="text-base leading-relaxed text-[#4B5563]">
-                {formData.description || 'Aún no has agregado una descripción personal. Editá tu perfil para agregar información sobre ti.'}
+                {formData.description || 'Aún no has agregado una descripción de tu empresa. Editá tu perfil para agregar información sobre tu organización.'}
               </p>
 
-              {formData.birthday && (
+              {(formData.legalReason || formData.groupName || formData.subGroupName) && (
                 <div className="mt-6 pt-6 border-t-2 border-[#FFD65B]">
-                  <h3 className="text-sm font-semibold text-[#6F442C] mb-3">Información adicional</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-xs text-[#4B5563] mb-1">Año de Nacimiento</p>
-                      <p className="text-base font-semibold text-[#1F2937]">{formData.birthday}</p>
-                    </div>
-                    {formData.Ci && (
+                  <h3 className="text-sm font-semibold text-[#6F442C] mb-3">Información Legal</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {formData.legalReason && (
                       <div>
-                        <p className="text-xs text-[#4B5563] mb-1">Cédula</p>
-                        <p className="text-base font-semibold text-[#1F2937]">{formData.Ci}</p>
+                        <p className="text-xs text-[#4B5563] mb-1">Razón Social</p>
+                        <p className="text-base font-semibold text-[#1F2937]">{formData.legalReason}</p>
+                      </div>
+                    )}
+                    {formData.groupName && (
+                      <div>
+                        <p className="text-xs text-[#4B5563] mb-1">Grupo</p>
+                        <p className="text-base font-semibold text-[#1F2937]">{formData.groupName}</p>
+                      </div>
+                    )}
+                    {formData.subGroupName && (
+                      <div>
+                        <p className="text-xs text-[#4B5563] mb-1">Subgrupo</p>
+                        <p className="text-base font-semibold text-[#1F2937]">{formData.subGroupName}</p>
                       </div>
                     )}
                   </div>
@@ -377,37 +391,28 @@ export default function UserProfile() {
               )}
             </section>
 
-            {/* Courses Section */}
             <section className="rounded-3xl bg-[#FFF8E7] p-6 md:p-8">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-[#1F2937]">Mis Cursos</h2>
-                  <p className="text-sm text-[#4B5563] mt-1">
-                    Tu progreso de aprendizaje
-                  </p>
-                </div>
-                <span className="text-sm font-semibold text-[#9B1756] bg-[#9B1756]/10 border border-[#9B1756] px-3 py-1 rounded-full">
-                  {courses.filter(c => c.status === 'completed').length} Completados
-                </span>
+              <h2 className="text-2xl font-bold text-[#1F2937] mb-6">Estadísticas</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <StatCard
+                  label="Candidatos Contactados"
+                  value={stats.totalCandidates}
+                  icon={HiUsers}
+                  color="#2A8A9E"
+                />
+                <StatCard
+                  label="Ofertas Activas"
+                  value={stats.activeJobs}
+                  icon={HiBriefcase}
+                  color="#F5C34D"
+                />
+                <StatCard
+                  label="Cursos Publicados"
+                  value={stats.publishedCourses}
+                  icon={HiBookOpen}
+                  color="#E84D4D"
+                />
               </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {courses.map((course) => (
-                  <CourseProgressCard key={course.id} course={course} />
-                ))}
-              </div>
-
-              {courses.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-[#4B5563]">Aún no estás inscripto en ningún curso.</p>
-                  <a
-                    href="/user/courses"
-                    className="inline-block mt-4 px-6 py-2 rounded-xl bg-[#FFD65B] border-b-4 border-[#E69C00] text-[#1F2937] font-semibold transition-transform duration-150 ease-out hover:scale-105"
-                  >
-                    Explorar Cursos
-                  </a>
-                </div>
-              )}
             </section>
           </div>
         )}
