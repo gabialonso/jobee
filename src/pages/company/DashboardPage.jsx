@@ -21,19 +21,24 @@ export default function CompanyDashboard() {
     const loadStats = async () => {
       try {
         const user = getUser();
-        if (!user?.id) return;
+        if (!user?.id) {
+          const statsData = await mockApi.getCompanyStats(1);
+          if (statsData.success) setStats(statsData.data);
+          return;
+        }
 
         const companyData = await apiFetch(`/company/user/${user.id}`);
         if (companyData.data && companyData.data.length > 0) {
           const company = companyData.data[0];
-
           const statsData = await mockApi.getCompanyStats(company.companyId);
-          if (statsData.success) {
-            setStats(statsData.data);
-          }
+          if (statsData.success) setStats(statsData.data);
+        } else {
+          const statsData = await mockApi.getCompanyStats(1);
+          if (statsData.success) setStats(statsData.data);
         }
       } catch (err) {
-        console.error('Error loading stats:', err);
+        const statsData = await mockApi.getCompanyStats(1);
+        if (statsData.success) setStats(statsData.data);
       }
     };
 

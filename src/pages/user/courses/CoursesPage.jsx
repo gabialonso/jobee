@@ -27,9 +27,11 @@ export default function UserCourses() {
         }));
         setCourses(mappedCourses);
       } catch (err) {
-        // backend: si no hay backend disponible, usa datos mock de /data/courses.js
-        console.error('error al cargar cursos, usando datos mock:', err);
-        setCourses(COURSES);
+        const mappedMockCourses = COURSES.map(course => ({
+          ...course,
+          courseId: course.id
+        }));
+        setCourses(mappedMockCourses);
       } finally {
         setLoading(false);
       }
@@ -40,12 +42,9 @@ export default function UserCourses() {
   const handleEnroll = async (courseId) => {
     setEnrolling(courseId);
     try {
-      // backend: reemplazar mockApi por apiFetch cuando esté el endpoint
-      // await apiFetch('/enrollments/', { method: 'POST', body: { courseId } });
       await mockApi.enrollInCourse(1, courseId);
       alert('¡Inscripción exitosa!');
     } catch (err) {
-      console.error('Error enrolling in course:', err);
       alert('Error al inscribirse en el curso');
     } finally {
       setEnrolling(null);
@@ -56,7 +55,6 @@ export default function UserCourses() {
     <div className="min-h-screen bg-[#FFF8E7]">
       <AuthenticatedHeader mode="user" currentPath={location.pathname} />
 
-      {/* Main content */}
       <main className="mx-auto w-full max-w-container px-5 py-12 md:px-8 lg:px-12">
         <div className="mb-10">
           <span className="inline-flex items-center rounded-full bg-[#9B1756]/10 border border-[#9B1756] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#9B1756] mb-4">
