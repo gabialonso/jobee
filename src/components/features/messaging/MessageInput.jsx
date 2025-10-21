@@ -19,7 +19,7 @@ export default function MessageInput({ value, onChange, onSend, sending, mode })
         <button
           type="submit"
           disabled={sending || !value.trim()}
-          className={`px-4 py-2 rounded-xl ${buttonColor} border-b-4 font-semibold hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed transition`}
+          className={`px-4 py-2 rounded-xl ${buttonColor} border-b-4 font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition`}
         >
           <HiPaperAirplane className="w-5 h-5" />
         </button>

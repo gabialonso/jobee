@@ -29,7 +29,7 @@ export default function CourseCarousel({ courses = [] }) {
     <div className="space-y-4">
       <div className="overflow-hidden rounded-3xl bg-[#FFF8E7]">
         <div
-          className="flex transition-transform duration-500"
+          className="flex transition-all duration-500"
           style={{ transform: `translateX(-${slide * 100}%)` }}
         >
           {slides.map((chunk, index) => (

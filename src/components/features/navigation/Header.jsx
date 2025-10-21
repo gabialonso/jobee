@@ -51,7 +51,7 @@ export default function Header({ mode = "public", currentPath = "" }) {
 
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-white px-3 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:hidden"
+              className="inline-flex items-center gap-2 rounded-xl border-b-4 border-[#E69C00] bg-white px-3 py-2 text-sm font-semibold text-[#1F2937] transition md:hidden"
             >
               {isMenuOpen ? <><FiX className="text-lg" />Cerrar</> : <><FiMenu className="text-lg" />Menú</>}
             </button>
@@ -90,7 +90,7 @@ export default function Header({ mode = "public", currentPath = "" }) {
                   </div>
                   <Link
                     to="/auth/login"
-                    className="rounded-xl border-b-4 border-[#E69C00] bg-white px-5 py-2 text-center text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+                    className="rounded-xl border-b-4 border-[#E69C00] bg-white px-5 py-2 text-center text-sm font-semibold text-[#1F2937] transition md:text-base"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Acceder
@@ -108,7 +108,7 @@ export default function Header({ mode = "public", currentPath = "" }) {
               {isAuthenticated && (
                 <button
                   onClick={handleLogout}
-                  className="rounded-xl border-b-4 border-[#E69C00] bg-white px-5 py-2 text-center text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+                  className="rounded-xl border-b-4 border-[#E69C00] bg-white px-5 py-2 text-center text-sm font-semibold text-[#1F2937] transition md:text-base"
                 >
                   Cerrar sesión
                 </button>

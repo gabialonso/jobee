@@ -126,8 +126,8 @@ export default function CompanyProfile() {
       <main className="mx-auto w-full max-w-container px-5 py-10 md:px-8 lg:px-12">
         {message && (
           <div className={`mb-6 px-6 py-4 rounded-xl border-b-4 ${message.includes('Error') || message.includes('error')
-              ? 'bg-[#DC2626]/10 border-[#DC2626] text-[#DC2626]'
-              : 'bg-[#10B981]/10 border-[#10B981] text-[#10B981]'
+            ? 'bg-[#DC2626]/10 border-[#DC2626] text-[#DC2626]'
+            : 'bg-[#10B981]/10 border-[#10B981] text-[#10B981]'
             }`}>
             {message}
           </div>
@@ -190,7 +190,7 @@ export default function CompanyProfile() {
                         href={formData.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#0B7285] text-[#0B7285] transition-transform duration-150 ease-out hover:scale-105 text-sm font-semibold"
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFF8E7] border-b-4 border-[#0B7285] text-[#0B7285] transition-all duration-150 ease-out hover:opacity-90 text-sm font-semibold"
                       >
                         <FiGlobe className="w-4 h-4" />
                         Sitio Web
@@ -208,11 +208,10 @@ export default function CompanyProfile() {
                 <div className="flex flex-col md:flex-row gap-3 self-start md:self-auto">
                   <button
                     onClick={() => setEditMode(!editMode)}
-                    className={`px-5 py-2 rounded-xl border-b-4 font-semibold flex items-center gap-2 transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] ${
-                      editMode
+                    className={`px-5 py-2 rounded-xl border-b-4 font-semibold flex items-center gap-2 transition-all duration-150 ease-out hover:opacity-90 ${editMode
                         ? 'bg-[#FCE7F3] border-[#9B1756] text-[#9B1756]'
                         : 'bg-[#FFF0C2] border-[#E69C00] text-[#1F2937]'
-                    }`}
+                      }`}
                   >
                     {editMode ? <FiX className="w-4 h-4" /> : <FiEdit2 className="w-4 h-4" />}
                     {editMode ? 'Cancelar' : 'Editar Perfil'}
@@ -221,7 +220,7 @@ export default function CompanyProfile() {
                   {editMode && (
                     <button
                       onClick={handleSubmit}
-                      className="px-5 py-2 rounded-xl border-b-4 border-[#2A8B9F] bg-[#D4E9EC] text-[#2A8B9F] font-semibold flex items-center gap-2 transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7]"
+                      className="px-5 py-2 rounded-xl border-b-4 border-[#2A8B9F] bg-[#D4E9EC] text-[#2A8B9F] font-semibold flex items-center gap-2 transition-all duration-150 ease-out hover:opacity-90"
                     >
                       <FiCheck className="w-4 h-4" />
                       Guardar

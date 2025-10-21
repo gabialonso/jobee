@@ -4,7 +4,7 @@ export default function ActionCard({ to, icon: Icon, title, description, color =
   return (
     <Link
       to={to}
-      className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 bg-[#FFF0C2] px-5 py-6 transition-transform duration-150 ease-out hover:scale-105"
+      className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 bg-[#FFF0C2] px-5 py-6 transition-all duration-150 ease-out hover:opacity-90"
       style={{ borderBottomColor: color }}
     >
       <div className="flex items-center gap-3">

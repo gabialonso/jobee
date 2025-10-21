@@ -12,11 +12,11 @@ export default function Button({
   const baseStyles = 'inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-150 ease-out disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variants = {
-    primary: 'bg-[#FFD65B] border-b-4 border-[#E69C00] text-[#1F2937] hover:scale-105 hover:bg-[#FFC933]',
-    secondary: 'bg-[#0B7285] border-b-4 border-[#074C59] text-white hover:scale-105 hover:bg-[#096073]',
-    danger: 'bg-[#DC2626] border-b-4 border-[#991B1B] text-white hover:scale-105 hover:bg-[#B91C1C]',
-    outline: 'bg-[#FFF8E7] border-2 border-[#E69C00] text-[#1F2937] hover:bg-[#FFF0C2]',
-    ghost: 'bg-transparent text-[#1F2937] hover:bg-[#FFF8E7]',
+    primary: 'bg-[#FFD65B] border-b-4 border-[#E69C00] text-[#1F2937] hover:opacity-90',
+    secondary: 'bg-[#0B7285] border-b-4 border-[#074C59] text-white hover:opacity-90',
+    danger: 'bg-[#DC2626] border-b-4 border-[#991B1B] text-white hover:opacity-90',
+    outline: 'bg-[#FFF8E7] border-2 border-[#E69C00] text-[#1F2937] hover:opacity-90',
+    ghost: 'bg-transparent text-[#1F2937] hover:opacity-90',
   };
 
   const sizes = {

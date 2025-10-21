@@ -59,7 +59,7 @@ export default function UserCompany() {
             {companies.map((company) => (
               <article
                 key={company.companyId}
-                className="flex flex-col justify-between gap-4 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] p-6 transition-transform duration-150 ease-out hover:scale-[1.02]"
+                className="flex flex-col justify-between gap-4 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] p-6 transition-all duration-150 ease-out hover:opacity-90"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -122,7 +122,7 @@ export default function UserCompany() {
                   </div>
                 </div>
 
-                <button className="w-full bg-[#FFD65B] text-[#1F2937] py-3 px-4 rounded-xl font-semibold border-b-4 border-[#E69C00] transition-transform duration-150 ease-out hover:scale-105">
+                <button className="w-full bg-[#FFD65B] text-[#1F2937] py-3 px-4 rounded-xl font-semibold border-b-4 border-[#E69C00] transition-all duration-150 ease-out hover:opacity-90">
                   Ver Detalles
                 </button>
               </article>

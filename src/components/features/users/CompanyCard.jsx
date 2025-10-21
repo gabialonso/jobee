@@ -1,6 +1,6 @@
 export default function CompanyCard({ company, onViewDetails }) {
   return (
-    <article className="flex flex-col justify-between gap-4 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] p-6 transition-transform duration-150 ease-out hover:scale-[1.02]">
+    <article className="flex flex-col justify-between gap-4 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] p-6 transition-all duration-150 ease-out hover:opacity-90">
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-bold text-[#2F1C10]">
@@ -64,7 +64,7 @@ export default function CompanyCard({ company, onViewDetails }) {
 
       <button
         onClick={() => onViewDetails && onViewDetails(company)}
-        className="w-full bg-[#FFD65B] text-[#1F2937] py-3 px-4 rounded-xl font-semibold border-b-4 border-[#E69C00] transition-transform duration-150 ease-out hover:scale-105"
+        className="w-full bg-[#FFD65B] text-[#1F2937] py-3 px-4 rounded-xl font-semibold border-b-4 border-[#E69C00] transition-all duration-150 ease-out hover:opacity-90"
       >
         Ver Detalles
       </button>

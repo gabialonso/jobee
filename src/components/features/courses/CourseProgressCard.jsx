@@ -18,7 +18,7 @@ export default function CourseProgressCard({ course }) {
 
   return (
     <article
-      className={`flex flex-col gap-4 rounded-2xl border-b-4 ${styles.border} bg-white p-5 transition-transform duration-150 ease-out hover:scale-[1.02]`}
+      className={`flex flex-col gap-4 rounded-2xl border-b-4 ${styles.border} bg-white p-5 transition-all duration-150 ease-out hover:opacity-90`}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 space-y-2">

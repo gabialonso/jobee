@@ -51,14 +51,14 @@ export default function PublicHeader() {
             <div className="flex flex-col gap-3 md:flex-row md:items-center">
               <Link
                 to="/auth/login"
-                className="rounded-xl border-b-4 border-[#E69C00] bg-white px-5 py-2 text-center text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
+                className="rounded-xl border-b-4 border-[#E69C00] bg-white px-5 py-2 text-center text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Acceder
               </Link>
               <Link
                 to="/auth/signup/user"
-                className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-center text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
+                className="rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-center text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Crear cuenta

@@ -22,7 +22,7 @@ export default function CourseModal({
               {type === 'edit' && 'Editar Curso'}
               {type === 'delete' && 'Eliminar Curso'}
             </h2>
-            <button onClick={onClose} className="p-2 hover:bg-[#FFF8E7] rounded-xl transition">
+            <button onClick={onClose} className="p-2 rounded-xl transition">
               <HiXMark className="w-6 h-6 text-[#4B5563]" />
             </button>
           </div>

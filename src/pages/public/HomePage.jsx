@@ -26,13 +26,13 @@ function Hero() {
         <div className="flex flex-wrap gap-4">
           <Link
             to="/auth/signup/user"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
           >
             Registrate como usuario
           </Link>
           <Link
             to="/auth/signup/company"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
           >
             Soy empresa aliada
           </Link>
@@ -154,13 +154,13 @@ function CallToAction() {
       <div className="mt-6 flex flex-wrap justify-center gap-4">
         <Link
           to="/auth/signup/user"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
         >
           Crear cuenta joven
         </Link>
         <Link
           to="/auth/signup/company"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:scale-105 hover:bg-[#FFF8E7] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
         >
           Sumarse como empresa
         </Link>

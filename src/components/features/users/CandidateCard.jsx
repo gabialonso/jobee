@@ -2,7 +2,7 @@ import { HiCheckCircle, HiAcademicCap } from "react-icons/hi2";
 
 export default function CandidateCard({ candidate, onViewProfile }) {
   return (
-    <div className="bg-white rounded-3xl border-b-4 border-[#E69C00] p-6 transition-all hover:scale-105 cursor-pointer">
+    <div className="bg-white rounded-3xl border-b-4 border-[#E69C00] p-6 transition-all hover:opacity-90 cursor-pointer">
       {/* Profile Photo */}
       <div className="flex items-center gap-4 mb-4">
         <div className="w-16 h-16 rounded-full bg-[#FFD65B] flex items-center justify-center text-[#1F2937] text-2xl font-bold">
@@ -75,7 +75,7 @@ export default function CandidateCard({ candidate, onViewProfile }) {
       {/* Action Button */}
       <button
         onClick={() => onViewProfile && onViewProfile(candidate)}
-        className="w-full mt-4 px-4 py-2 rounded-xl bg-[#0B7285] border-b-4 border-[#074C59] text-white font-semibold transition-all hover:scale-105"
+        className="w-full mt-4 px-4 py-2 rounded-xl bg-[#0B7285] border-b-4 border-[#074C59] text-white font-semibold transition-all hover:opacity-90"
       >
         Ver Perfil Completo
       </button>
