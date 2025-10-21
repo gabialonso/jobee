@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { apiFetch } from "../../utils/api";
-import { getUser } from "../../utils/auth";
-import { mockApi } from "../../utils/mockData";
-import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
-import StatCard from "../../components/common/StatCard";
+import { apiFetch } from "../../../utils/api";
+import { getUser } from "../../../utils/auth";
+import { mockApi } from "../../../utils/mockData";
+import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
+import StatCard from "../../../components/common/StatCard";
 import { HiUsers, HiBriefcase, HiBookOpen } from "react-icons/hi2";
 import { FiEdit2, FiGlobe, FiMapPin, FiCamera, FiX, FiCheck } from "react-icons/fi";
 

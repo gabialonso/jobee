@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { apiFetch } from "../../utils/api";
-import { getUser } from "../../utils/auth";
-import { mockApi } from "../../utils/mockData";
-import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
-import CourseProgressCard from "../../components/courses/CourseProgressCard";
+import { apiFetch } from "../../../utils/api";
+import { getUser } from "../../../utils/auth";
+import { mockApi } from "../../../utils/mockData";
+import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
+import CourseProgressCard from "../../../components/features/courses/CourseProgressCard";
 import { FiEdit2, FiLinkedin, FiFileText, FiCamera, FiX, FiCheck } from "react-icons/fi";
 
 export default function UserProfile() {
@@ -77,22 +77,16 @@ export default function UserProfile() {
     setMessage('');
 
     try {
-      const payload = {
-        ...formData,
-        birthday: formData.birthday ? parseInt(formData.birthday) : null,
-        Ci: formData.Ci ? parseInt(formData.Ci) : null,
-      };
-
       if (isEditing && personId) {
         await apiFetch(`/person/${personId}`, {
           method: 'PUT',
-          body: payload
+          body: formData
         });
         setMessage('Perfil actualizado exitosamente');
       } else {
         const data = await apiFetch('/person/', {
           method: 'POST',
-          body: payload
+          body: formData
         });
         setPersonId(data.data.personId);
         setIsEditing(true);

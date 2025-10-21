@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { apiFetch } from "../../utils/api";
-import { mockApi } from "../../utils/mockData";
-import { COURSES } from "../../data/courses.js";
-import CourseCard from "../../components/courses/CourseCard";
-import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
+import { apiFetch } from "../../../utils/api";
+import { mockApi } from "../../../utils/mockData";
+import { COURSES } from "../../../data/courses.js";
+import CourseCard from "../../../components/features/courses/CourseCard";
+import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
 
 export default function UserCourses() {
   const location = useLocation();

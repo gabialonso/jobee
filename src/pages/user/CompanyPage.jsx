@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
-import AuthenticatedHeader from "../../components/common/AuthenticatedHeader";
+import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
 
 export default function UserCompany() {
   const location = useLocation();
