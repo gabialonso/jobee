@@ -62,10 +62,27 @@ export default function UserProfile() {
             bannerPhoto: person.bannerPhoto || ''
           });
           setIsEditing(true);
+        }
 
-          const coursesData = await mockApi.getUserCourses(user.id);
-          if (coursesData.success) {
-            setCourses(coursesData.data);
+        try {
+          const purchases = await apiFetch(`/purchase/user/${user.id}`);
+          if (Array.isArray(purchases)) {
+            const mappedCourses = purchases.map((purchase) => {
+              const course = purchase.course ?? purchase;
+              return {
+                title: course.title,
+                description: course.description,
+                progress: purchase.progress ?? 0,
+                status: purchase.status ?? 'in_progress',
+              };
+            });
+            setCourses(mappedCourses);
+          }
+        } catch (purchaseErr) {
+          console.error('Error loading user purchases:', purchaseErr);
+          const fallback = await mockApi.getUserCourses(user.id);
+          if (fallback.success) {
+            setCourses(fallback.data);
           }
         }
       } catch (err) {

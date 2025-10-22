@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../../utils/api";
-import { mockApi } from "../../../utils/mockData";
+import { getUser } from "../../../utils/auth";
 import { COURSES } from "../../../data/courses.js";
 import CourseCard from "../../../components/features/courses/CourseCard";
 import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
@@ -11,47 +11,101 @@ export default function UserCourses() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [enrolling, setEnrolling] = useState(null);
+  const [enrolledCourseIds, setEnrolledCourseIds] = useState([]);
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchAllData = async () => {
       setLoading(true);
       try {
-        const response = await apiFetch('/course/');
-        if (!Array.isArray(response)) {
-          throw new Error('Respuesta inválida del servidor');
+        const user = getUser();
+
+        if (user?.id) {
+          try {
+            const purchases = await apiFetch(`/purchase/user/${user.id}`);
+            if (Array.isArray(purchases)) {
+              setEnrolledCourseIds(
+                purchases
+                  .map((purchase) => purchase.course?.courseId ?? purchase.courseId)
+                  .filter(Boolean)
+              );
+            }
+          } catch (purchaseErr) {
+            console.error("Error fetching purchases:", purchaseErr);
+          }
         }
-        const coursesData = response;
-        const mappedCourses = coursesData.map(course => ({
+
+        const response = await apiFetch("/course/");
+        if (!Array.isArray(response)) {
+          throw new Error("Respuesta inválida del servidor");
+        }
+        const mappedCourses = response.map((course) => ({
           title: course.title,
           description: course.description,
           duration: course.duration ? `${course.duration}h` : null,
-          plan: course.theme || course.plan || 'basico',
-          planLabel: course.planLabel || 'Curso',
-          modality: course.modality || 'Online',
-          courseId: course.courseId || course.id
+          plan: course.theme || course.plan || "basico",
+          planLabel: course.planLabel || "Curso",
+          modality: course.modality || "Online",
+          price: course.price ?? null,
+          courseId: course.courseId || course.id,
         }));
         setCourses(mappedCourses);
       } catch (err) {
-        console.error('Error fetching courses:', err);
-        const mappedMockCourses = COURSES.map(course => ({
+        console.error("Error fetching courses:", err);
+        const mappedMockCourses = COURSES.map((course) => ({
           ...course,
-          courseId: course.id
+          courseId: course.id,
+          price: course.price ?? null,
         }));
         setCourses(mappedMockCourses);
       } finally {
         setLoading(false);
       }
     };
-    fetchCourses();
+
+    fetchAllData();
   }, []);
 
   const handleEnroll = async (courseId) => {
+    const user = getUser();
+    if (!user?.id) {
+      alert("Necesitas iniciar sesión para inscribirte.");
+      return;
+    }
+
+    if (enrolledCourseIds.includes(courseId)) {
+      alert("Ya estás inscripto en este curso.");
+      return;
+    }
+
     setEnrolling(courseId);
     try {
-      await mockApi.enrollInCourse(1, courseId);
-      alert('¡Inscripción exitosa!');
+      const course = courses.find((item) => item.courseId === courseId);
+      const price = course?.price ?? 0;
+
+      await apiFetch("/purchase/", {
+        method: "POST",
+        body: {
+          userId: user.id,
+          courseId,
+          price,
+          currency: "USD",
+        },
+      });
+
+      setEnrolledCourseIds((prev) =>
+        prev.includes(courseId) ? prev : [...prev, courseId]
+      );
+      alert("¡Inscripción exitosa!");
     } catch (err) {
-      alert('Error al inscribirse en el curso');
+      console.error("Error enrolling in course:", err);
+      if (err.message?.toLowerCase().includes("already purchased")) {
+        setEnrolledCourseIds((prev) =>
+          prev.includes(courseId) ? prev : [...prev, courseId]
+        );
+        alert("Ya estás inscripto en este curso.");
+      } else {
+        alert(`Error al inscribirse en el curso: ${err.message}`);
+      }
     } finally {
       setEnrolling(null);
     }
@@ -83,6 +137,7 @@ export default function UserCourses() {
         {!loading && courses.length > 0 && (
           <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] p-6 sm:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => {
+              const isEnrolled = enrolledCourseIds.includes(course.courseId);
               const planColors = {
                 basico: { border: 'border-[#F5C34D]', bg: 'bg-[#FFF0C2]', text: 'text-[#1F2937]' },
                 medio: { border: 'border-[#2A8A9E]', bg: 'bg-[#D4E9EC]', text: 'text-[#2A8A9E]' },
@@ -97,10 +152,14 @@ export default function UserCourses() {
                   actionButton={
                     <button
                       onClick={() => handleEnroll(course.courseId)}
-                      disabled={enrolling === course.courseId}
+                      disabled={isEnrolled || enrolling === course.courseId}
                       className={`w-full px-5 py-2 rounded-xl border-b-4 ${colors.border} ${colors.bg} ${colors.text} font-semibold transition-all duration-150 ease-out hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed`}
                     >
-                      {enrolling === course.courseId ? 'Inscribiendo...' : 'Inscribirse Ahora'}
+                      {isEnrolled
+                        ? 'Ya estás inscripto'
+                        : enrolling === course.courseId
+                          ? 'Inscribiendo...'
+                          : 'Inscribirse Ahora'}
                     </button>
                   }
                 />

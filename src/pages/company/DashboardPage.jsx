@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getUser } from "../../utils/auth";
 import { apiFetch } from "../../utils/api";
-import { mockApi } from "../../utils/mockData";
 import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
 import StatCard from "../../components/common/StatCard";
 import ActionCard from "../../components/common/ActionCard";
@@ -12,33 +11,60 @@ export default function CompanyDashboard() {
   const user = getUser();
   const location = useLocation();
   const [stats, setStats] = useState({
-    totalCandidates: '-',
-    activeJobs: '-',
-    publishedCourses: '-'
+    totalCandidates: 0,
+    activeJobs: 0,
+    publishedCourses: 0
   });
 
   useEffect(() => {
     const loadStats = async () => {
       try {
         const user = getUser();
-        if (!user?.id) {
-          const statsData = await mockApi.getCompanyStats(1);
-          if (statsData.success) setStats(statsData.data);
-          return;
-        }
+        if (!user?.id) return;
 
         const companies = await apiFetch(`/company/user/${user.id}`);
         if (Array.isArray(companies) && companies.length > 0) {
           const company = companies[0];
-          const statsData = await mockApi.getCompanyStats(company.id);
-          if (statsData.success) setStats(statsData.data);
-        } else {
-          const statsData = await mockApi.getCompanyStats(1);
-          if (statsData.success) setStats(statsData.data);
+          const [applications, postulations, courses] = await Promise.all([
+            apiFetch(`/company/users?companyId=${company.id}`),
+            apiFetch(`/postulation/company/${company.id}/postulations`),
+            apiFetch('/course/')
+          ]);
+
+          const candidateKeys = new Set(
+            Array.isArray(applications)
+              ? applications
+                  .filter((application) => {
+                    const companyId = application.company?.id ?? application.postulation?.company?.id;
+                    return Boolean(companyId);
+                  })
+                  .map((application) => {
+                    const candidateId = application.candidate?.id ?? application.id;
+                    const postulationId = application.postulation?.id ?? application.postulationId ?? "legacy";
+                    return `${candidateId}-${postulationId}`;
+                  })
+              : []
+          );
+
+          const activeJobs = Array.isArray(postulations)
+            ? postulations.filter((postulation) => postulation.status?.toLowerCase() === "activa").length
+            : 0;
+
+          const publishedCourses = Array.isArray(courses) ? courses.length : 0;
+
+          setStats({
+            totalCandidates: candidateKeys.size,
+            activeJobs,
+            publishedCourses
+          });
         }
       } catch (err) {
-        const statsData = await mockApi.getCompanyStats(1);
-        if (statsData.success) setStats(statsData.data);
+        console.error("Error loading company dashboard stats:", err);
+        setStats({
+          totalCandidates: 0,
+          activeJobs: 0,
+          publishedCourses: 0
+        });
       }
     };
 
