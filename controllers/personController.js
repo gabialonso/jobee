@@ -4,7 +4,7 @@ import {
         listPersonsByUser,
         updatePerson,
         deletePerson
-        } from "../services/personService.js";   
+        } from "../services/person/personService.js";   
         
 import 'express-async-errors';
 

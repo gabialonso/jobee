@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import 'express-async-errors';
 
 import stripeRoutes from "./routes/stripeRoutes.js";
+import postulationRoutes from "./routes/postulationRoutes.js"
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
@@ -37,6 +38,7 @@ app.use('/api/purchase', purchaseRoutes);
 app.use('/api/company', companyRoutes);
 app.use('/api/stripe', stripeRoutes);
 app.use('/api/openAi', openAiRoutes);
+app.use('/api/postulation' , postulationRoutes);
 
 // Conexión a la base de datos
 connectDB();

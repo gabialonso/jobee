@@ -183,10 +183,6 @@ model Like {
   @@unique([userId, postId]) // evita likes duplicados del mismo user al mismo post
   @@index([postId])
 }
-
-// =========================
-// Chat
-// =========================
 model Chat {
   id        Int       @id @default(autoincrement())
   isDirect  Boolean?  // opcional
@@ -206,3 +202,43 @@ model Message {
 
   @@index([chatId])
 }
+model Postulation {
+  id_postulation Int           @id @default(autoincrement())
+  title          String        @db.VarChar(100)
+  description    String
+  company_name   String        @db.VarChar(100)
+  location       String        @db.VarChar(100)
+  area           String        @db.VarChar(50)
+  requirements   String
+  job_type       JobType
+  themes         String?       @db.VarChar(100)
+  posted_at      DateTime      @default(now())
+  status         Status        @default(ACTIVA)
+  applications   JobApplication[]
+
+  @@map("postulaciones") // opcional: si tu tabla en SQL se llama así
+}
+
+model JobApplication {
+  id_application Int          @id @default(autoincrement())
+  id_person      Int
+  postulation_id Int
+  message        String?
+  applied_at     DateTime      @default(now())
+  postulation    Postulation   @relation(fields: [postulation_id], references: [id_postulation])
+
+  @@map("postulaciones_aplicaciones") // opcional: nombre real de la tabla
+}
+
+enum JobType {
+  TIEMPO_COMPLETO
+  MEDIO_TIEMPO
+  FREELANCE
+  PRACTICAS
+}
+
+enum Status {
+  ACTIVA
+  CERRADA
+}
+

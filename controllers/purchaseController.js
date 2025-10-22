@@ -3,7 +3,7 @@ import {
         buyCourse,
         getUserPurchase,
         getAllPurchase, 
-        } from "../services/purchaseService.js";
+        } from "../services/course/purchaseService.js";
 
 export const buyCourseHandler = async (req, res, next) => {
     try {
