@@ -1,5 +1,5 @@
-import * as authService from '../services/authService.js';
-import * as userService from '../services/userService.js';
+import * as authService from '../services/user/authService.js';
+import * as userService from '../services/user/userService.js';
 
 export const login = async (req, res) => {
   try {

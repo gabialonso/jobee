@@ -1,4 +1,4 @@
-import { pool } from "../config/db.js";
+import { pool } from "../../config/db.js";
 import "express-async-errors";
 
 export async function createCourse(courseData) {

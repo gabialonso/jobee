@@ -37,4 +37,7 @@ const User = sequelize.define("User", {
     },
 });
 
+User.hasMany(JobApplication, { foreignKey: 'user_id' });
+JobApplication.belongsTo(User, { foreignKey: 'user_id' });
+
 

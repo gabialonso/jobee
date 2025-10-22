@@ -2,7 +2,7 @@ import * as UserService from './userService.js';
 import 'express-async-errors';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import jwtConfig from '../config/jwt.js';
+import jwtConfig from '../../config/jwt.js';
 
 export const signup = async ({ email, password, name, Ci, brithday }) => {
   const user = await UserService.findByEmail(email);

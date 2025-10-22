@@ -4,7 +4,7 @@ import {
         listCompaniesByUser,
         listAllCompanies,
         updateCompany,
-        deleteCompany}from "../services/companyService.js";
+        deleteCompany}from "../services/company/companyService.js";
 import 'express-async-errors';
 
 // POST /api/v1/companies - create a new company

@@ -1,5 +1,5 @@
 import 'express-async-errors';
-import prisma from '../config/db.js';
+import prisma from '../../config/db.js';
 import bcrypt from 'bcryptjs';
 
 export const signup = async ({ name, email, password,Ci,brithday}) => {

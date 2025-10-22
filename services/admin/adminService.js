@@ -1,10 +1,10 @@
 // src/services/admin.service.js
 import 'express-async-errors';
-import prisma from "../config/db.js";
+import prisma from "../../config/db.js";
 import 'express-async-errors';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import jwtConfig from '../config/jwt.js';
+import jwtConfig from '../../config/jwt.js';
 
 export const adminCreateCourse = async (courseData) => {
     return prisma.course.create({ data: courseData });
