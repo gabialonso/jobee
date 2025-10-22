@@ -14,8 +14,8 @@ export default function UserDashboard() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const data = await apiFetch('/users/profile');
-        setProfile(data.data);
+        const profileData = await apiFetch('/users/profile');
+        setProfile(profileData);
       } catch (err) {
         setError(err.message);
       } finally {

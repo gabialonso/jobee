@@ -15,35 +15,32 @@ export default function UserCourses() {
   useEffect(() => {
     const fetchCourses = async () => {
       setLoading(true);
-
-      // MVP: Usar datos mock directamente
-      const mappedMockCourses = COURSES.map(course => ({
-        ...course,
-        courseId: course.id
-      }));
-      setCourses(mappedMockCourses);
-      setLoading(false);
-
-      // TODO: Para integrar con backend, descomentar esto y comentar lo de arriba:
-      // try {
-      //   const data = await apiFetch('/course/');
-      //   if (data.data && data.data.length > 0) {
-      //     const mappedCourses = data.data.map(course => ({
-      //       title: course.title,
-      //       description: course.description,
-      //       duration: course.duration ? `${course.duration}h` : null,
-      //       plan: 'basico',
-      //       planLabel: 'Curso',
-      //       modality: 'Online',
-      //       courseId: course.courseId
-      //     }));
-      //     setCourses(mappedCourses);
-      //   }
-      // } catch (err) {
-      //   console.error('Error fetching courses:', err);
-      // } finally {
-      //   setLoading(false);
-      // }
+      try {
+        const response = await apiFetch('/course/');
+        if (!Array.isArray(response)) {
+          throw new Error('Respuesta inválida del servidor');
+        }
+        const coursesData = response;
+        const mappedCourses = coursesData.map(course => ({
+          title: course.title,
+          description: course.description,
+          duration: course.duration ? `${course.duration}h` : null,
+          plan: course.theme || course.plan || 'basico',
+          planLabel: course.planLabel || 'Curso',
+          modality: course.modality || 'Online',
+          courseId: course.courseId || course.id
+        }));
+        setCourses(mappedCourses);
+      } catch (err) {
+        console.error('Error fetching courses:', err);
+        const mappedMockCourses = COURSES.map(course => ({
+          ...course,
+          courseId: course.id
+        }));
+        setCourses(mappedMockCourses);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchCourses();
   }, []);

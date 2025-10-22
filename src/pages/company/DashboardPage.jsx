@@ -27,10 +27,10 @@ export default function CompanyDashboard() {
           return;
         }
 
-        const companyData = await apiFetch(`/company/user/${user.id}`);
-        if (companyData.data && companyData.data.length > 0) {
-          const company = companyData.data[0];
-          const statsData = await mockApi.getCompanyStats(company.companyId);
+        const companies = await apiFetch(`/company/user/${user.id}`);
+        if (Array.isArray(companies) && companies.length > 0) {
+          const company = companies[0];
+          const statsData = await mockApi.getCompanyStats(company.id);
           if (statsData.success) setStats(statsData.data);
         } else {
           const statsData = await mockApi.getCompanyStats(1);

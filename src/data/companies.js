@@ -1,6 +1,6 @@
 export const COMPANIES = [
   {
-    companyId: 1,
+    id: 1,
     rut: "21-123456789-0",
     name: "TechCorp Solutions",
     legalReason: "TechCorp Solutions S.A.",
@@ -14,7 +14,7 @@ export const COMPANIES = [
     bannerPhoto: null
   },
   {
-    companyId: 2,
+    id: 2,
     rut: "21-987654321-0",
     name: "Innovate Labs",
     legalReason: "Innovate Labs S.R.L.",
@@ -28,7 +28,7 @@ export const COMPANIES = [
     bannerPhoto: null
   },
   {
-    companyId: 3,
+    id: 3,
     rut: "21-456789012-0",
     name: "DataVision Analytics",
     legalReason: "DataVision Analytics S.A.",
@@ -42,7 +42,7 @@ export const COMPANIES = [
     bannerPhoto: null
   },
   {
-    companyId: 4,
+    id: 4,
     rut: "21-234567890-0",
     name: "GreenTech Solutions",
     legalReason: "GreenTech Solutions S.A.",
@@ -56,7 +56,7 @@ export const COMPANIES = [
     bannerPhoto: null
   },
   {
-    companyId: 5,
+    id: 5,
     rut: "21-345678901-0",
     name: "FinTech Uruguay",
     legalReason: "FinTech Uruguay S.R.L.",
@@ -70,7 +70,7 @@ export const COMPANIES = [
     bannerPhoto: null
   },
   {
-    companyId: 6,
+    id: 6,
     rut: "21-567890123-0",
     name: "EduTech Platform",
     legalReason: "EduTech Platform S.A.",

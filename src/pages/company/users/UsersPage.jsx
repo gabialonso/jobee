@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { apiFetch } from "../../../utils/api";
 import { mockApi } from "../../../utils/mockData";
 import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
 import PageHeader from "../../../components/features/shared/PageHeader";
@@ -18,13 +19,24 @@ export default function CompanyUsers() {
   useEffect(() => {
     const loadCandidates = async () => {
       try {
-        const data = await mockApi.getCandidates();
-        if (data.success) {
-          setCandidates(data.data);
-          setFilteredCandidates(data.data);
+        const people = await apiFetch('/person/');
+        if (!Array.isArray(people)) {
+          throw new Error('Respuesta inválida del servidor');
         }
+        const normalized = people.map((person) => ({
+          ...person,
+          completedCourses: Array.isArray(person.completedCourses) ? person.completedCourses : [],
+          inProgressCourses: Array.isArray(person.inProgressCourses) ? person.inProgressCourses : [],
+        }));
+        setCandidates(normalized);
+        setFilteredCandidates(normalized);
       } catch (err) {
         console.error('Error loading candidates:', err);
+        const mockData = await mockApi.getCandidates();
+        if (mockData.success) {
+          setCandidates(mockData.data);
+          setFilteredCandidates(mockData.data);
+        }
       } finally {
         setLoading(false);
       }
@@ -65,7 +77,6 @@ export default function CompanyUsers() {
           description="Gestioná y encontrá el talento ideal para tu empresa."
         />
 
-        {/* Search Bar */}
         <div className="mb-6">
           <SearchBar
             value={searchTerm}
@@ -75,7 +86,6 @@ export default function CompanyUsers() {
           />
         </div>
 
-        {/* Stats */}
         <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white rounded-2xl border-b-4 border-[#E69C00] p-4">
             <div className="flex items-center gap-3">
@@ -116,7 +126,6 @@ export default function CompanyUsers() {
           </div>
         </div>
 
-        {/* Candidates List */}
         {filteredCandidates.length === 0 ? (
           <EmptyState
             icon={HiUsers}

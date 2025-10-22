@@ -38,16 +38,22 @@ export default function UserProfile() {
           return;
         }
 
-        const data = await apiFetch(`/person/user/${user.id}`);
+        const people = await apiFetch(`/person/user/${user.id}`);
+        if (Array.isArray(people) && people.length > 0) {
+          const person = people[0];
+          const birthdayValue = person.birthday ?? person.birthYear;
+          const birthday = !birthdayValue
+            ? ''
+            : typeof birthdayValue === 'string' && birthdayValue.includes('-')
+              ? birthdayValue
+              : `${birthdayValue}-01-01`;
 
-        if (data.data && data.data.length > 0) {
-          const person = data.data[0];
-          setPersonId(person.personId);
+          setPersonId(person.id ?? person.personId ?? null);
           setFormData({
             firstName: person.firstName || '',
             lastName: person.lastName || '',
-            birthday: person.birthday || '',
-            Ci: person.Ci || '',
+            birthday,
+            Ci: person.Ci ? String(person.Ci) : '',
             highSchool: person.highSchool || '',
             description: person.description || '',
             cv: person.cv || '',
@@ -84,11 +90,15 @@ export default function UserProfile() {
         });
         setMessage('Perfil actualizado exitosamente');
       } else {
-        const data = await apiFetch('/person/', {
+        const user = getUser();
+        const created = await apiFetch('/person/', {
           method: 'POST',
-          body: formData
+          body: {
+            ...formData,
+            userId: user?.id,
+          }
         });
-        setPersonId(data.data.personId);
+        setPersonId(created.id ?? created.personId ?? null);
         setIsEditing(true);
         setMessage('Perfil creado exitosamente');
       }

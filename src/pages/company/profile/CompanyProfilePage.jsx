@@ -44,11 +44,11 @@ export default function CompanyProfile() {
           return;
         }
 
-        const data = await apiFetch(`/company/user/${user.id}`);
+        const companies = await apiFetch(`/company/user/${user.id}`);
 
-        if (data.data && data.data.length > 0) {
-          const company = data.data[0];
-          setCompanyId(company.companyId);
+        if (Array.isArray(companies) && companies.length > 0) {
+          const company = companies[0];
+          setCompanyId(company.id ?? null);
           setFormData({
             rut: company.rut || '',
             name: company.name || '',
@@ -64,7 +64,7 @@ export default function CompanyProfile() {
           });
           setIsEditing(true);
 
-          const statsData = await mockApi.getCompanyStats(company.companyId);
+          const statsData = await mockApi.getCompanyStats(company.id);
           if (statsData.success) {
             setStats(statsData.data);
           }
@@ -84,18 +84,25 @@ export default function CompanyProfile() {
     setMessage('');
 
     try {
+      const user = getUser();
       if (isEditing && companyId) {
         await apiFetch(`/company/${companyId}`, {
           method: 'PUT',
-          body: formData
+          body: {
+            ...formData,
+            userId: user?.id,
+          }
         });
         setMessage('Perfil de empresa actualizado exitosamente');
       } else {
-        const data = await apiFetch('/company/', {
+        const created = await apiFetch('/company/', {
           method: 'POST',
-          body: formData
+          body: {
+            ...formData,
+            userId: user?.id,
+          }
         });
-        setCompanyId(data.data.companyId);
+        setCompanyId(created.id ?? created.companyId ?? null);
         setIsEditing(true);
         setMessage('Perfil de empresa creado exitosamente');
       }

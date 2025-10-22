@@ -14,21 +14,32 @@ export default function UserCompany() {
   useEffect(() => {
     const fetchCompanies = async () => {
       setLoading(true);
-
-      // MVP: Usar datos mock directamente
-      setCompanies(COMPANIES);
-      setLoading(false);
-
-      // TODO: Para integrar con backend, descomentar esto y comentar lo de arriba:
-      // try {
-      //   const data = await apiFetch('/company/');
-      //   setCompanies(data.data || []);
-      // } catch (err) {
-      //   console.error('Error fetching companies:', err);
-      //   setError('Failed to load companies');
-      // } finally {
-      //   setLoading(false);
-      // }
+      try {
+        const result = await apiFetch('/company/');
+        if (!Array.isArray(result)) {
+          throw new Error('Respuesta inválida del servidor');
+        }
+        const rawCompanies = result;
+        const normalized = rawCompanies.map((company) => ({
+          ...company,
+          id: company.id ?? company.companyId,
+          industry: company.industry ?? '',
+          description: company.description ?? '',
+          location: company.location ?? '',
+        }));
+        setCompanies(normalized);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching companies:', err);
+        setError('No se pudieron cargar las empresas. Mostrando datos de ejemplo.');
+        const fallback = COMPANIES.map((company) => ({
+          ...company,
+          id: company.id ?? company.companyId,
+        }));
+        setCompanies(fallback);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchCompanies();
@@ -63,15 +74,14 @@ export default function UserCompany() {
           </div>
         )}
 
-        {!loading && !error && companies.length > 0 && (
+        {!loading && companies.length > 0 && (
           <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {companies.map((company) => (
-              <CompanyCard key={company.companyId} company={company} />
+              <CompanyCard key={company.id} company={company} />
             ))}
           </section>
         )}
-
-        {!loading && !error && companies.length === 0 && (
+        {!loading && companies.length === 0 && (
           <section className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-10 md:p-16">
             <div className="text-center">
               <div className="inline-flex p-6 bg-[#FFF0C2] rounded-3xl border-b-4 border-[#E69C00] mb-6">

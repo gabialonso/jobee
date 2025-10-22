@@ -21,7 +21,7 @@ export default function CompanyCourses() {
     description: '',
     duration: '',
     price: '',
-    theme: ''
+    theme: 'basico'
   });
 
   useEffect(() => {
@@ -30,43 +30,43 @@ export default function CompanyCourses() {
 
   const fetchCourses = async () => {
     setLoading(true);
-
-    // MVP: Usar datos mock directamente (simular que la empresa creó estos 3 cursos)
-    const mockCompanyCourses = COURSES.slice(0, 3).map((course, index) => ({
-      courseId: course.id,
-      title: course.title,
-      description: course.description,
-      duration: parseInt(course.duration) || 4,
-      price: (index + 1) * 1000,
-      theme: course.plan
-    }));
-    setCourses(mockCompanyCourses);
-    setLoading(false);
-
-    // TODO: Para integrar con backend, descomentar esto y comentar lo de arriba:
-    // try {
-    //   const data = await apiFetch('/course/');
-    //   setCourses(data.data || []);
-    // } catch (err) {
-    //   console.error('Error fetching courses:', err);
-    //   setError('Error al cargar los cursos');
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      const courseList = await apiFetch('/course/');
+      if (!Array.isArray(courseList)) {
+        throw new Error('Respuesta inválida del servidor');
+      }
+      const normalized = courseList;
+      setCourses(normalized);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching courses:', err);
+      setError('No se pudieron cargar los cursos. Mostrando datos de ejemplo.');
+      const mockCompanyCourses = COURSES.slice(0, 3).map((course, index) => ({
+        courseId: course.id,
+        title: course.title,
+        description: course.description,
+        duration: parseInt(course.duration) || 4,
+        price: (index + 1) * 1000,
+        theme: course.plan
+      }));
+      setCourses(mockCompanyCourses);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const openModal = (type, course = null) => {
     setModalType(type);
     setSelectedCourse(course);
     if (type === 'create') {
-      setFormData({ title: '', description: '', duration: '', price: '', theme: '' });
+      setFormData({ title: '', description: '', duration: '', price: '', theme: 'basico' });
     } else if (type === 'edit' && course) {
       setFormData({
         title: course.title || '',
         description: course.description || '',
         duration: course.duration || '',
         price: course.price || '',
-        theme: course.theme || ''
+        theme: course.theme || 'basico'
       });
     }
     setShowModal(true);
@@ -81,31 +81,36 @@ export default function CompanyCourses() {
     e.preventDefault();
     try {
       if (modalType === 'create') {
-        // backend: descomentar la siguiente línea para crear curso
-        // await apiFetch('/course/', { method: 'POST', body: formData });
-        alert('Curso creado (simulación)');
+        const courseData = {
+          ...formData,
+          duration: parseInt(formData.duration, 10) || 0,
+          price: parseInt(formData.price, 10) || 0,
+        };
+        await apiFetch('/course/', { method: 'POST', body: courseData });
+        alert('Curso creado exitosamente');
       } else if (modalType === 'edit') {
-        // backend: descomentar la siguiente línea para editar curso
-        // await apiFetch(`/course/${selectedCourse.courseId}`, { method: 'PUT', body: formData });
-        alert('Curso editado (simulación)');
+        const courseData = {
+          ...formData,
+          duration: parseInt(formData.duration, 10) || 0,
+          price: parseInt(formData.price, 10) || 0,
+        };
+        await apiFetch(`/course/${selectedCourse.courseId}`, { method: 'PUT', body: courseData });
+        alert('Curso editado exitosamente');
       }
       closeModal();
-      // backend: descomentar para refrescar lista después de crear/editar
-      // fetchCourses();
+      fetchCourses();
     } catch (err) {
       console.error('Error saving course:', err);
-      alert('Error al guardar el curso');
+      alert('Error al guardar el curso: ' + err.message);
     }
   };
 
   const handleDelete = async () => {
     try {
-      // backend: descomentar la siguiente línea para eliminar curso
-      // await apiFetch(`/course/${selectedCourse.courseId}`, { method: 'DELETE' });
-      alert('Curso eliminado (simulación)');
+      await apiFetch(`/course/${selectedCourse.courseId}`, { method: 'DELETE' });
+      alert('Curso eliminado exitosamente');
       closeModal();
-      // backend: descomentar para refrescar lista después de eliminar
-      // fetchCourses();
+      fetchCourses();
     } catch (err) {
       console.error('Error deleting course:', err);
       alert('Error al eliminar el curso');
