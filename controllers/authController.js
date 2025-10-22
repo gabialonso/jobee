@@ -30,9 +30,11 @@ export const registerUser = async (req, res) => {
 
 export const registerCompany = async (req, res) => {
   try {
-    // TODO: Implementar lógica de registro de empresa
-    // Por ahora, registramos como usuario normal
-    const user = await userService.signup(req.body);
+    // Registrar usuario con rol de empresa
+    const user = await userService.signup({
+      ...req.body,
+      role: 'companies'
+    });
     const { token, user: userData } = await authService.login({
       email: user.email,
       password: req.body.password

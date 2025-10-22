@@ -1,7 +1,3 @@
--- CreateEnum
-CREATE TYPE `Role` AS ENUM ('persons', 'companies', 'Admin');
-CREATE TYPE `AdminRole` AS ENUM ('ADMIN', 'SUPERADMIN', 'MODERATOR');
-
 -- CreateTable
 CREATE TABLE `User` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,

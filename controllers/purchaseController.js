@@ -16,6 +16,20 @@ export const buyCourseHandler = async (req, res, next) => {
             data: purchase,
         });
     } catch (error) {
+        if (error?.message === "Course not found") {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found",
+            });
+        }
+
+        if (error?.message === "Course already purchased by this user") {
+            return res.status(409).json({
+                success: false,
+                message: "Course already purchased by this user",
+            });
+        }
+
         next(error);
     }
 };
