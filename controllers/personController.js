@@ -8,7 +8,25 @@ import {
 import "express-async-errors";
 
 const parseId = (value) => {
-    const parsed = Number.parseInt(value, 10);
+    if (value === null || value === undefined) {
+        return null;
+    }
+
+    if (typeof value === "number" && Number.isFinite(value)) {
+        return Math.trunc(value);
+    }
+
+    const normalized = String(value).trim();
+    if (normalized === "") {
+        return null;
+    }
+
+    const digitsOnly = normalized.replace(/[^\d-]+/g, "");
+    if (!digitsOnly || digitsOnly === "-" || digitsOnly === "+") {
+        return null;
+    }
+
+    const parsed = Number.parseInt(digitsOnly, 10);
     return Number.isNaN(parsed) ? null : parsed;
 };
 

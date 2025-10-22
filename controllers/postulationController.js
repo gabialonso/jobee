@@ -1,38 +1,74 @@
-import {publishPostulation,applyToPostulation,getCandidatesByPostulation} from '../services/company/postulationService.js';
-export const publish = async (req,res )=> {
+import {
+    publishPostulation,
+    applyToPostulation,
+    getCandidatesByPostulation,
+    listPublicPostulations,
+    listCompanyPostulations,
+} from "../services/company/postulationService.js";
+
+export const listPostulations = async (req, res, next) => {
     try {
-        const { companyId} = req.params;
-        const data = req.body;
-        const newPostulation = await publishPostulation(companyId, data);
-        res.status(201).json({
-            message: "Oferta publicada correctamente.",
-            postulation: newPostulation
+        const postulations = await listPublicPostulations();
+        return res.status(200).json({
+            success: true,
+            data: postulations,
         });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };
 
-export const apply = async (req, res) => {
+export const listCompanyPostulationsHandler = async (req, res, next) => {
+    try {
+        const { companyId } = req.params;
+        const postulations = await listCompanyPostulations(companyId);
+        return res.status(200).json({
+            success: true,
+            data: postulations,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const publish = async (req, res, next) => {
+    try {
+        const { companyId } = req.params;
+        const newPostulation = await publishPostulation(companyId, req.body);
+        return res.status(201).json({
+            success: true,
+            message: "Oferta publicada correctamente.",
+            data: newPostulation,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const apply = async (req, res, next) => {
     try {
         const { personId, postulationId } = req.params;
         const { message } = req.body;
         const application = await applyToPostulation(personId, postulationId, message);
-        res.status(201).json({
+        return res.status(201).json({
+            success: true,
             message: "Postulación enviada correctamente.",
-            application
+            data: application,
         });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        next(error);
     }
 };
 
-export const getCandidates = async (req, res) => {
+export const getCandidates = async (req, res, next) => {
     try {
         const { postulationId } = req.params;
         const candidates = await getCandidatesByPostulation(postulationId);
-        res.status(200).json(candidates);
+        return res.status(200).json({
+            success: true,
+            data: candidates,
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };

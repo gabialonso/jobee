@@ -1,146 +1,374 @@
-import sequelize from "../../config/sequelize.js";
-import { QueryTypes } from "sequelize";
+import "express-async-errors";
+import prisma from "../../config/db.js";
 
-
-export async function publishPostulation(companyId, data) {
-    try {
-        const { title, description, location, area, requirements, salary } = data;
-
-        const result = await sequelize.query(
-            `
-                INSERT INTO postulaciones 
-                    (id_company, title, description, location, area, requirements, level, salary, currency, type, created_at)
-                VALUES 
-                    (:companyId, :title, :description, :location, :area, :requirements, 'PUBLICACION', NOW())
-                RETURNING *;
-            `,
-            {
-                replacements: { companyId, title, description, location, area, requirements },
-                type: QueryTypes.INSERT,
-            }
-        );
-
-        return result[0];
-    } catch (error) {
-        console.error("Error al publicar la postulación:", error);
-        throw new Error("No se pudo publicar la postulación.");
+const toIntOrNull = (value) => {
+    if (value === null || value === undefined) {
+        return null;
     }
-}
 
-// 🔹 APLICAR A POSTULACIÓN O CURSO
-export async function applyToPostulation(personId, postulationId, message, courseId) {
-    try {
-        // Validar que al menos uno esté presente
-        if (!postulationId && !courseId) {
-            throw new Error("Debes especificar una postulación o un curso.");
-        }
-
-        // Validar que no se envíen ambos al mismo tiempo
-        if (postulationId && courseId) {
-            throw new Error("Solo puedes aplicar a una postulación o a un curso, no ambos.");
-        }
-
-        // 🧩 Si aplica a una POSTULACIÓN
-        if (postulationId) {
-            const alreadyApplied = await sequelize.query(
-                `
-                    SELECT 1 FROM postulaciones_aplicaciones
-                    WHERE id_person = :personId AND id_postulation = :postulationId
-                `,
-                {
-                    replacements: { personId, postulationId },
-                    type: QueryTypes.SELECT,
-                }
-            );
-
-            if (alreadyApplied.length > 0) {
-                throw new Error("Ya te has postulado a esta oferta.");
-            }
-
-            const result = await sequelize.query(
-                `
-                    INSERT INTO postulaciones_aplicaciones (id_person, id_postulation, message, applied_at)
-                    VALUES (:personId, :postulationId, :message, NOW())
-                    RETURNING *;
-                `,
-                {
-                    replacements: { personId, postulationId, message },
-                    type: QueryTypes.INSERT,
-                }
-            );
-
-            return { success: true, message: "Postulación realizada correctamente.", data: result };
-        }
-
-        // 🧩 Si aplica a un CURSO
-        if (courseId) {
-            const alreadyAppliedCourse = await sequelize.query(
-                `
-                    SELECT 1 FROM cursos_aplicaciones
-                    WHERE id_person = :personId AND id_course = :courseId
-                `,
-                {
-                    replacements: { personId, courseId },
-                    type: QueryTypes.SELECT,
-                }
-            );
-
-            if (alreadyAppliedCourse.length > 0) {
-                throw new Error("Ya te has inscrito a este curso.");
-            }
-
-            const resultCourse = await sequelize.query(
-                `
-                    INSERT INTO cursos_aplicaciones (id_person, id_course, message, applied_at)
-                    VALUES (:personId, :courseId, :message, NOW())
-                    RETURNING *;
-                `,
-                {
-                    replacements: { personId, courseId, message },
-                    type: QueryTypes.INSERT,
-                }
-            );
-
-            return { success: true, message: "Inscripción al curso realizada correctamente.", data: resultCourse };
-        }
-    } catch (error) {
-        console.error("Error en applyToPostulation:", error);
-        return { success: false, message: error.message };
+    if (typeof value === "number" && Number.isFinite(value)) {
+        return Math.trunc(value);
     }
-}
 
-// 🔹 OBTENER CANDIDATOS DE UNA POSTULACIÓN
-export async function getCandidatesByPostulation(postulationId) {
-    try {
-        const candidates = await sequelize.query(
-            `
-                SELECT 
-                    p.id_user,
-                    p.apellido,
-                    p.cedula,
-                    p.institucion_educativa,
-                    p.descripcion,
-                    p.cv_url,
-                    u.name AS user_name,
-                    u.email,
-                    pa.message,
-                    pa.applied_at
-                FROM postulaciones_aplicaciones pa
-                INNER JOIN personas p ON p.id_user = pa.id_person
-                INNER JOIN users u ON u.id_user = p.id_user
-                WHERE pa.id_postulation = :postulationId
-                ORDER BY pa.applied_at DESC
-            `,
-            {
-                replacements: { postulationId },
-                type: QueryTypes.SELECT,
-            }
-        );
-
-        return candidates;
-    } catch (error) {
-        console.error("Error al obtener candidatos:", error);
-        throw new Error("No se pudieron obtener los candidatos.");
+    const normalized = String(value).trim();
+    if (normalized === "") {
+        return null;
     }
-}
 
+    const digitsOnly = normalized.replace(/[^\d-]+/g, "");
+    if (digitsOnly === "" || digitsOnly === "-" || digitsOnly === "+") {
+        return null;
+    }
+
+    const parsed = Number.parseInt(digitsOnly, 10);
+    return Number.isNaN(parsed) ? null : parsed;
+};
+
+const cleanOptionalText = (value) => {
+    if (value === null || value === undefined) {
+        return null;
+    }
+
+    const trimmed = String(value).trim();
+    return trimmed === "" ? null : trimmed;
+};
+
+const ensureRequiredText = (value, fieldName) => {
+    const cleaned = cleanOptionalText(value);
+    if (!cleaned) {
+        throw new Error(`${fieldName} es obligatorio`);
+    }
+    return cleaned;
+};
+
+const allowedJobTypes = new Set([
+    "TIEMPO_COMPLETO",
+    "MEDIO_TIEMPO",
+    "FREELANCE",
+    "PRACTICAS",
+]);
+
+const normalizeJobType = (value) => {
+    if (!value && value !== 0) {
+        return null;
+    }
+
+    const normalized = String(value)
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "_");
+
+    if (allowedJobTypes.has(normalized)) {
+        return normalized;
+    }
+
+    // Admite valores en español más human friendly
+    const aliases = {
+        "TIEMPO COMPLETO": "TIEMPO_COMPLETO",
+        "MEDIO TIEMPO": "MEDIO_TIEMPO",
+        "PRÁCTICAS": "PRACTICAS",
+        "PRACTICAS": "PRACTICAS",
+    };
+
+    const alias = aliases[normalized];
+    if (alias && allowedJobTypes.has(alias)) {
+        return alias;
+    }
+
+    return null;
+};
+
+const allowedStatuses = new Set(["ACTIVA", "CERRADA"]);
+
+const normalizeStatus = (value) => {
+    if (!value && value !== 0) {
+        return null;
+    }
+
+    const normalized = String(value).trim().toUpperCase();
+    return allowedStatuses.has(normalized) ? normalized : null;
+};
+
+export const publishPostulation = async (companyId, data = {}) => {
+    const parsedCompanyId = toIntOrNull(companyId ?? data.companyId);
+    if (!parsedCompanyId) {
+        throw new Error("companyId es obligatorio");
+    }
+
+    const company = await prisma.company.findUnique({
+        where: { id: parsedCompanyId },
+    });
+
+    if (!company) {
+        throw new Error("Empresa no encontrada");
+    }
+
+    const jobType = normalizeJobType(data.jobType ?? data.job_type);
+    if (!jobType) {
+        throw new Error("jobType es obligatorio");
+    }
+
+    const payload = {
+        title: ensureRequiredText(data.title, "title"),
+        description: ensureRequiredText(data.description, "description"),
+        company_name: cleanOptionalText(data.company_name) ?? company.name,
+        location: ensureRequiredText(data.location, "location"),
+        area: ensureRequiredText(data.area, "area"),
+        requirements: ensureRequiredText(data.requirements, "requirements"),
+        job_type: jobType,
+        themes: cleanOptionalText(data.themes),
+        companyId: parsedCompanyId,
+    };
+
+    const status = normalizeStatus(data.status);
+    if (status) {
+        payload.status = status;
+    }
+
+    return prisma.postulation.create({
+        data: payload,
+        include: {
+            company: {
+                select: {
+                    id: true,
+                    name: true,
+                    logoPhoto: true,
+                    location: true,
+                },
+            },
+        },
+    });
+};
+
+export const applyToPostulation = async (personId, postulationId, message) => {
+    const parsedPersonId = toIntOrNull(personId);
+    const parsedPostulationId = toIntOrNull(postulationId);
+
+    if (!parsedPersonId) {
+        throw new Error("personId es obligatorio");
+    }
+    if (!parsedPostulationId) {
+        throw new Error("postulationId es obligatorio");
+    }
+
+    const [person, postulation] = await Promise.all([
+        prisma.person.findUnique({
+            where: { id: parsedPersonId },
+            include: {
+                user: {
+                    select: { id: true, name: true, email: true },
+                },
+            },
+        }),
+        prisma.postulation.findUnique({
+            where: { id_postulation: parsedPostulationId },
+            include: {
+                company: {
+                    select: { id: true, name: true },
+                },
+            },
+        }),
+    ]);
+
+    if (!person) {
+        throw new Error("Persona no encontrada");
+    }
+    if (!postulation) {
+        throw new Error("Postulación no encontrada");
+    }
+
+    const alreadyApplied = await prisma.jobApplication.findFirst({
+        where: {
+            personId: parsedPersonId,
+            postulationId: parsedPostulationId,
+        },
+    });
+
+    if (alreadyApplied) {
+        throw new Error("Ya te has postulado a esta oferta.");
+    }
+
+    return prisma.jobApplication.create({
+        data: {
+            personId: parsedPersonId,
+            postulationId: parsedPostulationId,
+            message: cleanOptionalText(message),
+        },
+        include: {
+            postulation: {
+                include: {
+                    company: {
+                        select: { id: true, name: true },
+                    },
+                },
+            },
+            person: {
+                include: {
+                    user: {
+                        select: { id: true, name: true, email: true },
+                    },
+                },
+            },
+        },
+    });
+};
+
+export const getCandidatesByPostulation = async (postulationId) => {
+    const parsedPostulationId = toIntOrNull(postulationId);
+
+    if (!parsedPostulationId) {
+        throw new Error("postulationId es inválido");
+    }
+
+    return prisma.jobApplication.findMany({
+        where: { postulationId: parsedPostulationId },
+        orderBy: { applied_at: "desc" },
+        include: {
+            postulation: {
+                include: {
+                    company: {
+                        select: { id: true, name: true },
+                    },
+                },
+            },
+            person: {
+                include: {
+                    user: {
+                        select: { id: true, name: true, email: true },
+                    },
+                },
+            },
+        },
+    });
+};
+
+export const listPublicPostulations = async () => {
+    return prisma.postulation.findMany({
+        where: { status: "ACTIVA" },
+        orderBy: { posted_at: "desc" },
+        include: {
+            company: {
+                select: { id: true, name: true, logoPhoto: true, location: true },
+            },
+            applications: {
+                select: {
+                    id_application: true,
+                },
+            },
+        },
+    });
+};
+
+export const listCompanyPostulations = async (companyId) => {
+    const parsedCompanyId = toIntOrNull(companyId);
+
+    if (!parsedCompanyId) {
+        throw new Error("companyId es inválido");
+    }
+
+    return prisma.postulation.findMany({
+        where: { companyId: parsedCompanyId },
+        orderBy: { posted_at: "desc" },
+        include: {
+            company: {
+                select: { id: true, name: true },
+            },
+            applications: {
+                orderBy: { applied_at: "desc" },
+                include: {
+                    person: {
+                        include: {
+                            user: {
+                                select: { id: true, name: true, email: true },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    });
+};
+
+export const listCompanyApplications = async ({ companyId } = {}) => {
+    const where = {};
+
+    if (companyId !== undefined) {
+        const parsedCompanyId = toIntOrNull(companyId);
+        if (!parsedCompanyId) {
+            throw new Error("companyId es inválido");
+        }
+        where.postulation = { companyId: parsedCompanyId };
+    }
+
+    const applications = await prisma.jobApplication.findMany({
+        where,
+        orderBy: { applied_at: "desc" },
+        include: {
+            postulation: {
+                include: {
+                    company: {
+                        select: {
+                            id: true,
+                            name: true,
+                            location: true,
+                            logoPhoto: true,
+                        },
+                    },
+                },
+            },
+            person: {
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                        },
+                    },
+                },
+            },
+        },
+    });
+
+    return applications.map((application) => ({
+        id: application.id_application,
+        appliedAt: application.applied_at,
+        message: application.message,
+        postulation: application.postulation
+            ? {
+                  id: application.postulation.id_postulation,
+                  title: application.postulation.title,
+                  area: application.postulation.area,
+                  location: application.postulation.location,
+                  status: application.postulation.status,
+              }
+            : null,
+        company: application.postulation?.company
+            ? {
+                  id: application.postulation.company.id,
+                  name: application.postulation.company.name,
+                  location: application.postulation.company.location,
+                  logoPhoto: application.postulation.company.logoPhoto,
+              }
+            : null,
+        candidate: application.person
+            ? {
+                  id: application.person.id,
+                  firstName: application.person.firstName,
+                  lastName: application.person.lastName,
+                  highSchool: application.person.highSchool,
+                  description: application.person.description,
+                  cv: application.person.cv,
+                  linkedin: application.person.linkedin,
+                  profilePhoto: application.person.profilePhoto,
+                  user: application.person.user
+                      ? {
+                            id: application.person.user.id,
+                            name: application.person.user.name,
+                            email: application.person.user.email,
+                        }
+                      : null,
+              }
+            : null,
+    }));
+};

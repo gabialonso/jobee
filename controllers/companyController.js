@@ -6,10 +6,29 @@ import {
     updateCompany,
     deleteCompany,
 } from "../services/company/companyService.js";
+import { listCompanyPostulations, listCompanyApplications } from "../services/company/postulationService.js";
 import "express-async-errors";
 
 const parseId = (value) => {
-    const parsed = Number.parseInt(value, 10);
+    if (value === null || value === undefined) {
+        return null;
+    }
+
+    if (typeof value === "number" && Number.isFinite(value)) {
+        return Math.trunc(value);
+    }
+
+    const normalized = String(value).trim();
+    if (normalized === "") {
+        return null;
+    }
+
+    const digitsOnly = normalized.replace(/[^\d-]+/g, "");
+    if (!digitsOnly || digitsOnly === "-" || digitsOnly === "+") {
+        return null;
+    }
+
+    const parsed = Number.parseInt(digitsOnly, 10);
     return Number.isNaN(parsed) ? null : parsed;
 };
 
@@ -80,6 +99,45 @@ export const listCompaniesByUserHandler = async (req, res, next) => {
             success: true,
             message: "Companies retrieved successfully",
             data: companies,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const listCompanyCandidatesHandler = async (req, res, next) => {
+    try {
+        const companyId = parseId(req.params.companyId);
+        if (!companyId) {
+            return sendValidationError(res, "Company id is invalid");
+        }
+
+        const applications = await listCompanyApplications({ companyId });
+
+        return res.status(200).json({
+            success: true,
+            message: "Company candidates retrieved successfully",
+            data: applications,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const listCompanyCandidatesByQueryHandler = async (req, res, next) => {
+    try {
+        const companyIdQuery = req.query.companyId;
+        const parsed = companyIdQuery !== undefined ? parseId(companyIdQuery) : null;
+        if (companyIdQuery !== undefined && !parsed) {
+            return sendValidationError(res, "Company id is invalid");
+        }
+
+        const applications = await listCompanyApplications({ companyId: parsed ?? undefined });
+
+        return res.status(200).json({
+            success: true,
+            message: "Company candidates retrieved successfully",
+            data: applications,
         });
     } catch (err) {
         next(err);

@@ -3,11 +3,25 @@ import prisma from "../../config/db.js";
 import "express-async-errors";
 
 const toIntOrNull = (value) => {
-    if (value === null || value === undefined || value === "") {
+    if (value === null || value === undefined) {
         return null;
     }
 
-    const parsed = parseInt(value, 10);
+    if (typeof value === "number" && Number.isFinite(value)) {
+        return Math.trunc(value);
+    }
+
+    const normalized = String(value).trim();
+    if (normalized === "") {
+        return null;
+    }
+
+    const digitsOnly = normalized.replace(/[^\d-]+/g, "");
+    if (!digitsOnly || digitsOnly === "-" || digitsOnly === "+") {
+        return null;
+    }
+
+    const parsed = Number.parseInt(digitsOnly, 10);
     return Number.isNaN(parsed) ? null : parsed;
 };
 
@@ -64,7 +78,51 @@ export const createPerson = async (person) => {
 };
 
 export const getPersonById = async (id) => {
-    return prisma.person.findUnique({ where: { id } });
+    const parsedId = toIntOrNull(id);
+    if (!parsedId) {
+        return null;
+    }
+
+    const person = await prisma.person.findUnique({
+        where: { id: parsedId },
+        include: {
+            user: {
+                select: { id: true, name: true, email: true },
+            },
+        },
+    });
+
+    if (person) {
+        return person;
+    }
+
+    const personByUser = await prisma.person.findFirst({
+        where: { userId: parsedId },
+        include: {
+            user: {
+                select: { id: true, name: true, email: true },
+            },
+        },
+    });
+
+    if (personByUser) {
+        return personByUser;
+    }
+
+    const relatedApplication = await prisma.jobApplication.findFirst({
+        where: { personId: parsedId },
+        include: {
+            person: {
+                include: {
+                    user: {
+                        select: { id: true, name: true, email: true },
+                    },
+                },
+            },
+        },
+    });
+
+    return relatedApplication?.person ?? null;
 };
 
 export const listPersonsByUser = async (userId) => {

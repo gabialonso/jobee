@@ -2,11 +2,25 @@ import prisma from "../../config/db.js";
 import "express-async-errors";
 
 const toIntOrNull = (value) => {
-    if (value === null || value === undefined || value === "") {
+    if (value === null || value === undefined) {
         return null;
     }
 
-    const parsed = parseInt(value, 10);
+    if (typeof value === "number" && Number.isFinite(value)) {
+        return Math.trunc(value);
+    }
+
+    const normalized = String(value).trim();
+    if (normalized === "") {
+        return null;
+    }
+
+    const digitsOnly = normalized.replace(/[^\d-]+/g, "");
+    if (!digitsOnly || digitsOnly === "-" || digitsOnly === "+") {
+        return null;
+    }
+
+    const parsed = Number.parseInt(digitsOnly, 10);
     return Number.isNaN(parsed) ? null : parsed;
 };
 

@@ -64,6 +64,7 @@ model Person {
 
   userId Int
   user   User @relation(fields: [userId], references: [id])
+  applications JobApplication[]
 
   @@index([userId])
 }
@@ -84,6 +85,7 @@ model Company {
 
   userId Int
   user   User @relation(fields: [userId], references: [id])
+  postulations Postulation[]
 
   @@index([userId])
 }
@@ -225,6 +227,8 @@ model Postulation {
   themes         String?       @db.VarChar(100)
   posted_at      DateTime      @default(now())
   status         Status        @default(ACTIVA)
+  companyId      Int?          @map("id_company")
+  company        Company?      @relation(fields: [companyId], references: [id])
   applications   JobApplication[]
 
   @@map("postulaciones") // opcional: si tu tabla en SQL se llama así
@@ -232,11 +236,12 @@ model Postulation {
 
 model JobApplication {
   id_application Int          @id @default(autoincrement())
-  id_person      Int
-  postulation_id Int
+  personId       Int          @map("id_person")
+  postulationId  Int          @map("id_postulation")
   message        String?
   applied_at     DateTime      @default(now())
-  postulation    Postulation   @relation(fields: [postulation_id], references: [id_postulation])
+  postulation    Postulation   @relation(fields: [postulationId], references: [id_postulation])
+  person         Person        @relation(fields: [personId], references: [id])
 
   @@map("postulaciones_aplicaciones") // opcional: nombre real de la tabla
 }
@@ -252,4 +257,3 @@ enum Status {
   ACTIVA
   CERRADA
 }
-
