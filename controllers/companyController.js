@@ -1,17 +1,51 @@
 import {
-        createCompany,
-        getCompanyById,
-        listCompaniesByUser,
-        listAllCompanies,
-        updateCompany,
-        deleteCompany}from "../services/companyService.js";
-import 'express-async-errors';
+    createCompany,
+    getCompanyById,
+    listCompaniesByUser,
+    listAllCompanies,
+    updateCompany,
+    deleteCompany,
+} from "../services/company/companyService.js";
+import { listCompanyPostulations, listCompanyApplications } from "../services/company/postulationService.js";
+import "express-async-errors";
 
-// POST /api/v1/companies - create a new company
+const parseId = (value) => {
+    if (value === null || value === undefined) {
+        return null;
+    }
+
+    if (typeof value === "number" && Number.isFinite(value)) {
+        return Math.trunc(value);
+    }
+
+    const normalized = String(value).trim();
+    if (normalized === "") {
+        return null;
+    }
+
+    const digitsOnly = normalized.replace(/[^\d-]+/g, "");
+    if (!digitsOnly || digitsOnly === "-" || digitsOnly === "+") {
+        return null;
+    }
+
+    const parsed = Number.parseInt(digitsOnly, 10);
+    return Number.isNaN(parsed) ? null : parsed;
+};
+
+const isNotFoundError = (err) => {
+    return err?.code === "P2025";
+};
+
+const sendValidationError = (res, message) => {
+    return res.status(400).json({
+        success: false,
+        message,
+    });
+};
+
 export const createCompanyHandler = async (req, res, next) => {
     try {
-        const body = req.body;
-        const created = await createCompany(body);
+        const created = await createCompany(req.body);
 
         return res.status(201).json({
             success: true,
@@ -19,14 +53,20 @@ export const createCompanyHandler = async (req, res, next) => {
             data: created,
         });
     } catch (err) {
+        if (err.message === "userId es obligatorio") {
+            return sendValidationError(res, err.message);
+        }
         next(err);
     }
 };
 
-// GET /api/v1/companies/:id - get a company by ID
 export const getCompanyHandler = async (req, res, next) => {
     try {
-        const id = Number(req.params.id);
+        const id = parseId(req.params.id);
+        if (!id) {
+            return sendValidationError(res, "Company id is invalid");
+        }
+
         const company = await getCompanyById(id);
 
         if (!company) {
@@ -46,10 +86,13 @@ export const getCompanyHandler = async (req, res, next) => {
     }
 };
 
-// GET /api/v1/companies/user/:userId - list companies by user
 export const listCompaniesByUserHandler = async (req, res, next) => {
     try {
-        const userId = Number(req.params.userId);
+        const userId = parseId(req.params.userId);
+        if (!userId) {
+            return sendValidationError(res, "User id is invalid");
+        }
+
         const companies = await listCompaniesByUser(userId);
 
         return res.status(200).json({
@@ -62,7 +105,45 @@ export const listCompaniesByUserHandler = async (req, res, next) => {
     }
 };
 
-// GET /api/v1/companies - list all companies
+export const listCompanyCandidatesHandler = async (req, res, next) => {
+    try {
+        const companyId = parseId(req.params.companyId);
+        if (!companyId) {
+            return sendValidationError(res, "Company id is invalid");
+        }
+
+        const applications = await listCompanyApplications({ companyId });
+
+        return res.status(200).json({
+            success: true,
+            message: "Company candidates retrieved successfully",
+            data: applications,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const listCompanyCandidatesByQueryHandler = async (req, res, next) => {
+    try {
+        const companyIdQuery = req.query.companyId;
+        const parsed = companyIdQuery !== undefined ? parseId(companyIdQuery) : null;
+        if (companyIdQuery !== undefined && !parsed) {
+            return sendValidationError(res, "Company id is invalid");
+        }
+
+        const applications = await listCompanyApplications({ companyId: parsed ?? undefined });
+
+        return res.status(200).json({
+            success: true,
+            message: "Company candidates retrieved successfully",
+            data: applications,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
 export const listAllCompaniesHandler = async (req, res, next) => {
     try {
         const companies = await listAllCompanies();
@@ -77,12 +158,14 @@ export const listAllCompaniesHandler = async (req, res, next) => {
     }
 };
 
-// PUT/PATCH /api/v1/companies/:id - update a company
 export const updateCompanyHandler = async (req, res, next) => {
     try {
-        const id = Number(req.params.id);
-        const body = req.body;
-        const updated = await updateCompany(id, body);
+        const id = parseId(req.params.id);
+        if (!id) {
+            return sendValidationError(res, "Company id is invalid");
+        }
+
+        const updated = await updateCompany(id, req.body);
 
         return res.status(200).json({
             success: true,
@@ -90,22 +173,39 @@ export const updateCompanyHandler = async (req, res, next) => {
             data: updated,
         });
     } catch (err) {
+        if (err.message === "userId es obligatorio") {
+            return sendValidationError(res, err.message);
+        }
+        if (isNotFoundError(err)) {
+            return res.status(404).json({
+                success: false,
+                message: "Company not found",
+            });
+        }
         next(err);
-    } 
+    }
 };
 
-// DELETE /api/v1/companies/:id - delete a company
 export const deleteCompanyHandler = async (req, res, next) => {
     try {
-        const id = Number(req.params.id);
-        const deleted = await deleteCompany(id);
+        const id = parseId(req.params.id);
+        if (!id) {
+            return sendValidationError(res, "Company id is invalid");
+        }
+
+        await deleteCompany(id);
 
         return res.status(200).json({
             success: true,
             message: "Company deleted successfully",
-            data: deleted,
         });
     } catch (err) {
+        if (isNotFoundError(err)) {
+            return res.status(404).json({
+                success: false,
+                message: "Company not found",
+            });
+        }
         next(err);
     }
 };

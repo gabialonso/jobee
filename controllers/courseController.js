@@ -4,13 +4,25 @@ import {
         getAllCourses,
         updateCourse,
         deleteCourse 
-    } from '../services/courseService.js';
+    } from '../services/course/courseService.js';
 import 'express-async-errors';
+
+const parseId = (value) => {
+    const parsed = Number.parseInt(value, 10);
+    return Number.isNaN(parsed) ? null : parsed;
+};
+
+const sendValidationError = (res, message) => {
+    return res.status(400).json({
+        success: false,
+        message,
+    });
+};
 
 export const createCourseHandler = async (req, res, next) => {
     try {
-        const { title, description, duration, companyId } = req.body;
-        const created = await createCourse({ title, description, duration, companyId });
+        const { title, description, duration, theme, price } = req.body;
+        const created = await createCourse({ title, description, duration, theme, price });
 
         return res.status(201).json({
             success: true,
@@ -18,48 +30,65 @@ export const createCourseHandler = async (req, res, next) => {
             data: created,
         });
     } catch (err) {
+        if (err.message === "Título es obligatorio") {
+            return sendValidationError(res, err.message);
+        }
         next(err);
     }
-    }
+};
 
-
-
-// GET /api/v1/courses/:id - get a course by ID
 export const getCourseHandler = async (req, res, next) => {
     try {
-        const id = Number(req.params.id);
+        const id = parseId(req.params.id);
+        if (!id) {
+            return sendValidationError(res, "Course id is invalid");
+        }
+
         const course = await getCourseById(id);
 
-    if (!course) {
-        return res.status(404).json({
-            success: false,
-            message: "Course not found",
-        });
-    }
+        if (!course) {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found",
+            });
+        }
 
-    return res.status(200).json({
-        success: true,
-        message: "Course retrieved successfully",
-        data: course,
-    });
+        return res.status(200).json({
+            success: true,
+            message: "Course retrieved successfully",
+            data: course,
+        });
     } catch (err) {
         next(err);
     }
 };
 
-// PUT/PATCH /api/v1/courses/:id - update a course
 export const updateCourseHandler = async (req, res, next) => {
     try {
-        const id = Number(req.params.id);
-        const { title, description, duration } = req.body;
-        const updated = await updateCourse(id, { title, description, duration });
+        const id = parseId(req.params.id);
+        if (!id) {
+            return sendValidationError(res, "Course id is invalid");
+        }
 
-    return res.status(200).json({
-        success: true,
-        message: "Course updated successfully",
-        data: updated,
-    });
+        const { title, description, duration, theme, price } = req.body;
+        const updated = await updateCourse(id, { title, description, duration, theme, price });
+
+        if (!updated) {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Course updated successfully",
+            data: updated,
+        });
     } catch (err) {
+        if (err.message === "Título es obligatorio") {
+            return sendValidationError(res, err.message);
+        }
         next(err);
     }
 };
@@ -78,11 +107,13 @@ export const getAllCoursesHandler = async (req, res, next) => {
     }
 };
 
-
-// DELETE /api/v1/courses/:id - delete a course
 export const deleteCourseHandler = async (req, res, next) => {
     try {
-        const id = Number(req.params.id);
+        const id = parseId(req.params.id);
+        if (!id) {
+            return sendValidationError(res, "Course id is invalid");
+        }
+
         const deleted = await deleteCourse(id);
         if (!deleted) {
             return res.status(404).json({

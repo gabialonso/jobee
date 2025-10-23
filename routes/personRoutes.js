@@ -12,9 +12,9 @@ const router = Router();
 
 router.post("/",             createPersonHandler);
 router.get("/user/:userId",      listPersonsByUserHandler);
-router.get("/:userId",           getPersonByIdHandler);
-router.put("/:userId",           updatePersonHandler);
-router.patch("/:userId",         updatePersonHandler);
-router.delete("/:userId",        deletePersonHandler);
+router.get("/:id",               getPersonByIdHandler);
+router.put("/:id",               updatePersonHandler);
+router.patch("/:id",             updatePersonHandler);
+router.delete("/:id",            deletePersonHandler);
 
 export default router;
