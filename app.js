@@ -3,8 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import 'express-async-errors';
 
-import stripeRoutes from "./routes/stripeRoutes.js";
-import postulationRoutes from "./routes/postulationRoutes.js"
+import stripeRoutes from './routes/stripeRoutes.js';
+import postulationRoutes from './routes/postulationRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
@@ -20,16 +20,23 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-// Configurar CORS para permitir el frontend
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://jobee.anima.edu.uy'
+];
+
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, origin);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
 
-
 app.use(express.json());
 
-// Rutas
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/course', courseRoutes);
@@ -38,9 +45,8 @@ app.use('/api/purchase', purchaseRoutes);
 app.use('/api/company', companyRoutes);
 app.use('/api/stripe', stripeRoutes);
 app.use('/api/openAi', openAiRoutes);
-app.use('/api/postulation' , postulationRoutes);
+app.use('/api/postulation', postulationRoutes);
 
-// Conexión a la base de datos
 connectDB();
 
 app.listen(PORT, () => {
