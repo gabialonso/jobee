@@ -1,4 +1,4 @@
-base URL for backend APIE
+// Base URL for backend API
 const API_URL =
   import.meta.env.VITE_API_URL ??
   (import.meta.env.DEV ? 'http://localhost:3000/api' : 'https://api-jobee.anima.edu.uy/api');
@@ -8,7 +8,7 @@ export async function apiFetch(endpoint, options = {}) {
   const isFormData = options.body instanceof FormData;
 
   const headers = {
-    ...(!isFormData ? { 'Content-Type': 'application/json' } : {}),
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
     ...options.headers,
   };
 
@@ -41,3 +41,4 @@ export async function apiFetch(endpoint, options = {}) {
     throw error;
   }
 }
+
