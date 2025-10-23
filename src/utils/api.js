@@ -1,5 +1,5 @@
-// base URL for backend API
-const API_URL = 'http://localhost:3000/api';
+// base URL for backend APIE
+const API_URL = 'http://api-jobee.anima.edu.uy/api';
 
 /**
  * Fetch wrapper for backend requests
