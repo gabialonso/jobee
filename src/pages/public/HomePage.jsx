@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiFetch } from "../../utils/api.js";
-import Header from "../../components/common/Header.jsx";
-import CourseCarousel from "../../components/courses/CourseCarousel.jsx";
+import { COURSES } from "../../data/courses.js";
+import PublicHeader from "../../components/features/navigation/PublicHeader.jsx";
+import CourseCarousel from "../../components/features/courses/CourseCarousel.jsx";
 import BannerImage from "../../assets/LandingBannerImg.svg";
 import { MdPlace } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -10,7 +11,7 @@ import { GoMail } from "react-icons/go";
 
 function Hero() {
   return (
-    <section className="grid gap-10 rounded-3xl bg-[#FFF0C2] p-8 md:grid-cols-2 md:items-center lg:p-12">
+    <section className="grid gap-10 rounded-3xl bg-gradient-to-br from-[#FFF8E7] to-[#FFF0C2] p-8 md:grid-cols-2 md:items-center lg:p-12">
       <div className="flex flex-col gap-6 text-left">
         <span className="text-sm font-semibold uppercase tracking-wide text-[#9B1756]">
           Primera experiencia laboral
@@ -19,19 +20,19 @@ function Hero() {
           Conectamos talento joven con empresas reales
         </h1>
         <p className="text-base leading-relaxed text-[#4B5563] md:text-lg">
-          <strong>¿Tenés entre 18 y 27 años?</strong> Sumate a Jobee, aprendé nuevas
+          <strong>¿Tenés entre 18 y 24 años?</strong> Sumate a Jobee, aprendé nuevas
           habilidades y llegá a tu primera entrevista con respaldo y oportunidades reales.
         </p>
         <div className="flex flex-wrap gap-4">
           <Link
             to="/auth/signup/user"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
           >
             Registrate como usuario
           </Link>
           <Link
             to="/auth/signup/company"
-            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+            className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
           >
             Soy empresa aliada
           </Link>
@@ -58,7 +59,7 @@ function FeatureHighlights() {
       <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-3">
         <h3 className="text-lg font-semibold -mb-1 text-[#1F2937]">Acceso directo a talento joven</h3>
         <p className="text-sm text-[#4B5563]">
-          Encontrá candidatos entre 18–27 años listos para aprender. Sin filtros de años de experiencia.
+          Encontrá candidatos entre 18–24 años listos para aprender. Sin filtros de años de experiencia.
         </p>
       </article>
       <article className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-3">
@@ -143,23 +144,23 @@ function Metrics() {
 
 function CallToAction() {
   return (
-    <section className="rounded-3xl bg-[#FFF0C2] px-8 py-12 text-center">
-      <h3 className="text-2xl font-bold text-[#1F2937] md:text-3xl">
+    <section className="rounded-3xl bg-[#E69C00] px-8 py-12 text-center text-white">
+      <h3 className="text-2xl font-bold md:text-3xl">
         ¿Listo para dar tu primer paso profesional?
       </h3>
-      <p className="mt-3 text-sm text-[#4B5563] md:text-base">
+      <p className="mt-3 text-sm text-[#FFF8E7] md:text-base">
         Creamos un espacio sencillo para aprender, practicar y conectar. Elegí tu plan y empecemos hoy.
       </p>
       <div className="mt-6 flex flex-wrap justify-center gap-4">
         <Link
           to="/auth/signup/user"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+          className="rounded-xl border-b-4 border-[#FFF0C2] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:bg-[#FFF7E0] md:text-base"
         >
           Crear cuenta joven
         </Link>
         <Link
           to="/auth/signup/company"
-          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF8E7] md:text-base"
+          className="rounded-xl border-b-4 border-[#FFF0C2] bg-[#FFF0C2] px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:bg-[#FFF7E0] md:text-base"
         >
           Sumarse como empresa
         </Link>
@@ -201,28 +202,31 @@ export default function HomePage() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const data = await apiFetch('/course/');
-        const mappedCourses = (data.data || []).map(course => ({
+        const coursesData = await apiFetch('/course/');
+        if (!Array.isArray(coursesData)) {
+          throw new Error('Respuesta inválida del servidor');
+        }
+        const mappedCourses = coursesData.map(course => ({
           title: course.title,
           description: course.description,
           duration: course.duration ? `${course.duration}h` : null,
-          plan: 'basico',
-          planLabel: 'Curso',
-          modality: 'Online',
-          courseId: course.courseId
+          plan: course.plan || 'basico',
+          planLabel: course.planLabel || 'Curso',
+          modality: course.modality || 'Online',
+          courseId: course.courseId || course.id
         }));
         setCourses(mappedCourses);
       } catch (err) {
-        console.error('Error fetching courses:', err);
+        console.error('error al cargar cursos, usando datos mock:', err);
+        setCourses(COURSES);
       }
     };
-
     fetchCourses();
   }, []);
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#FFF8E7]">
-      <Header />
+      <PublicHeader />
       <main className="mx-auto flex w-full max-w-container flex-1 flex-col gap-16 px-5 pb-16 pt-6 md:px-8 lg:px-12">
         <Hero />
         <FeatureHighlights />

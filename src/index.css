@@ -8,8 +8,8 @@
         font-weight: 400;
 
         color-scheme: light dark;
-        color: #6f442c;
-        background-color: #fff4d6;
+        color: #6F442C;
+        background-color: #FFF8E7;
 
         font-synthesis: none;
         text-rendering: optimizeLegibility;
@@ -54,7 +54,7 @@
 
 @layer components {
     .landing-wrap {
-        @apply min-h-screen w-full grid place-items-center bg-[#FFF4D6];
+        @apply min-h-screen w-full grid place-items-center bg-[#FFF8E7];
     }
 
     .landing-stack {
@@ -74,27 +74,27 @@
     }
 
     .basic_plan {
-        @apply bg-green-500/50 text-center text-black font-bold rounded-b-2xl;
+        @apply bg-[#D4E9EC] text-center text-[#0B7285] font-bold border-b-4 border-[#0B7285] rounded-b-2xl;
     }
     .medium_plan {
-        @apply bg-[#E69C00]/50 text-center text-black font-bold rounded-b-2xl;
+        @apply bg-[#FFF0C2] text-center text-[#1F2937] font-bold border-b-4 border-[#E69C00] rounded-b-2xl;
     }
     .advanced_plan {
-        @apply bg-[#9B1756] text-white text-center font-bold rounded-b-2xl;
+        @apply bg-[#FCE7F3] text-center text-[#9B1756] font-bold border-b-4 border-[#9B1756] rounded-b-2xl;
     }
 
     .buttons_interactive {
-        @apply border-2 border-black rounded-lg px-3 py-1 hover:bg-yellow-500/50;
+        @apply border-2 border-[#374151] rounded-lg px-3 py-1 hover:bg-[#FFF0C2];
     }
     .button_selected {
-        @apply bg-yellow-500/50 border-2 border-black rounded-lg px-3 py-1 font-bold;
+        @apply bg-[#FFF0C2] border-2 border-[#E69C00] rounded-lg px-3 py-1 font-bold;
     }
     .buttons_forms {
-        @apply bg-white border-1 border-black rounded-lg px-1 py-0 hover:bg-yellow-100/50;
+        @apply bg-white border border-[#374151] rounded-lg px-1 py-0 hover:bg-[#FFF8E7];
     }
 
     .curses_card {
-        @apply flex flex-shrink-0 flex-col gap-4 border-2 border-black rounded-2xl px-4 pb-4 w-1/4 justify-between  text-start snap-center;
+        @apply flex flex-shrink-0 flex-col gap-4 border-2 border-[#374151] rounded-2xl px-4 pb-4 w-1/4 justify-between  text-start snap-center;
     }
 
     .interactive-logo:hover {

@@ -1,0 +1,38 @@
+{
+  "user_1": [
+    {
+      "id": 1,
+      "participantName": "TechCorp Solutions",
+      "participantPhoto": "",
+      "lastMessage": "Nos interesa tu perfil para una posición junior",
+      "lastMessageDate": "2025-10-16T14:30:00Z",
+      "unreadCount": 2
+    },
+    {
+      "id": 2,
+      "participantName": "Innovate Labs",
+      "participantPhoto": "",
+      "lastMessage": "¿Cuándo podés empezar?",
+      "lastMessageDate": "2025-10-15T10:20:00Z",
+      "unreadCount": 0
+    }
+  ],
+  "company_1": [
+    {
+      "id": 3,
+      "participantName": "Juan Pérez",
+      "participantPhoto": "",
+      "lastMessage": "Muchas gracias por la oportunidad",
+      "lastMessageDate": "2025-10-16T16:45:00Z",
+      "unreadCount": 1
+    },
+    {
+      "id": 4,
+      "participantName": "María González",
+      "participantPhoto": "",
+      "lastMessage": "Me interesa mucho la propuesta",
+      "lastMessageDate": "2025-10-14T09:15:00Z",
+      "unreadCount": 0
+    }
+  ]
+}

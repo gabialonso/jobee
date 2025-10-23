@@ -4,12 +4,12 @@ export default function ActionCard({ to, icon: Icon, title, description, color =
   return (
     <Link
       to={to}
-      className={`flex flex-col justify-center gap-3 rounded-2xl border-b-4 bg-[#FFF0C2] px-5 py-6 hover:bg-white transition group`}
+      className="flex flex-col justify-center gap-3 rounded-2xl border-b-4 bg-[#FFF0C2] px-5 py-6 transition-all duration-150 ease-out hover:opacity-90"
       style={{ borderBottomColor: color }}
     >
       <div className="flex items-center gap-3">
         <div
-          className="p-3 bg-white rounded-xl border-b-4 group-hover:scale-110 transition"
+          className="p-3 bg-white rounded-xl border-b-4"
           style={{ borderBottomColor: color }}
         >
           {Icon && <Icon className="w-5 h-5 text-[#1F2937]" />}

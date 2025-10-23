@@ -1,0 +1,191 @@
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { apiFetch } from "../../../utils/api";
+import { getUser } from "../../../utils/auth";
+import { COURSES } from "../../../data/courses.js";
+import CourseCard from "../../../components/features/courses/CourseCard";
+import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
+
+export default function UserCourses() {
+  const location = useLocation();
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [enrolling, setEnrolling] = useState(null);
+  const [enrolledCourseIds, setEnrolledCourseIds] = useState([]);
+
+  useEffect(() => {
+    const fetchAllData = async () => {
+      setLoading(true);
+      try {
+        const user = getUser();
+
+        if (user?.id) {
+          try {
+            const purchases = await apiFetch(`/purchase/user/${user.id}`);
+            if (Array.isArray(purchases)) {
+              setEnrolledCourseIds(
+                purchases
+                  .map((purchase) => purchase.course?.courseId ?? purchase.courseId)
+                  .filter(Boolean)
+              );
+            }
+          } catch (purchaseErr) {
+            console.error("Error fetching purchases:", purchaseErr);
+          }
+        }
+
+        const response = await apiFetch("/course/");
+        if (!Array.isArray(response)) {
+          throw new Error("Respuesta inválida del servidor");
+        }
+        const mappedCourses = response.map((course) => ({
+          title: course.title,
+          description: course.description,
+          duration: course.duration ? `${course.duration}h` : null,
+          plan: course.theme || course.plan || "basico",
+          planLabel: course.planLabel || "Curso",
+          modality: course.modality || "Online",
+          price: course.price ?? null,
+          courseId: course.courseId || course.id,
+        }));
+        setCourses(mappedCourses);
+      } catch (err) {
+        console.error("Error fetching courses:", err);
+        const mappedMockCourses = COURSES.map((course) => ({
+          ...course,
+          courseId: course.id,
+          price: course.price ?? null,
+        }));
+        setCourses(mappedMockCourses);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllData();
+  }, []);
+
+  const handleEnroll = async (courseId) => {
+    const user = getUser();
+    if (!user?.id) {
+      alert("Necesitas iniciar sesión para inscribirte.");
+      return;
+    }
+
+    if (enrolledCourseIds.includes(courseId)) {
+      alert("Ya estás inscripto en este curso.");
+      return;
+    }
+
+    setEnrolling(courseId);
+    try {
+      const course = courses.find((item) => item.courseId === courseId);
+      const price = course?.price ?? 0;
+
+      await apiFetch("/purchase/", {
+        method: "POST",
+        body: {
+          userId: user.id,
+          courseId,
+          price,
+          currency: "USD",
+        },
+      });
+
+      setEnrolledCourseIds((prev) =>
+        prev.includes(courseId) ? prev : [...prev, courseId]
+      );
+      alert("¡Inscripción exitosa!");
+    } catch (err) {
+      console.error("Error enrolling in course:", err);
+      if (err.message?.toLowerCase().includes("already purchased")) {
+        setEnrolledCourseIds((prev) =>
+          prev.includes(courseId) ? prev : [...prev, courseId]
+        );
+        alert("Ya estás inscripto en este curso.");
+      } else {
+        alert(`Error al inscribirse en el curso: ${err.message}`);
+      }
+    } finally {
+      setEnrolling(null);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#FFF8E7]">
+      <AuthenticatedHeader mode="user" currentPath={location.pathname} />
+
+      <main className="mx-auto w-full max-w-container px-5 py-12 md:px-8 lg:px-12">
+        <div className="mb-10">
+          <span className="inline-flex items-center rounded-full bg-[#9B1756]/10 border border-[#9B1756] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#9B1756] mb-4">
+            Catálogo de Cursos
+          </span>
+          <h1 className="text-3xl font-bold text-[#1F2937] md:text-4xl lg:text-5xl">
+            Cursos Disponibles
+          </h1>
+          <p className="text-base leading-relaxed text-[#4B5563] mt-3 md:text-lg">
+            Desarrollá nuevas habilidades con nuestros cursos especializados para tu crecimiento profesional.
+          </p>
+        </div>
+
+        {loading && (
+          <div className="text-center py-12">
+            <p className="text-[#6F442C]">Cargando cursos...</p>
+          </div>
+        )}
+
+        {!loading && courses.length > 0 && (
+          <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] p-6 sm:grid-cols-2 lg:grid-cols-3">
+            {courses.map((course) => {
+              const isEnrolled = enrolledCourseIds.includes(course.courseId);
+              const planColors = {
+                basico: { border: 'border-[#F5C34D]', bg: 'bg-[#FFF0C2]', text: 'text-[#1F2937]' },
+                medio: { border: 'border-[#2A8A9E]', bg: 'bg-[#D4E9EC]', text: 'text-[#2A8A9E]' },
+                avanzado: { border: 'border-[#E84D4D]', bg: 'bg-[#FED7D7]', text: 'text-[#E84D4D]' }
+              };
+              const colors = planColors[course.plan] || planColors.basico;
+
+              return (
+                <CourseCard
+                  key={course.courseId}
+                  course={course}
+                  actionButton={
+                    <button
+                      onClick={() => handleEnroll(course.courseId)}
+                      disabled={isEnrolled || enrolling === course.courseId}
+                      className={`w-full px-5 py-2 rounded-xl border-b-4 ${colors.border} ${colors.bg} ${colors.text} font-semibold transition-all duration-150 ease-out hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed`}
+                    >
+                      {isEnrolled
+                        ? 'Ya estás inscripto'
+                        : enrolling === course.courseId
+                          ? 'Inscribiendo...'
+                          : 'Inscribirse Ahora'}
+                    </button>
+                  }
+                />
+              );
+            })}
+          </section>
+        )}
+
+        {!loading && courses.length === 0 && (
+          <section className="rounded-3xl bg-white border-b-4 border-[#E69C00] p-10 md:p-16">
+            <div className="text-center">
+              <div className="inline-flex p-6 bg-[#FFF0C2] rounded-3xl border-b-4 border-[#E69C00] mb-6">
+                <svg className="w-16 h-16 text-[#E69C00]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-[#1F2937] mb-3">
+                No hay cursos disponibles
+              </h2>
+              <p className="text-[#4B5563] leading-relaxed max-w-md mx-auto">
+                En este momento no hay cursos disponibles. Volvé pronto para descubrir nuevas oportunidades de aprendizaje.
+              </p>
+            </div>
+          </section>
+        )}
+      </main>
+    </div>
+  );
+}

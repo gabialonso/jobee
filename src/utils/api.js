@@ -1,39 +1,43 @@
-// base URL for backend APIE
-const API_URL = 'http://api-jobee.anima.edu.uy/api';
+base URL for backend APIE
+const API_URL =
+  import.meta.env.VITE_API_URL ??
+  (import.meta.env.DEV ? 'http://localhost:3000/api' : 'https://api-jobee.anima.edu.uy/api');
 
-/**
- * Fetch wrapper for backend requests
- * @param {string} endpoint - e.g. '/auth/login'
- * @param {object} options - e.g. { method: 'POST', body: { email, password } }
- */
 export async function apiFetch(endpoint, options = {}) {
-  // get token from localStorage if exists
   const token = localStorage.getItem('token');
+  const isFormData = options.body instanceof FormData;
 
-  // setup headers
   const headers = {
-    'Content-Type': 'application/json',
+    ...(!isFormData ? { 'Content-Type': 'application/json' } : {}),
     ...options.headers,
   };
 
-  // add token to header if exists
   if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+    headers.Authorization = `Bearer ${token}`;
   }
 
-  // make the request
-  const response = await fetch(`${API_URL}${endpoint}`, {
-    ...options,
-    headers,
-    body: options.body ? JSON.stringify(options.body) : undefined,
-  });
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      headers,
+      body: options.body && !isFormData ? JSON.stringify(options.body) : options.body,
+    });
 
-  // throw error if response is not OK
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Request failed');
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error('El servidor no está disponible o devolvió una respuesta inválida');
+    }
+
+    const payload = await response.json();
+    if (!response.ok) {
+      throw new Error(payload.message || payload.error || 'Error en la petición');
+    }
+
+    return payload?.data ?? payload;
+  } catch (error) {
+    if (error.message.includes('Failed to fetch')) {
+      throw new Error('No se pudo conectar con el servidor. Asegurate de que el backend esté corriendo.');
+    }
+    throw error;
   }
-
-  // return data
-  return response.json();
 }

@@ -1,0 +1,41 @@
+{
+  "1": [
+    {
+      "id": 1,
+      "title": "Introducción a la Programación",
+      "description": "Fundamentos de JavaScript y lógica de programación",
+      "progress": 100,
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "title": "React desde Cero",
+      "description": "Desarrollo de aplicaciones web con React",
+      "progress": 65,
+      "status": "in_progress"
+    },
+    {
+      "id": 3,
+      "title": "Diseño UX para Product Teams",
+      "description": "Wireframes, prototipos y research con usuarios",
+      "progress": 40,
+      "status": "in_progress"
+    }
+  ],
+  "2": [
+    {
+      "id": 1,
+      "title": "Introducción a la Programación",
+      "description": "Fundamentos de JavaScript y lógica de programación",
+      "progress": 30,
+      "status": "in_progress"
+    },
+    {
+      "id": 4,
+      "title": "Marketing Digital",
+      "description": "Estrategias de marketing para redes sociales",
+      "progress": 100,
+      "status": "completed"
+    }
+  ]
+}

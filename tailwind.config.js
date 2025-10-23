@@ -27,7 +27,7 @@ export default {
         terracottaBlue: "#374151",
         alternativeMagenta: "#C21D6B",
         disturbingBlack: "#111827",
-        coldBlue: "#D1D5disturbingBlackDB",
+        coldBlue: "#D1D5DB",
         darkMagenta: "#9B1756",
         vibrantBlue: "#3B82F6",
         lightRed: "#F87171",

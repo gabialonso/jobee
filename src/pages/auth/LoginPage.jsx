@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import AuthLayout from "../../components/auth/AuthLayout.jsx";
+import AuthLayout from "../../components/layout/AuthLayout.jsx";
 import { apiFetch } from "../../utils/api.js";
 import { saveSession } from "../../utils/auth.js";
 
@@ -164,7 +164,7 @@ export default function LoginPage() {
         <div className="flex flex-col gap-4 pt-2">
           <button
             type="submit"
-            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50"
+            className="w-full rounded-xl border-b-4 border-[#E69C00] bg-[#FFF0C2] px-5 py-2 text-sm font-semibold text-[#1F2937]"
           >
             Iniciar sesión
           </button>
@@ -174,7 +174,7 @@ export default function LoginPage() {
               <Link
                 key={id}
                 to={to}
-                className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#E69C00]/60 border-b-4 border-x-2 bg-white px-5 py-2 text-sm font-semibold text-[#1F2937] transition hover:bg-[#FFF7E0]"
+                className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#E69C00]/60 border-b-4 border-x-2 bg-white px-5 py-2 text-sm font-semibold text-[#1F2937]"
               >
                 {Icon ? <Icon aria-hidden className={iconClassName} /> : null}
                 <span>{label}</span>
