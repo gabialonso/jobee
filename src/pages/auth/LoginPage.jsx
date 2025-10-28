@@ -75,8 +75,6 @@ export default function LoginPage() {
       // Redirect based on user role
       if (data.user.role === 'companies') {
         navigate('/company/dashboard');
-      } else if (data.user.role === 'Admin') {
-        navigate('/admin/dashboard');
       } else {
         navigate('/user/dashboard');
       }

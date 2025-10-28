@@ -1,7 +1,7 @@
 // Base URL for backend API
 const API_URL =
   import.meta.env.VITE_API_URL ??
-  (import.meta.env.DEV ? 'http://localhost:3000/api' : 'https://api-jobee.anima.edu.uy/api');
+  (import.meta.env.DEV ? 'http://localhost:3000/api' : 'http://jobee.anima.edu.uy/api');
 
 export async function apiFetch(endpoint, options = {}) {
   const token = localStorage.getItem('token');
