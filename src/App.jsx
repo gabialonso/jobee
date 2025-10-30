@@ -6,7 +6,6 @@ import UserProfile from "./pages/user/profile/ProfilePage.jsx";
 import UserCompany from "./pages/user/CompanyPage.jsx";
 import UserCourses from "./pages/user/courses/CoursesPage.jsx";
 import UserContacts from "./pages/user/contact/ContactPage.jsx";
-import UserPostulationsPage from "./pages/user/postulations/UserPostulationsPage.jsx";
 
 import CompanyDashboard from "./pages/company/DashboardPage.jsx";
 import CompanyProfile from "./pages/company/profile/CompanyProfilePage.jsx";
@@ -67,14 +66,6 @@ export default function App() {
         element={
           <ProtectedRoute>
             <UserContacts />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/user/postulations"
-        element={
-          <ProtectedRoute>
-            <UserPostulationsPage />
           </ProtectedRoute>
         }
       />

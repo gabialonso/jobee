@@ -15,7 +15,7 @@ export default function UserCompany() {
     const fetchCompanies = async () => {
       setLoading(true);
       try {
-        const result = await apiFetch('/company/');
+        const result = await apiFetch('/company');
         if (!Array.isArray(result)) {
           throw new Error('Respuesta inválida del servidor');
         }

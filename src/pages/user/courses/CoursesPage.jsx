@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../../utils/api";
 import { getUser } from "../../../utils/auth";
 import { COURSES } from "../../../data/courses.js";
-import CourseCard from "../../../components/features/courses/CourseCard";
+import CourseCard, { PLAN_STYLES } from "../../../components/features/courses/CourseCard";
 import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
 
 export default function UserCourses() {
@@ -138,12 +138,7 @@ export default function UserCourses() {
           <section className="grid gap-6 rounded-3xl bg-[#FFF8E7] p-6 sm:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => {
               const isEnrolled = enrolledCourseIds.includes(course.courseId);
-              const planColors = {
-                basico: { border: 'border-[#F5C34D]', bg: 'bg-[#FFF0C2]', text: 'text-[#1F2937]' },
-                medio: { border: 'border-[#2A8A9E]', bg: 'bg-[#D4E9EC]', text: 'text-[#2A8A9E]' },
-                avanzado: { border: 'border-[#E84D4D]', bg: 'bg-[#FED7D7]', text: 'text-[#E84D4D]' }
-              };
-              const colors = planColors[course.plan] || planColors.basico;
+              const styles = PLAN_STYLES[course.plan] || PLAN_STYLES.basico;
 
               return (
                 <CourseCard
@@ -153,7 +148,12 @@ export default function UserCourses() {
                     <button
                       onClick={() => handleEnroll(course.courseId)}
                       disabled={isEnrolled || enrolling === course.courseId}
-                      className={`w-full px-5 py-2 rounded-xl border-b-4 ${colors.border} ${colors.bg} ${colors.text} font-semibold transition-all duration-150 ease-out hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed`}
+                      className="inline-flex w-full items-center justify-center rounded-xl border-b-4 px-4 py-2 text-sm font-semibold transition-all duration-150 ease-out hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{
+                        backgroundColor: styles.buttonBg,
+                        color: styles.buttonText,
+                        borderBottomColor: styles.buttonBorder,
+                      }}
                     >
                       {isEnrolled
                         ? 'Ya estás inscripto'
