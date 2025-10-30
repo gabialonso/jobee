@@ -172,19 +172,19 @@ export default function CompanyUsers() {
                   icon={<HiUsers className="h-6 w-6" />}
                   label="Total"
                   value={highlightMetrics.total}
-                  tone="teal"
+                  tone="primary"
                 />
                 <MetricCard
                   icon={<HiCheckCircle className="h-6 w-6" />}
                   label="Con cursos"
                   value={highlightMetrics.withCourses}
-                  tone="emerald"
+                  tone="secondary"
                 />
                 <MetricCard
                   icon={<HiAcademicCap className="h-6 w-6" />}
                   label="Estudiando"
                   value={highlightMetrics.inProgress}
-                  tone="amber"
+                  tone="secondary"
                 />
                 <MetricCard
                   icon={<HiUsers className="h-6 w-6" />}
@@ -195,12 +195,12 @@ export default function CompanyUsers() {
                 />
               </div>
             </div>
-            <div className="w-full max-w-md space-y-4 rounded-3xl border border-[#E5E7EB] border-b-4 bg-[#F9FAFB] p-6" style={{ borderBottomColor: "#0B7285" }}>
+            <div className="w-full max-w-md space-y-4 rounded-3xl border border-[#E5E7EB] border-b-4 bg-[#FFFDF6] p-6" style={{ borderBottomColor: "#E69C00" }}>
               <SearchBar
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Buscar por nombre, liceo o curso..."
-                className="rounded-2xl border border-[#E5E7EB] bg-white p-1"
+                className="rounded-2xl border border-[#F3B61F] bg-white p-1"
               />
               <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 {areas.slice(0, 4).map((area) => (
@@ -209,8 +209,8 @@ export default function CompanyUsers() {
                     onClick={() => handleAreaChange(area)}
                     className={`rounded-2xl border px-4 py-2 text-sm font-semibold transition-all ${
                       selectedArea === area
-                        ? "border-[#0B7285] bg-[#0B7285] text-white"
-                        : "border-[#0B7285]/30 bg-white text-[#0B7285]"
+                        ? "border-[#E69C00] bg-[#E69C00] text-white"
+                        : "border-[#F3B61F] bg-white text-[#6F442C] hover:bg-[#FFF8E7]"
                     }`}
                   >
                     {area}
@@ -222,9 +222,9 @@ export default function CompanyUsers() {
         </section>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[280px,1fr]">
-          <aside className="space-y-6 rounded-3xl border border-[#E5E7EB] border-b-4 bg-white p-6" style={{ borderBottomColor: "#0B7285" }}>
+          <aside className="space-y-6 rounded-3xl border border-[#E5E7EB] border-b-4 bg-white p-6" style={{ borderBottomColor: "#E69C00" }}>
             <div>
-              <h3 className="text-sm font-semibold uppercase text-[#0B7285] tracking-wide">Filtros inteligentes</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-[#9B1756]">Filtros inteligentes</h3>
               <p className="mt-1 text-sm text-[#4B5563]">
                 Filtrá las postulaciones por área, estado o cursos completados.
               </p>
@@ -244,8 +244,8 @@ export default function CompanyUsers() {
               onSelect={handleStatusChange}
             />
 
-            <div className="rounded-2xl bg-[#FFF0C2] p-5 border border-[#F3B61F]/60">
-              <h4 className="text-sm font-semibold text-[#6F442C] uppercase tracking-wide">Tip Jobee</h4>
+            <div className="rounded-2xl border border-[#F3B61F] bg-[#FFF8E7] p-5">
+              <h4 className="text-sm font-semibold uppercase tracking-wide text-[#6F442C]">Tip Jobee</h4>
               <p className="mt-2 text-sm text-[#6F442C]/80">
                 Analizá los mensajes personalizados que envía cada candidato para priorizar entrevistas.
               </p>
@@ -275,14 +275,13 @@ export default function CompanyUsers() {
 
 function MetricCard({ icon, label, value, tone, isText = false }) {
   const toneClasses = {
-    teal: { icon: "#0B7285", bg: "#E6F6F9" },
-    emerald: { icon: "#047857", bg: "#E6F9F1" },
-    amber: { icon: "#B45309", bg: "#FFF4E0" },
-    neutral: { icon: "#6B7280", bg: "#F3F4F6" },
+    primary: { icon: "#E69C00", bg: "#FFF8E7", border: "#E69C00" },
+    secondary: { icon: "#B7791F", bg: "#FFF4D6", border: "#F3B61F" },
+    neutral: { icon: "#6B7280", bg: "#F3F4F6", border: "#D1D5DB" },
   };
 
-  const palette = toneClasses[tone] ?? toneClasses.teal;
-  const borderColor = tone === "teal" ? "#0B7285" : tone === "emerald" ? "#047857" : tone === "amber" ? "#F59E0B" : "#6B7280";
+  const palette = toneClasses[tone] ?? toneClasses.primary;
+  const borderColor = palette.border ?? "#E69C00";
 
   return (
     <div className="flex flex-col gap-2 rounded-2xl border border-[#E5E7EB] border-b-4 px-4 py-3" style={{ backgroundColor: palette.bg, borderBottomColor: borderColor }}>
@@ -300,27 +299,27 @@ function FilterSection({ title, options, selected, onSelect }) {
 
   return (
     <div className="space-y-3">
-      <p className="text-xs font-semibold uppercase text-[#1F2937]/60 tracking-wide">{title}</p>
-      <div className="flex flex-wrap gap-2">
+      <p className="text-xs font-semibold uppercase tracking-wide text-[#1F2937]/60">{title}</p>
+      <div className="flex flex-col gap-2">
         {options.map((option) => (
           <button
             key={option}
             onClick={() => onSelect(option)}
-          className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-all ${
-            selected === option
-              ? "border-[#0B7285] bg-[#0B7285] text-white"
-              : "border-[#0B7285]/20 bg-[#F5FBFC] text-[#0B7285]"
-          }`}
-        >
-          {option}
-        </button>
+            className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-all ${
+              selected === option
+                ? "border-[#E69C00] bg-[#E69C00] text-white"
+                : "border-[#F3B61F] bg-white text-[#6F442C] hover:bg-[#FFF8E7]"
+            }`}
+          >
+            {option}
+          </button>
         ))}
         <button
           onClick={() => onSelect('all')}
           className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-all ${
             selected === 'all'
-              ? "border-[#6F442C] bg-[#6F442C] text-white shadow-sm"
-              : "border-[#6F442C]/20 bg-white text-[#6F442C] hover:border-[#6F442C]/40"
+              ? "border-[#6F442C] bg-[#6F442C] text-white"
+              : "border-[#6F442C]/20 bg-white text-[#6F442C] hover:bg-[#FFF8E7]"
           }`}
         >
           Todos

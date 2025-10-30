@@ -1,20 +1,35 @@
 import { Link } from "react-router-dom";
 
-const PLAN_STYLES = {
+export const PLAN_STYLES = {
   basico: {
-    border: "border-b-7 border-x-4 border-t-4 border-[#F5C34D]",
-    badge: "bg-[#F5C34D]/30 text-[#1F2937]",
-    button: "border-b-4 border-[#F5C34D] bg-white text-[#1F2937]",
+    background: "#FFF0C2",
+    border: "#F5C34D",
+    badgeBg: "#FDF3C4",
+    badgeColor: "#6F442C",
+    buttonBg: "#F5C34D",
+    buttonText: "#1F2937",
+    buttonBorder: "#D48A00",
+    accent: "#F5C34D",
   },
   medio: {
-    border: "border-b-7 border-x-4 border-t-4 border-[#2A8A9E]",
-    badge: "bg-[#2A8A9E]/20 text-[#2A8A9E]",
-    button: "border-b-4 border-[#2A8A9E] bg-white text-[#2A8A9E]",
+    background: "#D4E9EC",
+    border: "#2A8A9E",
+    badgeBg: "#C0E3E8",
+    badgeColor: "#0B7285",
+    buttonBg: "#2A8A9E",
+    buttonText: "#FFFFFF",
+    buttonBorder: "#0B7285",
+    accent: "#2A8A9E",
   },
   avanzado: {
-    border: "border-b-7 border-x-4 border-t-4 border-[#E84D4D]",
-    badge: "bg-[#E84D4D]/20 text-[#E84D4D]",
-    button: "border-b-4 border-[#E84D4D] bg-white text-[#E84D4D]",
+    background: "#FDE8E8",
+    border: "#E84D4D",
+    badgeBg: "#F8CCCC",
+    badgeColor: "#842029",
+    buttonBg: "#E84D4D",
+    buttonText: "#FFFFFF",
+    buttonBorder: "#B91C1C",
+    accent: "#E84D4D",
   },
 };
 
@@ -24,11 +39,17 @@ export default function CourseCard({ course, actionButton }) {
 
   return (
     <article
-      className={`flex min-h-[18rem] flex-1 flex-col justify-between gap-4 rounded-3xl bg-[#FFF8E7] p-6 transition-all duration-150 ease-out hover:opacity-90 ${styles.border}`}
+      className="flex min-h-[18rem] flex-1 flex-col justify-between gap-4 rounded-3xl border-2 p-6 transition-all duration-150 ease-out hover:opacity-95"
+      style={{
+        backgroundColor: styles.background,
+        borderColor: styles.border,
+        borderBottomWidth: "6px",
+      }}
     >
       <div className="space-y-3">
         <span
-          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${styles.badge}`}
+          className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
+          style={{ backgroundColor: styles.badgeBg, color: styles.badgeColor }}
         >
           {planLabel}
         </span>
@@ -54,7 +75,12 @@ export default function CourseCard({ course, actionButton }) {
       {actionButton || (
         <Link
           to="/auth/login"
-          className={`inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-150 ease-out hover:opacity-90 ${styles.button}`}
+          className="inline-flex items-center justify-center rounded-xl border-b-4 px-4 py-2 text-sm font-semibold transition-all duration-150 ease-out hover:opacity-90"
+          style={{
+            backgroundColor: styles.buttonBg,
+            color: styles.buttonText,
+            borderBottomColor: styles.buttonBorder,
+          }}
         >
           Conocer más
         </Link>

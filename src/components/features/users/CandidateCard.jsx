@@ -17,15 +17,15 @@ export default function CandidateCard({ candidate, onViewProfile }) {
   const accent = "#E69C00";
 
   return (
-    <article className="flex flex-col gap-5 rounded-3xl bg-white border border-[#E5E7EB] border-b-4 p-6" style={{ borderBottomColor: accent }}>
+    <article className="flex flex-col gap-5 rounded-3xl border border-[#E5E7EB] border-b-4 bg-white p-6" style={{ borderBottomColor: accent }}>
       <header className="flex items-start gap-4">
-        <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-[#FFF0C2] text-2xl font-bold text-[#1F2937] border-b-4" style={{ borderBottomColor: accent }}>
+        <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border-b-4 bg-[#FFF8E7] text-2xl font-bold text-[#1F2937]" style={{ borderBottomColor: accent }}>
           {firstInitial}
           {lastInitial}
         </div>
         <div className="flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide" style={{ borderColor: accent, color: "#1F2937", backgroundColor: "#FFF8E7" }}>
+            <span className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#1F2937]" style={{ borderColor: accent, backgroundColor: "#FFF8E7" }}>
               {area}
             </span>
             {postulationTitle && <span className="truncate text-xs font-medium text-[#4B5563]">{postulationTitle}</span>}
@@ -40,8 +40,8 @@ export default function CandidateCard({ candidate, onViewProfile }) {
 
           <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-[#4B5563]">
             {candidate.birthday && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF8E7] px-2 py-1 border border-[#F3B61F]/60">
-                <HiCalendar className="h-3.5 w-3.5 text-[#E69C00]" />
+              <span className="inline-flex items-center gap-1 rounded-full border px-2 py-1" style={{ borderColor: "#F3B61F", backgroundColor: "#FFF8E7" }}>
+                <HiCalendar className="h-3.5 w-3.5" style={{ color: accent }} />
                 Año {candidate.birthday}
               </span>
             )}
@@ -51,7 +51,7 @@ export default function CandidateCard({ candidate, onViewProfile }) {
       </header>
 
       {message && (
-        <section className="rounded-2xl border border-[#E5E7EB] bg-[#FFF8E7] px-4 py-3">
+        <section className="rounded-2xl border px-4 py-3" style={{ borderColor: "#F3B61F", backgroundColor: "#FFF8E7" }}>
           <p className="text-xs font-semibold uppercase tracking-wide text-[#1F2937]">Mensaje al aplicar</p>
           <p className="mt-2 text-sm leading-relaxed text-[#4B5563]">{message}</p>
         </section>
@@ -68,7 +68,7 @@ export default function CandidateCard({ candidate, onViewProfile }) {
 
       <SectionsList icon={HiAcademicCap} label="Cursos en progreso" data={inProgressCourses} emptyLabel="Sin cursos en progreso" />
 
-      <footer className="flex flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white px-4 py-3">
+      <footer className="flex flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-[#FFFDF6] px-4 py-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[#4B5563]">Contacto</p>
@@ -76,12 +76,12 @@ export default function CandidateCard({ candidate, onViewProfile }) {
           </div>
           <div className="flex flex-wrap gap-2">
             {candidate.email && (
-              <a href={`mailto:${candidate.email}`} className="inline-flex items-center gap-1 rounded-full border border-[#E69C00]/40 px-3 py-1 text-xs font-semibold text-[#1F2937] bg-[#FFF8E7]">
+              <a href={`mailto:${candidate.email}`} className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-semibold text-[#1F2937] transition-colors" style={{ borderColor: accent, backgroundColor: "#FFF8E7" }}>
                 <HiEnvelope className="h-4 w-4" /> Email
               </a>
             )}
             {candidate.cv && (
-              <a href={candidate.cv} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 rounded-full border border-[#E69C00]/40 px-3 py-1 text-xs font-semibold text-[#1F2937] bg-[#FFF8E7]">
+              <a href={candidate.cv} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-semibold text-[#1F2937] transition-colors" style={{ borderColor: accent, backgroundColor: "#FFF8E7" }}>
                 <HiDocumentText className="h-4 w-4" /> CV
               </a>
             )}
@@ -107,8 +107,8 @@ function SectionsList({ icon: Icon, label, data, emptyLabel }) {
 
   return (
     <section className="rounded-2xl border border-[#E5E7EB] bg-white px-4 py-3">
-      <div className="mb-2 flex items-center gap-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-xl border-b-4" style={{ borderBottomColor: accent }}>
+      <div className="mb-2 flex items-center gap-2 text-[#1F2937]">
+        <div className="flex h-8 w-8 items-center justify-center rounded-xl border-b-4 bg-[#FFF8E7]" style={{ borderBottomColor: accent }}>
           <Icon className="h-5 w-5" style={{ color: accent }} />
         </div>
         <p className="text-xs font-semibold uppercase tracking-wide text-[#4B5563]">{label}</p>
@@ -116,7 +116,7 @@ function SectionsList({ icon: Icon, label, data, emptyLabel }) {
       {hasItems ? (
         <div className="flex flex-wrap gap-2">
           {data.map((item, idx) => (
-            <span key={`${item}-${idx}`} className="inline-flex items-center rounded-full border border-[#E5E7EB] px-3 py-1 text-xs font-medium text-[#374151]">
+            <span key={`${item}-${idx}`} className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium text-[#374151]" style={{ borderColor: "#E5E7EB", backgroundColor: "#FFFDF6" }}>
               {item}
             </span>
           ))}

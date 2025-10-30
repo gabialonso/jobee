@@ -4,14 +4,52 @@ import { apiFetch } from "../../utils/api.js";
 import { COURSES } from "../../data/courses.js";
 import PublicHeader from "../../components/features/navigation/PublicHeader.jsx";
 import CourseCarousel from "../../components/features/courses/CourseCarousel.jsx";
+import { PLAN_STYLES } from "../../components/features/courses/CourseCard.jsx";
 import BannerImage from "../../assets/LandingBannerImg.svg";
 import { MdPlace } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { GoMail } from "react-icons/go";
 
+const PLAN_LABELS = {
+  basico: "Plan Básico",
+  medio: "Plan Medio",
+  avanzado: "Plan Avanzado",
+};
+
+const PLAN_ALIASES = [
+  { match: ["basico", "básico", "basic", "descubrí", "discover"], value: "basico" },
+  { match: ["medio", "plus", "impulsá", "impulsa"], value: "medio" },
+  { match: ["avanzado", "premium", "pro"], value: "avanzado" },
+];
+
+const PLANS = [
+  {
+    key: "basico",
+    name: "Plan Descubrí",
+    tagline: "Ideal para quienes recién comienzan",
+    price: "Gratis",
+    features: [
+      "Acceso a cursos introductorios",
+      "Perfil visible para empresas aliadas",
+      "Soporte por correo en 48 hs",
+    ],
+  },
+  {
+    key: "medio",
+    name: "Plan Impulsá",
+    tagline: "Sumá proyectos y mentorías",
+    price: "9.99 USD/mes",
+    features: [
+      "Mentorías grupales quincenales",
+      "Participación en simulacros de entrevistas",
+      "Prioridad en postulaciones destacadas",
+    ],
+  },
+];
+
 function Hero() {
   return (
-    <section className="grid gap-10 rounded-3xl bg-gradient-to-br from-[#FFF8E7] to-[#FFF0C2] p-8 md:grid-cols-2 md:items-center lg:p-12">
+    <section className="grid gap-10 rounded-3xl bg-[#FFF0C2] p-8 md:grid-cols-2 md:items-center lg:p-12">
       <div className="flex flex-col gap-6 text-left">
         <span className="text-sm font-semibold uppercase tracking-wide text-[#9B1756]">
           Primera experiencia laboral
@@ -142,25 +180,86 @@ function Metrics() {
   );
 }
 
+function PlansSection() {
+  return (
+    <section className="px-6 py-12 md:px-10">
+      <header className="mb-8 text-center">
+        <p className="text-sm font-semibold uppercase tracking-wide text-[#0B7285]">Planes Jobee</p>
+        <h2 className="mt-2 text-2xl font-bold text-[#1F2937] md:text-3xl">
+          Elegí la experiencia que mejor se adapte a vos
+        </h2>
+        <p className="mt-2 text-sm text-[#4B5563] md:text-base">
+          Podés empezar gratis y luego escalar cuando quieras mentorías y postulaciones priorizadas.
+        </p>
+      </header>
+
+      <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+        {PLANS.map((plan) => {
+          const planStyles = PLAN_STYLES[plan.key] ?? PLAN_STYLES.basico;
+
+          return (
+            <article
+              key={plan.name}
+              className="flex flex-col gap-5 rounded-3xl p-6 text-left"
+              style={{
+                backgroundColor: planStyles.background,
+                borderBottomWidth: "8px",
+                borderBottomColor: planStyles.border,
+              }}
+            >
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: planStyles.badgeColor }}>
+                  {plan.name}
+                </p>
+                <h3 className="mt-1 text-lg font-semibold text-[#1F2937]">{plan.tagline}</h3>
+              </div>
+              <p className="text-2xl font-bold text-[#1F2937]">{plan.price}</p>
+              <ul className="space-y-3 text-sm text-[#4B5563]">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2">
+                    <span className="mt-1 inline-flex h-2.5 w-2.5 flex-shrink-0 rounded-full" style={{ backgroundColor: planStyles.accent }} />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                to="/auth/signup/user"
+                className="mt-auto inline-flex items-center justify-center rounded-xl border-b-4 px-4 py-2 text-sm font-semibold transition-all duration-150 ease-out hover:opacity-90"
+                style={{
+                  backgroundColor: planStyles.buttonBg,
+                  color: planStyles.buttonText,
+                  borderBottomColor: planStyles.buttonBorder,
+                }}
+              >
+                Empezar ahora
+              </Link>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function CallToAction() {
   return (
-    <section className="rounded-3xl bg-[#E69C00] px-8 py-12 text-center text-white">
-      <h3 className="text-2xl font-bold md:text-3xl">
+    <section className="rounded-3xl bg-[#FFF0C2] px-8 py-12 text-center">
+      <h3 className="text-2xl font-bold text-[#1F2937] md:text-3xl">
         ¿Listo para dar tu primer paso profesional?
       </h3>
-      <p className="mt-3 text-sm text-[#FFF8E7] md:text-base">
+      <p className="mt-3 text-sm text-[#4B5563] md:text-base">
         Creamos un espacio sencillo para aprender, practicar y conectar. Elegí tu plan y empecemos hoy.
       </p>
       <div className="mt-6 flex flex-wrap justify-center gap-4">
         <Link
           to="/auth/signup/user"
-          className="rounded-xl border-b-4 border-[#FFF0C2] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:bg-[#FFF7E0] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
         >
           Crear cuenta joven
         </Link>
         <Link
           to="/auth/signup/company"
-          className="rounded-xl border-b-4 border-[#FFF0C2] bg-[#FFF0C2] px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:bg-[#FFF7E0] md:text-base"
+          className="rounded-xl border-b-4 border-[#E69C00] bg-white px-6 py-2 text-sm font-semibold text-[#1F2937] transition-all duration-150 ease-out hover:opacity-90 md:text-base"
         >
           Sumarse como empresa
         </Link>
@@ -232,6 +331,7 @@ export default function HomePage() {
         <FeatureHighlights />
         <CoursesSection courses={courses} />
         <Metrics />
+        <PlansSection />
         <CallToAction />
       </main>
       <ContactFooter />
