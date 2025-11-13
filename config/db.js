@@ -3,12 +3,11 @@ import mysql from 'mysql2/promise';
 
 const prisma = new PrismaClient();
 
-// Create mysql2 connection pool for legacy code
 export const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'proyectousuario',
-  password: 'proyectousuario',
-  database: 'proyecto',
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'proyectousuario',
+  password: process.env.DB_PASSWORD || 'proyectousuario',
+  database: process.env.DB_NAME || 'proyecto',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
@@ -24,6 +23,4 @@ export const connectDB = async () => {
   }
 };
 
-// Export prisma as default for Prisma-based services
-// Export pool as named export for legacy SQL code
 export default prisma;

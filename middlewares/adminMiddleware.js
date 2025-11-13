@@ -1,4 +1,3 @@
-// src/middlewares/admin.js
 import jwt from "jsonwebtoken";
 import jwtConfig from "../config/jwt.js";
 import prisma from "../config/db.js";

@@ -1,4 +1,3 @@
-// src/routes/admin.routes.js
 import { Router } from "express";
 import {
     adminCreateCourseHandler,
@@ -9,8 +8,9 @@ import {
     adminListPurchasesHandler,
     adminPurchasesTableHandler,
     adminCoursesWithPurchaseCountHandler,
-} from "../src/controllers/admin.controller.js";
-import { authGuard, adminGuard } from "../src/middlewares/auth.js";
+} from "../controllers/adminController.js";
+import { authMiddleware as authGuard } from "../middlewares/authMiddleware.js";
+import { adminMiddleware as adminGuard } from "../middlewares/adminMiddleware.js";
 import expressasyncerrors from "express-async-errors";
 
 

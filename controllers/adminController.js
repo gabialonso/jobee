@@ -1,4 +1,3 @@
-// src/controllers/admin.controller.js
 import {
     adminCreateCourse,
     adminListUsers,
