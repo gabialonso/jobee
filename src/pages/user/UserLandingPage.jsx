@@ -169,7 +169,7 @@ function ContactFooter() {
         <div className="flex flex-col items-center gap-4 text-sm md:flex-row md:gap-10 md:text-base">
           <span className="flex items-center gap-2">
             <MdPlace />
-            Canelones 1564
+            Canelones 1162
           </span>
           <span className="flex items-center gap-2">
             <FaPhoneAlt />

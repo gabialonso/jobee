@@ -12,7 +12,6 @@ import CompanyProfile from "./pages/company/profile/CompanyProfilePage.jsx";
 import CompanyUsers from "./pages/company/users/UsersPage.jsx";
 import CompanyCourses from "./pages/company/courses/CompanyCoursesPage.jsx";
 import CompanyContacts from "./pages/company/contact/ContactPage.jsx";
-import CompanyPostulationsPage from "./pages/company/postulations/CompanyPostulationsPage.jsx";
 
 import HomePage from "./pages/public/HomePage.jsx";
 import SplashPage from "./pages/public/SplashPage.jsx";
@@ -107,14 +106,6 @@ export default function App() {
         element={
           <ProtectedRoute>
             <CompanyContacts />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/company/postulations"
-        element={
-          <ProtectedRoute>
-            <CompanyPostulationsPage />
           </ProtectedRoute>
         }
       />

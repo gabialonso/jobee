@@ -279,7 +279,7 @@ function ContactFooter() {
         <div className="flex flex-col items-center gap-4 text-sm md:flex-row md:gap-10 md:text-base">
           <span className="flex items-center gap-2">
             <MdPlace />
-            Canelones 1564
+            Canelones 1162
           </span>
           <span className="flex items-center gap-2">
             <FaPhoneAlt />
@@ -309,7 +309,7 @@ export default function HomePage() {
           title: course.title,
           description: course.description,
           duration: course.duration ? `${course.duration}h` : null,
-          plan: course.plan || 'basico',
+          plan: course.theme || course.plan || 'basico',
           planLabel: course.planLabel || 'Curso',
           modality: course.modality || 'Online',
           courseId: course.courseId || course.id

@@ -38,7 +38,7 @@ export default function CourseCarousel({ courses = [] }) {
               className="grid min-w-full gap-6 px-6 py-6 sm:grid-cols-2 md:grid-cols-3"
             >
               {chunk.map((course) => (
-                <CourseCard key={course.id} course={course} />
+                <CourseCard key={course.courseId || course.id} course={course} />
               ))}
             </div>
           ))}

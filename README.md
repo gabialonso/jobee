@@ -307,7 +307,7 @@ Consulta el archivo [LICENSE](./LICENSE) para más información.
 
 - **Email:** [animajobee@gmail.com](mailto:animajobee@gmail.com)
 - **Teléfono:** +598 92 502 958
-- **Dirección:** Canelones 1564, Uruguay
+- **Dirección:** Canelones 1162, Uruguay
 
 ---
 
