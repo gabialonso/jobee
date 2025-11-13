@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
-import { COMPANIES } from "../../data/companies.js";
+import COMPANIES from "../../data/companies.json";
 import AuthenticatedHeader from "../../components/features/navigation/AuthenticatedHeader";
 import CompanyCard from "../../components/features/users/CompanyCard";
 

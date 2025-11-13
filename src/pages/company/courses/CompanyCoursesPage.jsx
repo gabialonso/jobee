@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../../utils/api";
-import { COURSES } from "../../../data/courses.js";
+import COURSES from "../../../data/courses.json";
 import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
 import PageHeader from "../../../components/features/shared/PageHeader";
 import EmptyState from "../../../components/common/EmptyState";

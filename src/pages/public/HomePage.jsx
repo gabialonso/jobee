@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiFetch } from "../../utils/api.js";
-import { COURSES } from "../../data/courses.js";
+import COURSES from "../../data/courses.json";
 import PublicHeader from "../../components/features/navigation/PublicHeader.jsx";
 import CourseCarousel from "../../components/features/courses/CourseCarousel.jsx";
 import { PLAN_STYLES } from "../../components/features/courses/CourseCard.jsx";

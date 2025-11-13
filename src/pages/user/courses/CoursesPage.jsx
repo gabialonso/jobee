@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiFetch } from "../../../utils/api";
 import { getUser } from "../../../utils/auth";
-import { COURSES } from "../../../data/courses.js";
+import COURSES from "../../../data/courses.json";
 import CourseCard, { PLAN_STYLES } from "../../../components/features/courses/CourseCard";
 import AuthenticatedHeader from "../../../components/features/navigation/AuthenticatedHeader";
 

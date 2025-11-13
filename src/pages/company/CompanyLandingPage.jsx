@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import PublicHeader from "../../components/features/PublicHeader.jsx";
 import CourseCarousel from "../../components/features/CourseCarousel.jsx";
-import { COURSES } from "../../data/courses.js";
+import COURSES from "../../data/courses.json";
 import BannerImage from "../../assets/LandingBannerImg.svg";
 import { MdPlace } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
