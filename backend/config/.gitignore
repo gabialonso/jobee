@@ -1,0 +1,20 @@
+# Dependencias generales
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Stripe (dependencias y credenciales locales)
+# Ignorar claves o archivos de configuración de Stripe que no deban subirse
+stripe.log
+stripe/
+.stripe/
+stripe-config.json
+stripe-test-keys.json

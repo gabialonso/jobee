@@ -7,10 +7,25 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+node_modules/
+
+# Build outputs
 dist
 dist-ssr
+
+# Environment files
 *.local
+.env
+.env.*
+
+# Stripe
+stripe/
+.stripe/
+stripe.log
+stripe-config.json
+stripe-test-keys.json
 
 # Claude Code
 .claude/
@@ -32,5 +47,4 @@ demo-videos/
 .aider*
 
 # Source backup
-
 *src_backup*
