@@ -90,12 +90,6 @@ jobee/
 
 ---
 
-## 📄 Licencia
-
-Este proyecto está bajo la **Licencia MIT**.
-
----
-
 ## 📞 Contacto
 
 - **Email:** animajobee@gmail.com
@@ -106,6 +100,6 @@ Este proyecto está bajo la **Licencia MIT**.
 
 <div align="center">
 
-**Desarrollado con precisión y pasión por el equipo de Jobee** 💼
+**Desarrollado en el marco del proyecto integrador final del bachillerato ÁNIMA** 💼
 
 </div>
